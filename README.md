@@ -1,11 +1,9 @@
 # Spring-MVC-Exericse
-
--------------------------------------------------------------------------------------------
 ![gg](https://user-images.githubusercontent.com/79691025/149938094-e4ee60dc-79c4-45e7-89db-3dbec0ceca10.PNG)
 
 Background:
 
-### You are owner in Sam's library, due to COVID-19, you design start an online library to lend books to readers. And you are going to build a webpage with up-to-date book list to readers recommendation and also for promotion. As a result, you have to build:
+#### You are owner in Sam's library, due to COVID-19, you design start an online library to lend books to readers. And you are going to build a webpage with up-to-date book list to readers recommendation and also for promotion. As a result, you have to build:
      1. Search function
      2. Adding book
      3. Deleting book
@@ -14,14 +12,13 @@ Background:
 ---------------------------------------------------------------------------------------------
 ## Tools I've used:
 
-Java Spring MVC framework
+Java Spring MVC framework, with ...
     1. LibController.java
     2. Book.java
     3. BookDao.java
     4. Config file(web.xml, servlet.xml)
     5. Jsp file
 
-MVC version: Spring MVC
 -------------------------------------------------------------------------------------------
 
 ## Design Stage:

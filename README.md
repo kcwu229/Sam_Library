@@ -17,7 +17,7 @@ Java Spring MVC framework, with ...
     2. Book.java
     3. BookDao.java
     4. Config file(web.xml, servlet.xml)
-    5. Jsp file
+    5. Jsp file  --- where I mainly using Bootstrap to make layout of the view pages
 
 -------------------------------------------------------------------------------------------
 

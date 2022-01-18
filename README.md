@@ -62,8 +62,8 @@ Repeating Step 3 to 5.
 2. Add Book:
 ![wfwqfqw](https://user-images.githubusercontent.com/79691025/149938387-48f61247-f7db-4be7-9440-3dd53e9b1fd7.PNG)
 
-3. ![fewgq](https://user-images.githubusercontent.com/79691025/149938396-d15739f9-cd9d-4dbd-b202-7510352af464.PNG)
-Showing Book List   &  Editing/Deleting Data:
+3. Showing Book List   &  Editing/Deleting Data:
+![fewgq](https://user-images.githubusercontent.com/79691025/149938396-d15739f9-cd9d-4dbd-b202-7510352af464.PNG)
 
 4. Search By Title/Author/ Publisher/Year (Progressing ...): 
 

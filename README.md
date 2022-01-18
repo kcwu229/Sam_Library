@@ -5,25 +5,26 @@
 
 Background:
 
-You are librarian in library, where you are going to design a program to:
-     1. Search a book
-     2. Add a book
-     3. Delete a book
+### You are owner in Sam's library, due to COVID-19, you design start an online library to lend books to readers. And you are going to build a webpage with up-to-date book list to readers recommendation and also for promotion. As a result, you have to build:
+     1. Search function
+     2. Adding book
+     3. Deleting book
+     
+     
+---------------------------------------------------------------------------------------------
+## Tools I've used:
 
-Using Spring and Thymeleaf to create this program:
-Things needed to create:
-
+Java Spring MVC framework
     1. LibController.java
     2. Book.java
     3. BookDao.java
     4. Config file(web.xml, servlet.xml)
     5. Jsp file
 
+MVC version: Spring MVC
 -------------------------------------------------------------------------------------------
 
-MVC version: Spring MVC
-
-Design Stage:
+## Design Stage:
 A. Function of BookDao:
 
       - Reduce of dependency between Entity & Database 
@@ -45,7 +46,7 @@ D. Function of Config File:
         
 -------------------------------------------------------------------------------------------
 
-III. Logic
+## III. Logic
 
     RequestMapping("/") to open the index page via the Tomcat Server
     Through <a href=""> linking to another web route 
@@ -55,7 +56,7 @@ III. Logic
 
 Repeating Step 3 to 5.
 
-Previews:
+## Previews:
 --------------------------------------------------------------------------------------------
 
 1. Index Page:

@@ -18,6 +18,8 @@ Java Spring MVC framework, with ...
     3. BookDao.java
     4. Config file(web.xml, servlet.xml)
     5. Jsp files  --- with Bootstrap CSS
+    
+Javascript Part is progressing ...
 
 -------------------------------------------------------------------------------------------
 

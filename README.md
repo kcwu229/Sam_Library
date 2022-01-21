@@ -56,18 +56,22 @@ Repeating Step 3 to 5.
 ## Previews:
 --------------------------------------------------------------------------------------------
 
-1. Index Page:
-![111111](https://user-images.githubusercontent.com/79691025/149938373-8a50401d-6684-4427-baf8-d2b8ca2d5074.PNG)
+1. Welcome to my Library WebPage:
+![Index](https://user-images.githubusercontent.com/79691025/150518349-a701a804-6a34-45fc-80a5-625708e66cbb.PNG)
 
-2. Add Book:
-![wfwqfqw](https://user-images.githubusercontent.com/79691025/149938387-48f61247-f7db-4be7-9440-3dd53e9b1fd7.PNG)
 
-3. Showing Book List   &  Editing/Deleting Data:
-![fewgq](https://user-images.githubusercontent.com/79691025/149938396-d15739f9-cd9d-4dbd-b202-7510352af464.PNG)
+2. Every week I would update my recommendations to all of you:
+![add form](https://user-images.githubusercontent.com/79691025/150518453-a990f530-3791-4768-ba26-abbbf3bedda1.PNG)
 
-4. Search By Title/Author/ Publisher/Year (Progressing ...): 
 
-5. Database:
+3. And you can see them through the Book List.
+![booklist](https://user-images.githubusercontent.com/79691025/150518509-97d13cf8-fe1d-4543-af26-df8fea9f1580.PNG)
+
+
+4. If you have already interest in certain books, feel free to use the search function to access further information
+![wqfq](https://user-images.githubusercontent.com/79691025/150518896-545fc5f6-3c5b-40c3-8ca6-80aa4e755711.PNG)
+
+5. All data accessed would be save into DataBase. So convenient!
 ![wfqwfqwf](https://user-images.githubusercontent.com/79691025/149938430-71ce3d04-d4e1-4d76-9205-6a5c20b35321.PNG)
 
 

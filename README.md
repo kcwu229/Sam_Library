@@ -4,9 +4,9 @@
 Background:
 
 #### You are owner in Sam's library, due to COVID-19, you design start an online library to lend books to readers. And you are going to build a webpage with up-to-date book list to readers recommendation and also for promotion. As a result, you have to build:
-     1. Search function
-     2. Adding book
-     3. Deleting book
+     1. Search
+     2. Adding 
+     3. Delete
      
      
 ---------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ Java Spring MVC framework, with ...
     2. Book.java
     3. BookDao.java
     4. Config file(web.xml, servlet.xml)
-    5. Jsp file  --- where I mainly using Bootstrap to make layout of the view pages
+    5. Jsp files  --- with Bootstrap CSS
 
 -------------------------------------------------------------------------------------------
 
@@ -59,18 +59,19 @@ Repeating Step 3 to 5.
 1. Welcome to my Library WebPage:
 ![Index](https://user-images.githubusercontent.com/79691025/150518349-a701a804-6a34-45fc-80a5-625708e66cbb.PNG)
 
-
+--------------------------------------------------------------------------------------------
 2. Every week I would update my recommendations to all of you:
 ![add form](https://user-images.githubusercontent.com/79691025/150518453-a990f530-3791-4768-ba26-abbbf3bedda1.PNG)
 
-
+--------------------------------------------------------------------------------------------
 3. And you can see them through the Book List.
 ![booklist](https://user-images.githubusercontent.com/79691025/150518509-97d13cf8-fe1d-4543-af26-df8fea9f1580.PNG)
 
-
+--------------------------------------------------------------------------------------------
 4. If you have already interest in certain books, feel free to use the search function to access further information
 ![wqfq](https://user-images.githubusercontent.com/79691025/150518896-545fc5f6-3c5b-40c3-8ca6-80aa4e755711.PNG)
 
+--------------------------------------------------------------------------------------------
 5. All data accessed would be save into DataBase. So convenient!
 ![wfqwfqwf](https://user-images.githubusercontent.com/79691025/149938430-71ce3d04-d4e1-4d76-9205-6a5c20b35321.PNG)
 

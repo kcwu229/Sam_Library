@@ -77,4 +77,12 @@ Repeating Step 3 to 5.
 5. All data accessed would be save into DataBase. So convenient!
 ![wfqwfqwf](https://user-images.githubusercontent.com/79691025/149938430-71ce3d04-d4e1-4d76-9205-6a5c20b35321.PNG)
 
+--------------------------------------------------------------------------------------------
+
+Updates:
+1. Adding two more databases: author and publisher, and making connection with three databases:
+--> When adding books, allowing drop down list for both author and publisher for user/ librarian to pick instead of typing every time.
+
+2. Adding Validations on checking the duplication and the date format of the adding form.
+
 

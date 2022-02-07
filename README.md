@@ -1,6 +1,8 @@
-# Spring-MVC-Exericse   (For the most-update version.. and still not the final version :)   )  
+# Spring-MVC-Exericse  (Study Purpose)
+(For the most-update version.. and still not the final version :)   )  
      
-web link: http://springbookstoreonline-env.eba-2fjwxj2v.us-east-1.elasticbeanstalk.com/
+web link: http://springbookstoreonline-env.eba-2fjwxj2v.us-east-1.elasticbeanstalk.com/ 
+(This link may be holded for a short period of time as hosting on AWS is costy ... )
 
 ## Previews:
 --------------------------------------------------------------------------------------------
@@ -35,7 +37,8 @@ In book adding form, your previously written author and publisher data can found
 
 --------------------------------------------------------------------------------------------
 5. All data accessed would be save into DataBase. So convenient!
-![wfqwfqwf](https://user-images.githubusercontent.com/79691025/149938430-71ce3d04-d4e1-4d76-9205-6a5c20b35321.PNG)
+![savs](https://user-images.githubusercontent.com/79691025/152825782-ead84ae0-5c14-440a-afea-96bca5539880.JPG)
+
 
 --------------------------------------------------------------------------------------------
 
@@ -46,8 +49,6 @@ Updates:
 2. Adding Validations on checking the duplication and the date format of the adding form.
 
 3. Shading Backgroundcolor(yellow) to indicate the Book is Sold
-
-4. 
 
 --------------------------------------------------------------------------------------------
 
@@ -88,3 +89,9 @@ Java Spring MVC framework, with ...
     Send request to Dispatcher Servlet then assignment to Controller Class -- Other View Page
     Access the data from view to Dispatcher Servlet, execute the function (Change in Database via SQL Query) then pass the result to Model
     Showing the data from Model to view
+
+-------------------------------------------------------------------------------------------
+
+** If you want to deploy maven Spring MVC on AWS, you can check for these two webpage:
+          1. https://hackernoon.com/how-to-deploy-a-java-springboot-app-with-mysql-in-aws-for-free-dn3x34gg
+          2. https://www.youtube.com/watch?v=jNh2_Sq1zy4

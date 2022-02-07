@@ -52,15 +52,7 @@ Updates:
 
 --------------------------------------------------------------------------------------------
 
-## Web Tool: 
-     1. Maven, 
-     2. Spring MVC, 
-     3. AWS RDS, AWS ELASTIC BEANSTALK
-
---------------------------------------------------------------------------------------------
-![gg](https://user-images.githubusercontent.com/79691025/149938094-e4ee60dc-79c4-45e7-89db-3dbec0ceca10.PNG)
-
-Background:
+# Background:
 
 #### I am owner in Sam's Book Store, due to COVID-19, I decide to shut down my physical book shop and start an online book store. And you are going to build a webpage with up-to-date book list to readers recommendation and also for promotion. As a result, I provide the following functions
      1. Search
@@ -72,13 +64,18 @@ Background:
 ---------------------------------------------------------------------------------------------
 ## Tools I've used:
 
-Java Spring MVC framework, with ...
-    1. Controller: BookController & AuthorController & PublisherController
-    2. Entity: Book, Author, Publisher
-    3. Repository: Book, Author, Publisher
-    4. Service:  Book, Author, Publisher
-    5. Config file(JpaConfig, MvcWebConfig, WebApplicationConfig)
-    6. HTML templates, with CSS and JS 
+## Web Tool: 
+     1. Maven, 
+     2. Spring MVC, 
+     3. AWS RDS, AWS ELASTIC BEANSTALK
+
+     Java Spring MVC framework, with ...
+         1. Controller: BookController & AuthorController & PublisherController
+         2. Entity: Book, Author, Publisher
+         3. Repository: Book, Author, Publisher
+         4. Service:  Book, Author, Publisher
+         5. Config file(JpaConfig, MvcWebConfig, WebApplicationConfig)
+         6. HTML templates, with CSS and JS 
    
 -------------------------------------------------------------------------------------------
 

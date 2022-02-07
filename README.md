@@ -90,5 +90,7 @@ Updates:
 -------------------------------------------------------------------------------------------
 
 ** If you want to deploy maven Spring MVC on AWS, you can check for these two webpage:
-          1. https://hackernoon.com/how-to-deploy-a-java-springboot-app-with-mysql-in-aws-for-free-dn3x34gg
-          2. https://www.youtube.com/watch?v=jNh2_Sq1zy4
+   <ul>
+     <li> https://hackernoon.com/how-to-deploy-a-java-springboot-app-with-mysql-in-aws-for-free-dn3x34gg </li>
+     <li> https://www.youtube.com/watch?v=jNh2_Sq1zy4 </li> 
+   </ul>

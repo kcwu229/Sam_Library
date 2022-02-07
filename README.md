@@ -1,5 +1,6 @@
 # Spring-MVC-Exericse  (Study Purpose)
-(For the most-update version.. and still not the final version :)   )  
+-- For the most-update version for desktop Webpage ... and still not the final version :)  
+-- (For mobile user, sorry about that :(   I will finish it asap ...)
      
 web link: http://springbookstoreonline-env.eba-2fjwxj2v.us-east-1.elasticbeanstalk.com/ 
 (This link may be holded for a short period of time as hosting on AWS is costy ... )

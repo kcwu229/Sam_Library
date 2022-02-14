@@ -5,7 +5,29 @@
 web link: http://springbookstoreonline-env.eba-2fjwxj2v.us-east-1.elasticbeanstalk.com/ 
 (This link may be holded for a short period of time as hosting on AWS is costy ... )
 
-## Previews:
+
+## Previews: (v4)
+--------------------------------------------------------------------------------------------
+
+1. Welcome to my Library WebPage !  Every week I would update my recommendations to all of you:
+
+![1](https://user-images.githubusercontent.com/79691025/153913459-22f85219-8eaa-43dd-a083-9e56da4e3aab.JPG)
+--- And If you see the row was highlighted in red Color, then it means the book is sold! 
+
+
+2. Welcome to distribute the Book Info !!!
+![2](https://user-images.githubusercontent.com/79691025/153913632-bd367336-4541-46c4-b078-2bd6b6f0d12b.JPG)
+![3](https://user-images.githubusercontent.com/79691025/153913660-e6ae916e-a6a0-48fc-8d06-33d42deabdc3.JPG)
+![4](https://user-images.githubusercontent.com/79691025/153913835-fb4fab0c-e998-479d-9f81-3fdea47ecccd.JPG)
+
+--------------------------------------------------------------------------------------------
+
+5. Let's join us and contribute to the others !!!!
+--------------------------------------------------------------------------------------------
+
+
+
+## Previews: (v3.2)
 --------------------------------------------------------------------------------------------
 
 1. Welcome to my Library WebPage:

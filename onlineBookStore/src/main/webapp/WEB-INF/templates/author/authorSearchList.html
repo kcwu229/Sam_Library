@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	  <head>
+	    <meta charset="UTF-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <link th:href="@{/css/authorList.css}" rel="stylesheet" />
+	    <title>Author List</title>
+	  </head>
+	    
+  <body>
+
+    <figure th:each="author: ${authorResult}"  class="card">
+      <div class="profile-image">
+        <img th:src="@{'images/author_/' + ${author.id} + '/' + ${author.image}}" alt="" />
+      </div>
+      <figcaption>
+        <h3 th:text="${author.author}"></h3> <br>
+        <h5 th:text="${author.birthYear}"></h5>
+        <p th:text="${author.summary}"></p>
+      </figcaption>
+    </figure>
+      
+      
+    <footer class="footerBar">
+	   <a href="index">Homepage</a>  
+	   <a href="authorAddForm">Add-Author</a>
+	     
+	   <a href="bookList">Book List</a>
+	   <a href="publisherList">Publisher List</a>
+		        	
+    </footer>
+  </body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link th:href="@{/css/style.css}" rel="stylesheet" />   
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" /> 
+	<script type="text/javascript" th:src="@{/js/checkDate.js}"></script>
+    <title>Book Form</title>
+    
+  </head>
+  
+  
+  <body>
+	  <div class="d-lg-flex half">
+	    <div class="bg order-1 order-md-2" style="background-image: url('images/book_bg.jpg');"></div>
+	    <div class="contents order-2 order-md-1">
+	
+	      <div class="container ">
+	        <div class="row align-items-center justify-content-center">
+	          <div class="col-md-7">
+	            <div class="mb-4">
+	              <h3>Distribute new book</h3>
+	              <p class="mb-4">We aim to promote the most interesting and exciting books to you !</p>
+	            </div>
+	            
+	            
+	            <form th:action="@{/bookSave}" enctype="multipart/form-data" method="POST"
+	                    th:object="${book}"  th:onsubmit="|return validate()|">
+	                    
+	              <div class="form-group last mb-3">
+	              
+	                <input type="text" id="title" class="form-control last mb-3" placeholder="Book Title *" th:field="*{title}" required/>
+	              </div>
+	              
+	              <div class="form-group last mb-3">
+	                <p>Author :</p>
+	                <select th:field="*{author}" id="author" class="form-group last mb-3">
+		                  	<option 
+		                  	 	th:each="author: ${listAuthorDropDownList}"
+			                  	th:value="${author.author}"
+			                  	th:text="${author.author}" >
+		                  	</option>
+	                  	</select>                
+	              </div>
+	              
+	              
+	              <div class="form-group last mb-3" >
+	                <input class="form-control last mb-3" id="date" name="date" type="text" placeholder="Publish Date (YYYY-MM-DD)" th:field="*{date}">
+	                <p id="dateMsg"></p>
+	              </div>
+	              
+	              
+	              <div class="form-group last mb-3">
+	              <p>Publisher :</p>
+	              <select th:field="*{publisher} " class="form-group last mb-3">
+		                  	<option 
+		                  	 	th:each="publisher: ${listPublisherDropDownList}"
+			                  	th:value="${publisher.publisher}"
+			                  	th:text="${publisher.publisher}" >
+		                  	</option>
+	                  	</select>
+	              </div>
+	              
+	              <div class="form-group last mb-3">
+		              <p>Book Photo:</p> 
+		              <input type="file" id="myFile" name="image" accept="image/png, image/jpeg"> 
+		          </div>
+	              
+	              
+	              <div class="form-group last mb-3">
+	              	<textarea placeholder="Enter Summary of Book Here" th:field="*{summary}"></textarea>
+	              </div>
+	              	
+	              <input type="submit" value="Submit" class="btn btn-block btn-primary last mb-3">
+	
+	            </form>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    
+	  </div>
+	    
+  </body>
+</html>

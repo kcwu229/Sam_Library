@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <link type="text/css" rel="stylesheet" href="https://bbbootstrap.com/assets/css/allone.css?v=21.7">
+  <link type="text/css" rel="stylesheet" href="https://bbbootstrap.com/assets/css/newstyles.css?v=24">
+  
+  <script type="text/javascript" th:src="@{/js/editFormValidation.js}"></script>
+  <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>  
+</head> 
+
+<body>
+
+
+<div class="main-register-holder">
+    <div class="main-register fl-wrap">
+        
+        <h1 class="b-text-center">Edit Publisher</span></h1>
+            
+         <div id="infoMessage"></div>
+
+        <div id="tabs-container">
+            
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="custom-form">
+                        <form action="publisherSave" method="post" th:object="${publisher}">
+                        
+                        	<input type="hidden" th:field="*{id}"/>
+                        	
+                            <label>Publisher Name: </label>
+                            <input id="title" type="text" class="form-control" th:field="*{publisher}"/>
+                            
+                            <label>Description of Publisher: </label>
+                            <input id="author" type="text" class="form-control" th:field="*{summary}"/>
+
+                            <button type="submit" class="log-submit-btn" style="margin-top: 10px;" id="submitBtn">Save</button>
+
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

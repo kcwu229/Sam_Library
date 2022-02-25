@@ -2,77 +2,33 @@
 -- For the most-update version for desktop Webpage ... and still not the final version :)  
 -- (For mobile user, sorry about that :(   I will finish it asap ...)
      
-web link: http://springbookstoreonline-env.eba-2fjwxj2v.us-east-1.elasticbeanstalk.com/ 
-(This link may be holded for a short period of time as hosting on AWS is costy ... )
+web link: Coming Soon ... :)       
 
-
-## Previews: (v4)
+## Previews: (v5.0)
 --------------------------------------------------------------------------------------------
 
-1. Welcome to my Library WebPage !  Every week I would update my recommendations to all of you:
+😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊
 
-![1](https://user-images.githubusercontent.com/79691025/153913459-22f85219-8eaa-43dd-a083-9e56da4e3aab.JPG)
---- And If you see the row was highlighted in red Color, then it means the book is sold! 
-
-
-2. Welcome to distribute the Book Info !!!
-![2](https://user-images.githubusercontent.com/79691025/153913632-bd367336-4541-46c4-b078-2bd6b6f0d12b.JPG)
-![3](https://user-images.githubusercontent.com/79691025/153913660-e6ae916e-a6a0-48fc-8d06-33d42deabdc3.JPG)
-![4](https://user-images.githubusercontent.com/79691025/153913835-fb4fab0c-e998-479d-9f81-3fdea47ecccd.JPG)
-
---------------------------------------------------------------------------------------------
-
-5. Let's join us and contribute to the others !!!!
---------------------------------------------------------------------------------------------
+1. Welcome to distribute the Book Info !!! Please login to edit and add the bookList for this week !!! 
+![index](https://user-images.githubusercontent.com/79691025/155766179-cdf7d7f5-01ba-4a29-a2c2-8bcc105151c2.JPG)
 
 
+--- And If you see the row was highlighted in red Color and greyed, then it means the book is sold! 
+<br>
 
-## Previews: (v3.2)
---------------------------------------------------------------------------------------------
-
-1. Welcome to my Library WebPage:
-
-![SSSSS](https://user-images.githubusercontent.com/79691025/152822921-7750da7f-748c-4435-9527-322e871b9235.JPG)
-
---------------------------------------------------------------------------------------------
-
-2. Every week I would update my recommendations to all of you:
-
-And If you see the row was highlighted in YELLOW Color, then it means the book is sold! 
-
-![SCS](https://user-images.githubusercontent.com/79691025/152823014-500bbd8f-3afe-4cc1-90db-f2909d959d48.JPG)
-
---------------------------------------------------------------------------------------------
-3. If you have already interest in certain books, feel free to use the search function to access further information
-
-![vasvsa](https://user-images.githubusercontent.com/79691025/152823403-2e8721a6-10bf-498f-80a8-a6d9df98caee.JPG)
-
---------------------------------------------------------------------------------------------
-4. If you want to add new author, publisher and book information to benefit more readers, we are welcome!
-
-![savsavsavsa](https://user-images.githubusercontent.com/79691025/152824228-926355ba-de88-4180-9e43-37cb4e70eb07.JPG)
-
-![svasvsa](https://user-images.githubusercontent.com/79691025/152824474-bcc4c6ad-4140-4f58-becb-e8a78259e598.JPG)
+![signUp](https://user-images.githubusercontent.com/79691025/155766348-ea7a3e76-8ed2-46b9-a138-864eac40ff5a.JPG)
+<br>
+And add those exciting books to our readers!!!!
+<br><br>
+This page would become more prettier after a period of time :)
+![authorIntroduction](https://user-images.githubusercontent.com/79691025/155766445-9a65cb26-b412-4fdf-a818-4f853ca0180f.JPG)
 
 
-In book adding form, your previously written author and publisher data can found from the dropdown list. 
-![asvavasavv](https://user-images.githubusercontent.com/79691025/152823761-6ec48020-df68-4200-80a6-caf891b960ba.JPG)
+✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨<br>
+What ? Cannot find Your favorite author here ! No problem, you can add it here and help finish the author Collection !
+![AuthorList](https://user-images.githubusercontent.com/79691025/155766519-11446794-9083-4fe0-bd0d-4de2a2cf6dfe.JPG)
 
---------------------------------------------------------------------------------------------
-5. All data accessed would be save into DataBase. So convenient!
-![savs](https://user-images.githubusercontent.com/79691025/152825782-ead84ae0-5c14-440a-afea-96bca5539880.JPG)
-
-
---------------------------------------------------------------------------------------------
-
-Updates:
-1. Adding two more databases: author and publisher, and making connection with three databases:
---> When adding books, allowing drop down list for both author and publisher for user/ librarian to pick instead of typing every time.
-
-2. Adding Validations on checking the duplication and the date format of the adding form.
-
-3. Shading Backgroundcolor(yellow) to indicate the Book is Sold
-
+<h3>Let's join us and contribute to the others !!!!</h3>
 --------------------------------------------------------------------------------------------
 
 # Background:

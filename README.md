@@ -6,9 +6,6 @@ web link: Coming Soon ... :)
 
 ## Previews: (v5.0)
 --------------------------------------------------------------------------------------------
-
-😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊
-
 1. Welcome to distribute the Book Info !!! Please login to edit and add the bookList for this week !!! 
 ![index](https://user-images.githubusercontent.com/79691025/155766179-cdf7d7f5-01ba-4a29-a2c2-8bcc105151c2.JPG)
 

@@ -17,4 +17,6 @@ public interface EmployeeService {
 
     // abstract method to update an employee
     EmployeeDto updateEmployee(Long employeeId, EmployeeDto updatedEmployee);
+
+    void deleteEmployee(Long employeeId);
 }

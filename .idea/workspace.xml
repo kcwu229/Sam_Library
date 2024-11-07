@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eeb5b34d-fff8-4cf4-ac20-6624bf6c162e" name="Changes" comment="Adding a demo tutorial for Spring Boot and related API case">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/study/demo/exception/ResourceNotFoundException.java" afterDir="false" />
+    <list default="true" id="eeb5b34d-fff8-4cf4-ac20-6624bf6c162e" name="Changes" comment="add more API mapping and service logic">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/study/demo/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/demo/controller/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/demo/mapper/EmployeeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/demo/mapper/EmployeeMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/study/demo/service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/demo/service/EmployeeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/study/demo/service/impl/EmployeeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/demo/service/impl/EmployeeServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
@@ -112,7 +110,31 @@
       <option name="project" value="LOCAL" />
       <updated>1730960896312</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add more API mapping and service logic">
+      <option name="closed" value="true" />
+      <created>1730970467037</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730970467037</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add more API mapping and service logic">
+      <option name="closed" value="true" />
+      <created>1730970492296</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730970492296</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add more API mapping and service logic">
+      <option name="closed" value="true" />
+      <created>1730970516197</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1730970516197</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -140,6 +162,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding a demo tutorial for Spring Boot and related API case" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a demo tutorial for Spring Boot and related API case" />
+    <MESSAGE value="add more API mapping and service logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="add more API mapping and service logic" />
   </component>
 </project>

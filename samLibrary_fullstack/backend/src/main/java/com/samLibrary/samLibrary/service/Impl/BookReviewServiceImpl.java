@@ -3,6 +3,7 @@ package com.samLibrary.samLibrary.service.Impl;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.entity.Book;
 import com.samLibrary.samLibrary.entity.BookReview;
+import com.samLibrary.samLibrary.mapper.BookMapper;
 import com.samLibrary.samLibrary.mapper.BookReviewMapper;
 import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.repository.BookReviewRepository;
@@ -10,7 +11,9 @@ import com.samLibrary.samLibrary.service.BookReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -56,5 +59,12 @@ public class BookReviewServiceImpl implements BookReviewService {
                 .orElseThrow(() -> new RuntimeException("Book Review not found with id " + bookReviewId));
         bookReviewRepository.deleteById(bookReviewId);
 
+    }
+
+    @Override
+    public List<BookReviewDto> getAllBookReviews(UUID bookId) {
+        return bookReviewRepository.findByBookId(bookId).stream()
+                .map(BookReviewMapper::mapToBookReviewDto)
+                .collect(Collectors.toList());
     }
 }

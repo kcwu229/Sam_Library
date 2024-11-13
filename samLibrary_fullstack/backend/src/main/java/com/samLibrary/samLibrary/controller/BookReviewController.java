@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/bookReview")
 public class BookReviewController {
 
     private BookReviewService bookReviewService;

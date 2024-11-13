@@ -9,7 +9,9 @@ import com.samLibrary.samLibrary.service.AuthorService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -55,5 +57,12 @@ public class AuthorServiceImpl implements AuthorService {
                 () -> new RuntimeException("Employee not found")
         );
         authorRepository.deleteById(authorId);
+    }
+
+    @Override
+    public List<AuthorDto> getAllAuthors() {
+        return authorRepository.findAll().stream()
+                .map(AuthorMapper::mappToAuthorDto)
+                .collect(Collectors.toList());
     }
 }

@@ -9,7 +9,9 @@ import com.samLibrary.samLibrary.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -43,6 +45,13 @@ public class BookServiceImpl implements BookService {
         book.setPublishedYear(bookToBeUpdated.getPublishedYear());
         Book updatedBook = bookRepository.save(book);
         return BookMapper.mapToBookDto(updatedBook);
+    }
+
+    @Override
+    public List<BookDto> getAllBooks() {
+        return bookRepository.findAll().stream()
+                .map(BookMapper::mapToBookDto)
+                .collect(Collectors.toList());
     }
 
     @Override

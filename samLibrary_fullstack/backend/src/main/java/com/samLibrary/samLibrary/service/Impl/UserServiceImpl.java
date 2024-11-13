@@ -8,6 +8,7 @@ import com.samLibrary.samLibrary.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,14 +17,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserDto createAuthor(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
         User user = UserMapper.mapToUserEntity(userDto);
         User savedUser = userRepository.save(user);
         return UserMapper.mapToUserDto(savedUser);
     }
 
     @Override
-    public UserDto getAuthorById(UUID userId) {
+    public UserDto getUserById(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("Employee not found")
         );
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateAuthor(UserDto userToBeUpdate, UUID userId) {
+    public UserDto updateUser(UserDto userToBeUpdate, UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("Employee not found")
         );
@@ -44,8 +45,14 @@ public class UserServiceImpl implements UserService {
         return UserMapper.mapToUserDto(savedUpdated);
     }
 
+
     @Override
-    public void deleteAuthor(UUID userId) {
+    public List<UserDto> getAllUsers() {
+        return List.of();
+    }
+
+    @Override
+    public void deleteUser(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("Employee not found")
         );

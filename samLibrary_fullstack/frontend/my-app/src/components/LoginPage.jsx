@@ -2,17 +2,36 @@ import ChangeLanguageIcon from "./atoms/ChangeLanguageIcon";
 import QuestionIcon from "./atoms/QuestionIcon";
 import LoginImage from "../assets/images/login.jpg";
 import { useEffect, useState } from "react";
+import ExplainationIcon from "./atoms/ExplainationIcon";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
 
   function validateForm() {
     let valid = true;
 
-    if (username === "" || password === "") {
+    const errorCopy = { ...errors };
+
+    if (username === "") {
+      errorCopy.username = "Username is required !";
       valid = false;
+    } else {
+      errorCopy.username = "";
     }
+
+    if (password === "") {
+      errorCopy.password = "Password is required !";
+      valid = false;
+    } else {
+      errorCopy.password = "";
+    }
+
+    setErrors(errorCopy);
     return valid;
   }
 
@@ -49,17 +68,23 @@ function LoginPage() {
               Username
             </label>
             <input
-              className="shadow appearance-none border 
+              className={`shadow appearance-none border 
               rounded w-full py-2 px-3 text-gray-700 
-              leading-tight focus:outline-none focus:shadow-outline"
+              leading-tight focus:outline-none focus:shadow-outline ${
+                errors.username ? "border-pink-500" : ""
+              }`}
               id="username"
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            {errors.username && (
+              <div className="text-red-400">{errors.username}</div>
+            )}
           </div>
-          <div className="mb-6">
+
+          <div className="mb-10">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
@@ -67,16 +92,22 @@ function LoginPage() {
               Password
             </label>
             <input
-              className="shadow appearance-none 
+              className={`shadow appearance-none 
               border rounded w-full py-2 px-3
-               text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+               text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                 errors.password ? "border-pink-500" : ""
+               }`}
               id="password"
               type="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && (
+              <div className="text-red-400 ">{errors.password}</div>
+            )}
           </div>
+
           <div className="flex items-center justify-between">
             <div>
               <input type="checkbox" className="w-4 h-4" />

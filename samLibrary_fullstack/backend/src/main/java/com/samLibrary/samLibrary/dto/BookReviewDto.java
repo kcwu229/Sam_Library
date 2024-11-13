@@ -2,8 +2,6 @@ package com.samLibrary.samLibrary.dto;
 
 import com.samLibrary.samLibrary.entity.Book;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

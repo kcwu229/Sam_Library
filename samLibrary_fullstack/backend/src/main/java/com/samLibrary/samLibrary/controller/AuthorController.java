@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/author")
+@RequestMapping("/api/authors")
 @AllArgsConstructor
 public class AuthorController {
 

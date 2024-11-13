@@ -23,7 +23,7 @@ public class BookReview {
     private UUID bookId;
 
     @ManyToOne
-    @JoinColumn(name="book_id", nullable = false)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private Book book;
 
     @Column(name="book_review")

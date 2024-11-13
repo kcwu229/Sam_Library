@@ -1,11 +1,11 @@
 package com.samLibrary.samLibrary.service.Impl;
 
 
-import com.samLibrary.samLibrary.dto.AuthorDto;
-import com.samLibrary.samLibrary.entity.Author;
-import com.samLibrary.samLibrary.mapper.AuthorMapper;
-import com.samLibrary.samLibrary.repository.AuthorRepository;
-import com.samLibrary.samLibrary.service.AuthorService;
+import com.samLibrary.samLibrary.dto.BookDto;
+import com.samLibrary.samLibrary.entity.Book;
+import com.samLibrary.samLibrary.mapper.BookMapper;
+import com.samLibrary.samLibrary.repository.BookRepository;
+import com.samLibrary.samLibrary.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,47 +13,43 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class BookServiceImpl implements AuthorService {
-    private AuthorRepository authorRepository;
-
+public class BookServiceImpl implements BookService {
+    private BookRepository bookRepository;
 
     @Override
-    public AuthorDto createAuthor(AuthorDto authorDto) {
-        Author author = AuthorMapper.mapToAuthorEntity(authorDto);
-        Author saveAuthor = authorRepository.save(author);
-        return AuthorMapper.mappToAuthorDto(saveAuthor);
-
+    public BookDto createBook(BookDto bookDto) {
+        Book book = BookMapper.mapToBookEntity(bookDto);
+        Book savedBook = bookRepository.save(book);
+        return BookMapper.mapToBookDto(savedBook);
     }
 
     @Override
-    public AuthorDto getAuthorById(UUID authorId) {
-        Author author = authorRepository.findById(authorId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+    public BookDto getBookById(UUID bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(
+                () -> new RuntimeException("Book not found")
         );
-        return AuthorMapper.mappToAuthorDto(author);
+        return BookMapper.mapToBookDto(book);
     }
 
     @Override
-    public AuthorDto updateAuthor(AuthorDto authorToUpdate, UUID authorId) {
-        Author author = authorRepository.findById(authorId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+    public BookDto updateBook(BookDto bookToBeUpdated, UUID bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(
+                () -> new RuntimeException("Book not found")
         );
-        author.setBirthYear(authorToUpdate.getBirthYear());
-        author.setDeathYear(authorToUpdate.getDeathYear());
-        author.setCountry(authorToUpdate.getCountry());
-        author.setName(authorToUpdate.getName());
-        author.setDescription(authorToUpdate.getDescription());
-
-        // need to rewrite this part
-        author.setImageUrl(authorToUpdate.getImageUrl());
-        return null;
+        book.setAuthor(bookToBeUpdated.getAuthor());
+        book.setImageUrl(bookToBeUpdated.getImageUrl());
+        book.setIsbn(bookToBeUpdated.getIsbn());
+        book.setTitle(bookToBeUpdated.getTitle());
+        book.setPublishedYear(bookToBeUpdated.getPublishedYear());
+        Book updatedBook = bookRepository.save(book);
+        return BookMapper.mapToBookDto(updatedBook);
     }
 
     @Override
-    public void deleteAuthor(UUID authorId) {
-        Author author = authorRepository.findById(authorId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+    public void deleteBook(UUID bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(
+                () -> new RuntimeException("Book not found")
         );
-        authorRepository.deleteById(authorId);
+        bookRepository.deleteById(bookId);
     }
 }

@@ -6,7 +6,7 @@ const ChangeLanguageIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="absolute top-0 right-0 w-6 h-6"
+      className="absolute top-0 right-10 w-6 h-6"
     >
       <path
         strokeLinecap="round"

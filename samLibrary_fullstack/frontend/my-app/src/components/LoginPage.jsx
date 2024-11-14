@@ -1,6 +1,7 @@
 import ChangeLanguageIcon from "./atoms/ChangeLanguageIcon";
 import QuestionIcon from "./atoms/QuestionIcon";
-import LoginImage from "../assets/images/login.jpg";
+import LoginImage from "../assets/images/login.png";
+import LogoImage from "../assets/images/logo.png";
 import { useEffect, useState } from "react";
 import ExplainationIcon from "./atoms/ExplainationIcon";
 
@@ -48,25 +49,29 @@ function LoginPage() {
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg w-4/5 h-4/5 flex">
       <div className="w-1/2 flex">
-        <img src={LoginImage}></img>
+        <img className="w-full h-full" src={LoginImage}></img>
       </div>
       <div className="w-1/2 flex items-center justify-center relative">
         <div>
-          <ChangeLanguageIcon />
           <QuestionIcon />
+          <div className="group">
+            <button>
+              <ChangeLanguageIcon />
+            </button>
+            <p className="absolute top-10 right-8 w-14 h-18 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
+              Click to change language
+            </p>
+          </div>
         </div>
 
-        <form className="w-full max-w-sm relative mt-20">
-          <h1 className="text-2xl font-bold mb-4 mt-10">Welcome Back</h1>
+        <form className="w-full max-w-sm relative mt-10">
+          <img className="w-20 h-18 mb-10" src={LogoImage}></img>
+          <h1 className="font-bold mb-4 mt-1 text-blue-500 text-4xl">
+            Welcome Back
+          </h1>
           <p>Log in your account</p>
           <br />
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Username
-            </label>
             <input
               className={`shadow appearance-none border 
               rounded w-full py-2 px-3 text-gray-700 
@@ -80,19 +85,13 @@ function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
             />
             {errors.username && (
-              <div className="text-red-400">{errors.username}</div>
+              <i className="text-red-400 text-sm">{errors.username}</i>
             )}
           </div>
 
           <div className="mb-10">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
             <input
-              className={`shadow appearance-none 
+              className={`shadow appearance-none
               border rounded w-full py-2 px-3
                text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                  errors.password ? "border-pink-500" : ""
@@ -104,7 +103,7 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && (
-              <div className="text-red-400 ">{errors.password}</div>
+              <i className="text-red-400 text-sm">{errors.password}</i>
             )}
           </div>
 
@@ -115,7 +114,9 @@ function LoginPage() {
                 Remember me
               </label>
             </div>
-            <a href="#">Forget Password ? </a>
+            <a href="/forget-password">
+              <i className="text-sm">Forget Password ?</i>
+            </a>
           </div>
 
           <button
@@ -127,10 +128,12 @@ function LoginPage() {
           >
             Login
           </button>
-          <div className="text-center mt-3 mb-20">
+          <div className="text-center mt-2 mb-20">
             Don't have account ?
-            <a href="#" className="ml-6">
-              <b>Sign up</b>
+            <a href="/sign-up" className="ml-6">
+              <b>
+                <i className="text-sm">Sign up</i>
+              </b>
             </a>
           </div>
         </form>

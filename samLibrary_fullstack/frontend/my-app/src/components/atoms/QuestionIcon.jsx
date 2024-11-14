@@ -7,7 +7,7 @@ const QuestionIcon = () => {
       stroke-width="1.5"
       stroke="currentColor"
       class="size-6"
-      className="absolute top-0 right-12 w-6 h-6"
+      className="absolute top-0 right-20 w-6 h-6"
     >
       <path
         stroke-linecap="round"

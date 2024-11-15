@@ -9,12 +9,11 @@ public class UserMapper {
         {
             return new UserDto(
                     user.getId(),
-                    user.getUserName(),
+                    user.getUsername(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getPassword(),
-                    user.getEmail(),
-                    user.getRole()
+                    user.getEmail()
             );
         }
     }
@@ -23,12 +22,11 @@ public class UserMapper {
     public static User mapToUserEntity(UserDto userDto) {
         return new User(
                 userDto.getId(),
-                userDto.getUserName(),
+                userDto.getUsername(),
                 userDto.getFirstName(),
                 userDto.getLastName(),
                 userDto.getPassword(),
-                userDto.getEmail(),
-                userDto.getRole()
+                userDto.getEmail()
         );
     }
 }

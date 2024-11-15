@@ -20,7 +20,7 @@ public class User {
     private UUID id;
 
     @Column(name="user_name", unique = true)
-    private String userName;
+    private String username;
 
     @Column(name="first_name")
     private String firstName;
@@ -33,8 +33,4 @@ public class User {
 
     @Column(name="email")
     private String email;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name="role")
-    private Role role;
 }

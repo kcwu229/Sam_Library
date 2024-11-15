@@ -2,6 +2,7 @@ import LoginPage from "./components/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUpPage from "./components/SignUpPage";
 import ForgetPassword from "./components/ForgetPassword";
+import AuthContent from "./components/AuthContent";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             element={
               <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <LoginPage />
+                <AuthContent />
               </div>
             }
           />

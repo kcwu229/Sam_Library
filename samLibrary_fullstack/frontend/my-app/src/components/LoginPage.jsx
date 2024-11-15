@@ -4,6 +4,7 @@ import LoginImage from "../assets/images/login.png";
 import LogoImage from "../assets/images/logo.png";
 import { useEffect, useState } from "react";
 import ExplainationIcon from "./atoms/ExplainationIcon";
+import { login } from "../services/AuthService";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -36,13 +37,23 @@ function LoginPage() {
     return valid;
   }
 
-  function submitLoginForm(e) {
+  async function submitLoginForm(e) {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Pass the validation");
+      //console.log("Pass the validation");
+      try {
+        const response = await login({ username, password });
+        if (response.data === "Login successful") {
+          alert("Login successful");
+        } else {
+          alert("Login failed");
+        }
+      } catch (error) {
+        console.error("There was an error logging in!", error);
+      }
     } else {
-      console.log("Failed the validation");
+      //console.log("Failed the validation");
     }
   }
 

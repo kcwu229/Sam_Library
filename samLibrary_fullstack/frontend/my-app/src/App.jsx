@@ -2,6 +2,9 @@ import LoginPage from "./components/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUpPage from "./components/SignUpPage";
 import ForgetPassword from "./components/ForgetPassword";
+import BookPage from "./components/BookPage";
+import TopNavBar from "./components/TopNavBar";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -12,7 +15,7 @@ function App() {
             path="/"
             element={
               <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <LoginPage />
+                <HomePage />
               </div>
             }
           />
@@ -21,6 +24,14 @@ function App() {
             element={
               <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <LoginPage />
+              </div>
+            }
+          />
+          <Route
+            path="/books"
+            element={
+              <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                <BookPage />
               </div>
             }
           />

@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Open Sans", "sans-serif"],
+      },
       colors: {
         "sam-black": "#080d0c",
         "sam-dark-gray": "#bfb7b0",
@@ -10,6 +13,9 @@ module.exports = {
         "sam-light-brown": "#a68c7c",
         "sam-gray": "#f2f2f2",
       },
+    },
+    fontFamily: {
+      sans: ["Open Sans", "sans-serif"],
     },
   },
   variants: {

@@ -18,22 +18,22 @@ public class UserController {
 
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserDto> createAuthor(@RequestBody UserDto UserDto) {
-        UserDto savedAuthor = userService.createUser(UserDto);
-        return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto UserDto) {
+        UserDto savedUser = userService.createUser(UserDto);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<UserDto> getAuthorById(@PathVariable UUID authorId) {
-        UserDto UserDto = userService.getUserById(authorId);
+    public ResponseEntity<UserDto> getUserById(@PathVariable UUID userId) {
+        UserDto UserDto = userService.getUserById(userId);
         return ResponseEntity.ok(UserDto);
     }
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<UserDto> authors = userService.getAllUsers();
-        return ResponseEntity.ok(authors);
+        List<UserDto> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
 
     }
 

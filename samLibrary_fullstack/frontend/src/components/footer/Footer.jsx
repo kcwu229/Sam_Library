@@ -23,7 +23,7 @@ function Footer() {
             <FooterBarTag href="/" text="Contact" />
           </ul>
         </div>
-        <div class="mt-4 sm:mt-0 text-sm text-gray-500 text-right">
+        <div class="mt-4 sm:mt-0 text-sm text-gray-500 text-right" id="contact">
           <p>Tel: (123) 456-7890</p>
           <p>Email: contact@samlibrary.com</p>
           <p>Fax: (098) 765-4321</p>

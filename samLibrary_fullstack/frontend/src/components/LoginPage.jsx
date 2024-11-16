@@ -1,10 +1,10 @@
-import ChangeLanguageIcon from "./atoms/ChangeLanguageIcon";
-import QuestionIcon from "./atoms/QuestionIcon";
 import LoginImage from "../assets/images/login.png";
 import LogoImage from "../assets/images/logo.png";
 import { useEffect, useState } from "react";
 import ExplainationIcon from "./atoms/ExplainationIcon";
 import { login } from "../services/AuthService";
+import { AiOutlineGlobal } from "react-icons/ai";
+import { FaRegCircleQuestion } from "react-icons/fa6";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -58,16 +58,16 @@ function LoginPage() {
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg w-4/5 h-4/5 flex">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-4/5 h-4/5 flex mt-28">
       <div className="w-1/2 flex">
         <img className="w-full h-full" src={LoginImage}></img>
       </div>
       <div className="w-1/2 flex items-center justify-center relative">
         <div>
-          <QuestionIcon />
+          <FaRegCircleQuestion className="absolute top-0 right-20 w-6 h-6" />
           <div className="group">
             <button>
-              <ChangeLanguageIcon />
+              <AiOutlineGlobal className="absolute top-0 right-10 w-6 h-6" />
             </button>
             <p className="absolute top-10 right-8 w-14 h-18 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
               Click to change language

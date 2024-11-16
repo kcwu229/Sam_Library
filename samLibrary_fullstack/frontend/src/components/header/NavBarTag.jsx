@@ -1,4 +1,4 @@
-function NavBarPage({ href, text, className, ariaCurrent }) {
+function NavBarTag({ href, text, className, ariaCurrent }) {
   return (
     <li>
       {ariaCurrent ? (
@@ -29,4 +29,4 @@ function NavBarPage({ href, text, className, ariaCurrent }) {
   );
 }
 
-export default NavBarPage;
+export default NavBarTag;

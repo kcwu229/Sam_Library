@@ -9,7 +9,7 @@ function HomePage() {
   const articles = [
     {
       title: "The Future of Libraries in the Digital Age",
-      date: "October 10, 2024",
+      date: "October 12, 2024",
       image: ArticleImage1,
     },
     {
@@ -52,37 +52,38 @@ function HomePage() {
           </button>
         </div>
       </div>
-      <br />
-      <h1 class="flex items-center justify-center text-left">
-        <b className="w-7/12 items-center text-4xl mt-10 text-gray-600">
-          Welcome to Sam's Library
-        </b>
-      </h1>
-      <br />
-      <div className="flex items-center justify-center">
-        <p class="w-7/12 items-center text-lg mt-10 text-gray-600">
-          Dive into Sam's Library, your go-to online haven for book lovers!
-          Here, every book opens the door to new adventures and endless
-          possibilities. Our diverse collection, from timeless classics to the
-          latest bestsellers, has something for everyone. Whether you're seeking
-          inspiration or a thrilling escape, our virtual shelves are brimming
-          with captivating stories.
-        </p>
-      </div>
-      <br />
-      <div className="flex items-center justify-center">
-        <p class="w-7/12 items-center text-lg mb-10 text-gray-600">
-          With just a click, explore thousands of titles and connect with a
-          vibrant community of fellow readers. Discover your next great read
-          today and transform your reading experience into an extraordinary
-          adventure at Sam's Library! Let your imagination soar!
-        </p>
-      </div>
-      <br />
       <div className="w-full bg-sam-gray">
-        <h1 class="flex items-center justify-center text-right">
+        <h1 class="flex items-center justify-center text-left">
+          <b className="w-7/12 items-center text-4xl mt-10 text-sam-light-brown pt-20">
+            Welcome
+          </b>
+        </h1>
+        <br />
+        <div className="flex items-center justify-center">
+          <p class="w-7/12 items-center text-lg mt-10 text-gray-600">
+            Dive into Sam's Library, your go-to online haven for book lovers!
+            Here, every book opens the door to new adventures and endless
+            possibilities. Our diverse collection, from timeless classics to the
+            latest bestsellers, has something for everyone. Whether you're
+            seeking inspiration or a thrilling escape, our virtual shelves are
+            brimming with captivating stories.
+          </p>
+        </div>
+        <br />
+        <div className="flex items-center justify-center">
+          <p class="w-7/12 items-center text-lg mb-10 text-gray-600">
+            With just a click, explore thousands of titles and connect with a
+            vibrant community of fellow readers. Discover your next great read
+            today and transform your reading experience into an extraordinary
+            adventure at Sam's Library! Let your imagination soar!
+          </p>
+        </div>
+      </div>
+      <br />
+      <div className="w-full bg-white">
+        <h1 class="flex items-center justify-center text-right pt-20">
           <b
-            className="w-7/12 items-center text-4xl mt-20 text-sam-light-brown"
+            className="w-7/12 items-center text-4xl mt-20 text-gray-600"
             id="about"
           >
             About Us
@@ -103,8 +104,8 @@ function HomePage() {
         </div>
       </div>
 
-      <div className="w-full bg-white pb-20">
-        <h1 class="flex items-center justify-center">
+      <div className="w-full bg-sam-gray pb-20">
+        <h1 class="flex items-center justify-center text-sam-light-brown pt-20">
           <b className="w-7/12 items-center text-4xl mt-20" id="news">
             News and Articles
           </b>
@@ -149,10 +150,10 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className="w-full bg-sam-gray">
-        <h1 class="flex items-center justify-center text-right">
+      <div className="w-full bg-white">
+        <h1 class="flex items-center justify-center text-right pt-20">
           <b
-            className="w-7/12 items-center text-4xl mt-20 text-sam-light-brown"
+            className="w-7/12 items-center text-4xl mt-20 text-gray-600"
             id="policy"
           >
             Privacy Policy
@@ -181,10 +182,10 @@ function HomePage() {
           </p>
         </div>
       </div>
-      <div className="w-full bg-white">
-        <h1 class="flex items-center justify-center text-left">
+      <div className="w-full bg-sam-gray">
+        <h1 class="flex items-center justify-center text-left pt-20">
           <b
-            className="w-7/12 items-center text-4xl mt-20 text-gray-600"
+            className="w-7/12 items-center text-4xl mt-20 text-sam-light-brown"
             id="license"
           >
             Licensing

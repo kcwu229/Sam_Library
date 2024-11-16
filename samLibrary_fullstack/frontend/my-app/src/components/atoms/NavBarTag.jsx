@@ -6,7 +6,7 @@ function NavBarPage({ href, text, className, ariaCurrent }) {
         <a
           href={href}
           onClick={(e) => ""}
-          class={`block py-2 px-3  text-lg text-orange-500
+          class={`block py-2 px-3  text-lg text-stone-400 text-font-medium
           ${className} `}
         >
           {text}

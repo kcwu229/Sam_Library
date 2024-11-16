@@ -24,21 +24,26 @@
 # Current works: 
 
 ## 1. Home page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/75b72b00-f090-4552-9b32-74fe0a2ab9a9">
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/7cfd0e03-da2b-44b4-8d06-16888fc8927b">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/8c425fc2-065b-43dc-b290-240f35c50934">
 
 
 ## 2. Login page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/d5db1588-ff3f-456b-ac6c-9f4218432a5d">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/53c470fa-a333-4ae6-806d-112ce857fc04">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/f52cd8fa-47f2-4f3f-ab17-b4725ead5043">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/42eb9e17-ec21-49e2-921e-d28a003183b2">
+
 
 
 ## 3. Sign Up page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/d43d0aa8-d10e-4bdb-b966-e153c88de29b">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/f0c1ed7b-093c-4c6d-92a5-1680fe8feecf">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/a797961a-f121-413b-a897-8411f9d25067">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/801f44f2-abf4-4103-998e-21ca8e2a698a">
+
+
 
 
 ## 4. Forget password page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/32f00c8a-6731-40bd-91d9-5f18c38a1d54">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/d84c6260-0073-4dea-bb08-3e1f3af33be3">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/84463f2d-756a-4fbc-8655-5b27f8fb84ee">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/4ef225eb-47c9-4b8b-a90b-7a194653c2b5">
+
+
 

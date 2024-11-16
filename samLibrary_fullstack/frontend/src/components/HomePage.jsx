@@ -9,7 +9,7 @@ function HomePage() {
   const articles = [
     {
       title: "The Future of Libraries in the Digital Age",
-      date: "October 11, 2024",
+      date: "October 12, 2024",
       image: ArticleImage1,
     },
     {

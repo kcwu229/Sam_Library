@@ -21,8 +21,7 @@ function Navbar() {
             <NavBarTag href="#about" text="About" />
             <NavBarTag href="#" text="Find Book" />
             <NavBarTag href="#news" text="News and Articles" />
-            <NavBarTag href="#" text="Events" />
-            <NavBarTag href="#" text="Contact" />
+            <NavBarTag href="#contact" text="Contact" />
           </ul>
         </div>
 

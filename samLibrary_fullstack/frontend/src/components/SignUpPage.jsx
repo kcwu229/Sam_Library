@@ -1,13 +1,14 @@
-import ChangeLanguageIcon from "./atoms/ChangeLanguageIcon";
-import QuestionIcon from "./atoms/QuestionIcon";
-import { useEffect, useState } from "react";
+import SignUpImage from "../assets/images/signUp.png";
 import LogoImage from "../assets/images/logo.png";
+import { useEffect, useState } from "react";
 import ExplainationIcon from "./atoms/ExplainationIcon";
+import { AiOutlineGlobal } from "react-icons/ai";
+import { FaRegCircleQuestion } from "react-icons/fa6";
 
-function ForgetPassword() {
+function SignUpPage() {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({
-    eamil: "",
+    email: "",
   });
 
   function validateForm() {
@@ -16,7 +17,7 @@ function ForgetPassword() {
     const errorCopy = { ...errors };
 
     if (email === "") {
-      errorCopy.email = "Email is required !";
+      errorCopy.email = "email is required !";
       valid = false;
     } else {
       errorCopy.email = "";
@@ -37,13 +38,16 @@ function ForgetPassword() {
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg w-3/5 h-4/5 flex">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-4/5 h-4/5 flex mt-28">
+      <div className="w-1/2 flex">
+        <img className="w-full h-full" src={SignUpImage}></img>
+      </div>
       <div className="w-1/2 flex items-center justify-center relative">
         <div>
-          <QuestionIcon />
+          <FaRegCircleQuestion className="absolute top-0 right-20 w-6 h-6" />
           <div className="group">
             <button>
-              <ChangeLanguageIcon />
+              <AiOutlineGlobal className="absolute top-0 right-10 w-6 h-6" />
             </button>
             <p className="absolute top-10 right-8 w-14 h-18 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
               Click to change language
@@ -53,15 +57,36 @@ function ForgetPassword() {
 
         <form className="w-full max-w-sm relative mt-20">
           <img className="w-20 h-18 mb-10" src={LogoImage}></img>
-          <h1 className="font-bold mb-10 text-orange-500 text-4xl">
-            Forget your password
+
+          <h1 className="font-bold mb-4 mt-1 text-red-500 text-3xl">
+            Welcome to Sam's library
           </h1>
-          <p>
-            Please enter the email address you'd like your password reset
-            information sent to
-          </p>
+          <p>Capture and share your happiness instantly</p>
           <br />
 
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white 
+              font-bold py-2 px-40 rounded focus:outline-none mt-4 mb-2
+              focus:shadow-outline"
+            type="button"
+            onClick=""
+          >
+            Sign Up with Facebook
+          </button>
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white 
+              font-bold py-2 px-40 rounded focus:outline-none mt-4 mb-2
+              focus:shadow-outline"
+            type="button"
+            onClick=""
+          >
+            Sign Up with Google
+          </button>
+          <h2 className="text-center mt-4">OR</h2>
+          <br />
+          <hr />
+
+          <br />
           <div className="mb-10">
             <input
               className={`shadow appearance-none
@@ -71,7 +96,7 @@ function ForgetPassword() {
                }`}
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Enter your email to continue"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -81,18 +106,19 @@ function ForgetPassword() {
           </div>
 
           <button
-            className="bg-orange-500 hover:bg-orange-700 text-white 
+            className="bg-red-500 hover:bg-red-700 text-white 
               font-bold py-3 px-40 rounded focus:outline-none mt-4 mb-8
               focus:shadow-outline"
             type="submit"
             onClick={submitLoginForm}
           >
-            Request
+            Continue
           </button>
-          <div className="text-center mt-2 mb-8">
-            <a href="/sign-up" className="ml-6">
+          <div className="text-center mt-2 mb-20">
+            Don't have account ?
+            <a href="/login" className="ml-6">
               <b>
-                <i className="text-l text-blue-600">Back to Login</i>
+                <i className="text-sm">Login</i>
               </b>
             </a>
           </div>
@@ -102,4 +128,4 @@ function ForgetPassword() {
   );
 }
 
-export default ForgetPassword;
+export default SignUpPage;

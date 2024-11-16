@@ -24,7 +24,8 @@
 # Current works: 
 
 ## 1. Home page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/aebf842c-7c18-4253-a996-61017f8ded07">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/75b72b00-f090-4552-9b32-74fe0a2ab9a9">
+
 
 
 ## 2. Login page

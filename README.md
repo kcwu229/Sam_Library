@@ -1,7 +1,7 @@
 # Welcome to Sam's Library
 <img width="140" alt="image" src="https://github.com/user-attachments/assets/dedc9c26-c592-4807-8955-41e77ad0e68b">
 
-# Introduction
+## Introduction
 <ul>
   <li>Full-stack application built with:
     <ul>
@@ -21,27 +21,27 @@
   </li>
 </ul>
 
-# Current works: 
+## Current works: 
 
-## 1. Home page
+### 1. Home page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/195c8b49-d3ab-47ef-9afe-759161a0d88c">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/bfeee42e-996d-4e95-919c-4e2dd1481ca3">
 
-## 2. Login page
+### 2. Login page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/de8b4770-2d96-4a2f-8383-972f60c5426c">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/24ba5cfe-a07a-4e8a-b733-365e8ae5aa4e">
 
-## 3. Sign Up page
+### 3. Sign Up page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/2274e6a2-8b29-44f3-84ed-cd58d5e09c58">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/624f21e1-7132-479f-91bc-ae77533000b8">
 
 
-## 4. Forget password page
+### 4. Forget password page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/ef824247-fc34-4eca-8b6d-4415def16da1">
 
 
 
-## 5. Book Page
+### 5. Book Page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/489ae533-b866-4649-b59f-adb9bd6bb7c2">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/0c551751-2cc6-41d0-855e-e0309dc4114e">
 

@@ -4,8 +4,10 @@ import ArticleImage2 from "../assets/images/article2.png";
 import ArticleImage3 from "../assets/images/article3.png";
 import { FaShieldAlt } from "react-icons/fa";
 import { GrLicense } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+  const navigate = useNavigate();
   const articles = [
     {
       title: "The Future of Libraries in the Digital Age",
@@ -23,6 +25,11 @@ function HomePage() {
       image: ArticleImage3,
     },
   ];
+
+  function navigateBookPage() {
+    navigate("/books");
+  }
+
   return (
     <div>
       <div className="relative flex items-center justify-center min-h-screen">
@@ -35,18 +42,19 @@ function HomePage() {
         <div className="relative z-10 text-center text-white">
           <br />
           <br />
-          <h1 className="text-5xl font-bold opacity-90 w-3/5 text-left ml-24">
+          <h1 className="text-5xl font-bold text-sam-gray opacity-90 w-3/5 text-left ml-32">
             <i>
               Every book holds a dream waiting to be discovered. Let your
               imagination soar as you turn each page.
             </i>
           </h1>
-          <p className="ml-24 mt-10 text-3xl opacity-65 w-3/5 text-left mb-14">
+          <p className="ml-40 mt-10 text-3xl text-sam-gray opacity-65 w-3/5 text-left mb-14">
             <i>Journey through stories that inspire and transform.</i>
           </p>
+
           <button
-            onClick=""
-            className="absolute right-60 text-white p-4 rounded text-xl bg-sam-orange text-left mb-16"
+            onClick={navigateBookPage}
+            className=" rounded-2xl absolute right-60 text-sam-gray p-4 text-xl bg-sam-orange text-left mb-16"
           >
             Explore
           </button>
@@ -60,7 +68,7 @@ function HomePage() {
         </h1>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 text-gray-600">
+          <p class="w-7/12 items-center mt-10 text-gray-600 font-light">
             Dive into Sam's Library, your go-to online haven for book lovers!
             Here, every book opens the door to new adventures and endless
             possibilities. Our diverse collection, from timeless classics to the
@@ -71,7 +79,7 @@ function HomePage() {
         </div>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mb-10 text-gray-600">
+          <p class="w-7/12 items-center mb-10 text-gray-600 font-light">
             With just a click, explore thousands of titles and connect with a
             vibrant community of fellow readers. Discover your next great read
             today and transform your reading experience into an extraordinary
@@ -91,7 +99,7 @@ function HomePage() {
         </h1>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-20 text-gray-600">
+          <p class="w-7/12 items-center mt-10 pb-20 text-gray-600 font-light">
             At Sam's Library, we celebrate the transformative power of stories.
             Our mission is to create a welcoming haven for readers, where every
             book serves as a portal to new adventures. With a carefully curated
@@ -112,7 +120,7 @@ function HomePage() {
         </h1>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600">
+          <p class="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
             Find the latest buzz in the literary world—new releases, author
             spotlights, and thought-provoking articles.
           </p>
@@ -129,15 +137,15 @@ function HomePage() {
                   />
                 </div>
                 <div className="flex-grow text-left">
-                  <p className="text-gray-600">{article.date}</p>
-                  <h2 className="text-2xl font-bold text-gray-600">
+                  <p className="text-gray-600 font-normal">{article.date}</p>
+                  <h2 className="text-2xl text-gray-600 font-medium">
                     {article.title}
                   </h2>
                 </div>
 
                 <div className="flex justify-end">
                   <button
-                    className="mt-4 text-white px-5 py-2 ml-10 rounded bg-cyan-600"
+                    className="mt-4 text-white px-6 py-2 ml-7 rounded-xl bg-lime-600"
                     onClick={(e) => {
                       alert("Coming soon!");
                     }}
@@ -166,14 +174,14 @@ function HomePage() {
 
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-1 text-gray-600">
+          <p class="w-7/12 items-center text-lg mt-10 pb-1 text-gray-600 font-light">
             At Sam's Library, your privacy is our priority. This Privacy Policy
             outlines how we collect, use, and protect your personal information
             when you visit our website and interact with our services.
           </p>
         </div>
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg pb-20 text-gray-600">
+          <p class="w-7/12 items-center text-lg pb-20 text-gray-600 font-light">
             We may update this Privacy Policy periodically. Any changes will be
             posted on this page, and we encourage you to review it regularly.
             Thank you for trusting Sam's Library with your information. We are
@@ -195,7 +203,7 @@ function HomePage() {
 
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600">
+          <p class="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
             All content available on Sam's Library, including text, images, and
             multimedia, is protected by copyright and intellectual property
             laws. Users are granted a limited, non-exclusive license to access
@@ -203,7 +211,7 @@ function HomePage() {
           </p>
         </div>
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg pb-20 text-gray-600">
+          <p class="w-7/12 items-center text-lg pb-20 text-gray-600 font-light">
             If you contribute articles, reviews, or other content to Sam's
             Library, you grant us a non-exclusive, royalty-free license to use,
             reproduce, and distribute your contributions on our platform and

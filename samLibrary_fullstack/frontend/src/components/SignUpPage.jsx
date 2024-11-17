@@ -1,9 +1,9 @@
 import SignUpImage from "../assets/images/signUp.png";
 import LogoImage from "../assets/images/logo.png";
 import { useEffect, useState } from "react";
-import ExplainationIcon from "./atoms/ExplainationIcon";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaRegCircleQuestion } from "react-icons/fa6";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -87,12 +87,12 @@ function SignUpPage() {
           <hr />
 
           <br />
-          <div className="mb-10">
+          <div className="mb-10 relative">
             <input
               className={`shadow appearance-none
               border rounded w-full py-2 px-3
                text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                 errors.email ? "border-pink-500" : ""
+                 errors.email ? "border-red-500" : ""
                }`}
               id="email"
               type="email"
@@ -101,7 +101,12 @@ function SignUpPage() {
               onChange={(e) => setEmail(e.target.value)}
             />
             {errors.email && (
-              <i className="text-red-400 text-sm">{errors.email}</i>
+              <div>
+                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
+                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
+                </div>
+                <i className="text-red-500 text-sm">{errors.email}</i>
+              </div>
             )}
           </div>
 

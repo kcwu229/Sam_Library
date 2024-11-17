@@ -1,10 +1,10 @@
 import LoginImage from "../assets/images/login.png";
 import LogoImage from "../assets/images/logo.png";
 import { useEffect, useState } from "react";
-import ExplainationIcon from "./atoms/ExplainationIcon";
 import { login } from "../services/AuthService";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaRegCircleQuestion } from "react-icons/fa6";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -82,12 +82,12 @@ function LoginPage() {
           </h1>
           <p>Log in your account</p>
           <br />
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
               className={`shadow appearance-none border 
               rounded w-full py-2 px-3 text-gray-700 
               leading-tight focus:outline-none focus:shadow-outline ${
-                errors.username ? "border-pink-500" : ""
+                errors.username ? "border-red-500" : ""
               }`}
               id="username"
               type="text"
@@ -95,17 +95,23 @@ function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+
             {errors.username && (
-              <i className="text-red-400 text-sm">{errors.username}</i>
+              <div>
+                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
+                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
+                </div>
+                <i className="text-red-500 text-sm">{errors.username}</i>
+              </div>
             )}
           </div>
 
-          <div className="mb-10">
+          <div className="mb-10 relative">
             <input
               className={`shadow appearance-none
               border rounded w-full py-2 px-3
                text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                 errors.password ? "border-pink-500" : ""
+                 errors.password ? "border-red-500" : ""
                }`}
               id="password"
               type="password"
@@ -113,8 +119,14 @@ function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
             {errors.password && (
-              <i className="text-red-400 text-sm">{errors.password}</i>
+              <div>
+                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
+                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
+                </div>
+                <i className="text-red-500 text-sm">{errors.password}</i>
+              </div>
             )}
           </div>
 

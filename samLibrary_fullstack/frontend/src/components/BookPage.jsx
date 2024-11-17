@@ -178,10 +178,6 @@ function BookPage() {
                 />
               );
             })}
-            <BookCard className="w-1/4" />
-            <BookCard className="w-1/4" />
-            <BookCard className="w-1/4" />
-            <BookCard className="w-1/4" />
           </div>
           <div className="pt-32"></div>
         </div>

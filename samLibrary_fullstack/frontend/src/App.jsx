@@ -13,7 +13,7 @@ function App() {
           <Route
             path="/"
             element={
-              <div className="flex items-center justify-center min-h-screen bg-gray-100">
+              <div className="flex items-center justify-center min-h-screen">
                 <HomePage />
               </div>
             }
@@ -21,7 +21,7 @@ function App() {
           <Route
             path="/login"
             element={
-              <div className="flex items-center justify-center min-h-screen bg-gray-100">
+              <div className="flex items-center justify-center min-h-screen">
                 <LoginPage />
               </div>
             }
@@ -29,7 +29,7 @@ function App() {
           <Route
             path="/books"
             element={
-              <div className="flex items-center justify-center min-h-screen bg-gray-100">
+              <div className="flex items-center justify-center min-h-screen">
                 <BookPage />
               </div>
             }
@@ -38,7 +38,7 @@ function App() {
           <Route
             path="/sign-up"
             element={
-              <div className="flex items-center justify-center min-h-screen bg-gray-100">
+              <div className="flex items-center justify-center min-h-screen">
                 <SignUpPage />
               </div>
             }

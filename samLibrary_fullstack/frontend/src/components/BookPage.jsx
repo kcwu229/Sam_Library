@@ -2,9 +2,13 @@ import { showBooks } from "../services/BookServices";
 import { useEffect, useState } from "react";
 import SearchBar from "./header/SearchBar";
 import RatingFilter from "./bookFilter/RatingFilter";
+import { VscClose } from "react-icons/vsc";
+import BookCard from "./bookFilter/BookCard";
+
 import {
   categories as categoryData,
   languages as languageData,
+  exampleBooks as exampleBooksData,
 } from "./bookFilter/BookFilterData";
 import SortFilter from "./bookFilter/SortFilter";
 
@@ -15,9 +19,16 @@ function BookPage() {
   const [categoryExpand, setCategoryExpand] = useState(false);
   const [languageExpand, setLanguageExpand] = useState(false);
   const [resultCount, setResultCount] = useState(0);
-
+  const [showButton, setShowButton] = useState(true);
   const categories = categoryData;
   const languages = languageData;
+  const exampleBooks = exampleBooksData;
+
+  const removeFilter = () => {
+    setShowButton(false);
+  };
+
+  const removeAllFilter = () => {};
 
   const toggleCategoryExpand = () => {
     setCategoryExpand(!categoryExpand);
@@ -43,10 +54,12 @@ function BookPage() {
   return (
     <div className="w-full">
       <SearchBar />
-      <h1 className="text-4xl font-bold text-center">Result for {result}</h1>
-      <br />
-      <div className="flex mt-5">
-        <div id="filter" className="w-3/12 h-80 pl-3">
+      <div className="pt-20"></div>
+      <h2 className="text-3xl font-bold text-center pt-32">
+        Result for {result}
+      </h2>
+      <div className="flex mt-1">
+        <div id="filter" className="w-3/12 h-80 pl-8">
           <div id="categoryFilter">
             <h2 className="font-semibold mb-3">Category</h2>
             {categories.map((category, index) => {
@@ -110,13 +123,67 @@ function BookPage() {
             </div>
           </div>
           <div className="w-full">
-            <button className="text-sam-black border border-black rounded-lg px-4 py-1 text-center items-center mr-4">
-              Fiction
-            </button>
-            <button className="text-sam-black border border-black rounded-lg px-4 py-1 text-center items-center mr-4">
-              Fiction
-            </button>
+            {showButton && (
+              <button
+                className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center 
+              hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
+                onClick={removeFilter}
+              >
+                Fiction
+                <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500" />
+              </button>
+            )}
+            {showButton && (
+              <button
+                className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center 
+              hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
+                onClick={removeFilter}
+              >
+                Fiction
+                <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500" />
+              </button>
+            )}
+            {showButton && (
+              <button
+                className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center 
+              hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
+                onClick={removeFilter}
+              >
+                Fiction
+                <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500" />
+              </button>
+            )}
+            <a
+              href="javascript:void(0);"
+              className="inline-block pl-8 hover:text-blue-500"
+              onClick={removeAllFilter}
+            >
+              Clear All
+            </a>
+            <br />
           </div>
+          <br />
+          <hr />
+          <br />
+          {/* 4. BookCard */}
+          <div className="w-full mt-4 flex flex-wrap gap-5 mx-4">
+            {exampleBooks.map((exampleBook) => {
+              return (
+                <BookCard
+                  key={exampleBook.id}
+                  title={exampleBook.title}
+                  author={exampleBook.author}
+                  rating={exampleBook.rating}
+                  remainingCount={exampleBook.remainingCount}
+                />
+              );
+            })}
+            <BookCard className="w-1/4" />
+            <BookCard className="w-1/4" />
+            <BookCard className="w-1/4" />
+            <BookCard className="w-1/4" />
+          </div>
+          <div className="pt-32"></div>
         </div>
       </div>
     </div>

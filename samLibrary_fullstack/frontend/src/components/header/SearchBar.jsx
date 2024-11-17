@@ -19,8 +19,8 @@ function SearchBar() {
   };
 
   return (
-    <div className="fixed top-32 w-full bg-white shadow z-50">
-      <div className="flex items-center justify-between p-4">
+    <div className="fixed pt-4 top-28 w-full bg-white shadow z-50">
+      <div className="flex items-center justify-between px-3 pb-4">
         <div className="hidden md:flex" id="bookLogo">
           <IoLibrarySharp className="text-4xl" />
           <span className="ml-2 text-4xl font-bold">Book List</span>

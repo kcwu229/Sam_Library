@@ -18,9 +18,7 @@ function Navbar() {
           md:p-0 md:mt-0 rounded-lg"
           >
             <NavBarTag href="/" text="HomePage" ariaCurrent="page" />
-            <NavBarTag href="#about" text="About" />
             <NavBarTag href="/books" text="Find Book" />
-            <NavBarTag href="#news" text="News and Articles" />
             <NavBarTag href="#contact" text="Contact" />
           </ul>
         </div>

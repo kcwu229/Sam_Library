@@ -7,11 +7,11 @@ function UserSection({ userLoggedIn }) {
     </button>
   ) : (
     <div className="mr-4">
-      <a href="/login" className="px-4 py-2 text-lg">
+      <a href="/login" className="px-4 py-2 text-sam-gray">
         Sign In
       </a>
       <a href="/sign-up">
-        <button className="text-white px-4 py-2 rounded ml-4 text-lg bg-sam-orange">
+        <button className="text-sam-gray px-4 py-2 rounded-2xl ml-4 bg-sam-orange">
           Sign Up
         </button>
       </a>

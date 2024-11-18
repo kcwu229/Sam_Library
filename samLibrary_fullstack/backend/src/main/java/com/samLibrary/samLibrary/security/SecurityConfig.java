@@ -49,6 +49,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/api/books").permitAll()
+                        .requestMatchers("/api/books/create-book").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()

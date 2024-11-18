@@ -33,4 +33,7 @@ public class Book {
 
     @Column(name = "isbn")
     private String isbn;
+
+    @Column(name = "book_introduction")
+    private String bookIntroduction;
 }

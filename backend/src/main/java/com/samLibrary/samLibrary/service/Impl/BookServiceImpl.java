@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,12 +33,14 @@ public class BookServiceImpl implements BookService {
         String fileName = bookId.toString();
 
         try {
-            // Save the file to the desired location
-            Files.copy(file.getInputStream(), Paths.get("backend/images/" + fileName));
-            System.out.println("File uploaded successfully");
+            // Read the input file as a BufferedImage
+            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+
+            // Save the BufferedImage as a PNG file
+            ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/" + fileName + ".png")));
+            logger.info("File uploaded and converted to PNG successfully");
         } catch (IOException e) {
-            // Handle the exception
-            e.printStackTrace();
+            logger.error("Error uploading and converting file", e);
         }
         // Create a new Book entity from the BookDto
         Book book = new Book();

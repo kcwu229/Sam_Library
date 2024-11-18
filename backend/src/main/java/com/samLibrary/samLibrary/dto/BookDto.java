@@ -19,7 +19,6 @@ public class BookDto {
     @NotBlank(message = "title is required")
     private String title;
 
-    @NotBlank(message = "author is required")
     private String author;
 
     @NotNull(message = "publishedYear is required")
@@ -30,7 +29,6 @@ public class BookDto {
     //@NotBlank(message = "Image name is required")
     private String imageName;
 
-    @NotBlank(message = "Isbn is required")
     private String isbn;
 
 

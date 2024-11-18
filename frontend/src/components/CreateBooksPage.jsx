@@ -78,7 +78,7 @@ const CreateBooksPage = () => {
       }
     } else {
       valid = false;
-      errorsCopy.publishedYear = "Publish Year is required";
+      errorsCopy.publishedYear = "Publish Year is required !";
     }
 
     if (file) {

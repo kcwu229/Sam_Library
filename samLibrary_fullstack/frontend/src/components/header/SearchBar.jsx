@@ -3,10 +3,12 @@ import { IoLibrarySharp } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
   const [bookName, setBookName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -16,6 +18,10 @@ function SearchBar() {
     setTimeout(() => {
       setDropdownOpen(false);
     }, 200); // Adjust the delay as needed
+  };
+
+  const createBook = () => {
+    navigate("create-book");
   };
 
   return (
@@ -75,6 +81,14 @@ function SearchBar() {
             <IoMdSearch className="w-5 h-5" />
           </button>
         </div>
+        <button
+          class="text-sam-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 
+            font-bold rounded-lg text-sm px-5 py-2.5 
+            text-center"
+          onClick={createBook}
+        >
+          Create Book
+        </button>
         <div></div>
       </div>
     </div>

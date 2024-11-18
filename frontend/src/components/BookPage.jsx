@@ -121,7 +121,7 @@ function BookPage() {
           {/* Another halfpage */}
           <div id="resultList" className="">
             <div className="flex justify-between">
-              {resultCount} products
+              {books.length} products
               <SortFilter className="right-0" />
             </div>
           </div>

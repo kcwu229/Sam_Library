@@ -21,6 +21,7 @@ const CreateBooksPage = () => {
     title: "",
     publishedYear: "",
     file: "",
+    bookDescription: "",
   });
 
   const [file, setFile] = useState(null);
@@ -28,6 +29,20 @@ const CreateBooksPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "bookDescription") {
+      const wordCount = value.trim().split(/\s+/).length;
+      if (wordCount > 50) {
+        setErrors({
+          ...errors,
+          bookDescription: "Description cannot exceed 50 words",
+        });
+        return;
+      } else {
+        setErrors({ ...errors, bookDescription: "" });
+      }
+    }
+
     setBook({ ...book, [name]: value });
   };
 
@@ -70,7 +85,7 @@ const CreateBooksPage = () => {
       if (!Number.isInteger(publishedYear)) {
         valid = false;
         errorsCopy.publishedYear = "Publish Year must be an integer";
-      } else if (publishedYear < 0 || publishedYear > 30) {
+      } else if (publishedYear < 0 || publishedYear > 2022) {
         valid = false;
         errorsCopy.publishedYear = "Publish Year should be between 0 and 2022";
       } else {
@@ -183,20 +198,16 @@ const CreateBooksPage = () => {
             onChange={handleInputChange}
             value={book.bookDescription}
           />
-          <p className="text-gray-600 text-xs italic">
-            Make it as long and as crazy as you'd like
-          </p>
+          {errors.bookDescription && (
+            <CreateBookErrorTag error={errors.bookDescription} />
+          )}
+          <p className="text-gray-600 text-xs italic">Not more than 50 words</p>
         </div>
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-zip"
-          >
-            Image
-          </label>
+          <LabelsTag for="grid-zip" text="Image" />
           <input
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             type="file"

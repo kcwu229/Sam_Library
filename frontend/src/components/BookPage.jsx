@@ -1,4 +1,4 @@
-import { showBooks } from "../services/BookServices";
+import { listBooks, showBooks } from "../services/BookServices";
 import { useEffect, useState } from "react";
 import SearchBar from "./header/SearchBar";
 import RatingFilter from "./bookFilter/RatingFilter";
@@ -10,6 +10,7 @@ import {
   languages as languageData,
   exampleBooks as exampleBooksData,
 } from "./bookFilter/BookFilterData";
+
 import SortFilter from "./bookFilter/SortFilter";
 
 function BookPage() {
@@ -38,17 +39,19 @@ function BookPage() {
     setLanguageExpand(!languageExpand);
   };
 
-  useEffect(() => {
-    async function fetchBooks() {
-      try {
-        const response = await showBooks();
+  function getAllBooks() {
+    listBooks()
+      .then((response) => {
         setBooks(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("There was an error fetching the books!", error);
-      }
-    }
-    fetchBooks();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  useEffect(() => {
+    getAllBooks();
   }, []);
 
   return (
@@ -59,7 +62,7 @@ function BookPage() {
         Result for {result}
       </h2>
       <div className="flex mt-1">
-        <div id="filter" className="w-3/12 h-80 pl-8">
+        <div id="filter" className="hidden md:block w-3/12 h-80 pl-8">
           <div id="categoryFilter">
             <h2 className="font-semibold mb-3">Category</h2>
             {categories.map((category, index) => {
@@ -167,14 +170,15 @@ function BookPage() {
           <br />
           {/* 4. BookCard */}
           <div className="w-full mt-4 flex flex-wrap gap-5 mx-4">
-            {exampleBooks.map((exampleBook) => {
+            {books.map((book) => {
               return (
                 <BookCard
-                  key={exampleBook.id}
-                  title={exampleBook.title}
-                  author={exampleBook.author}
-                  rating={exampleBook.rating}
-                  remainingCount={exampleBook.remainingCount}
+                  key={book.id}
+                  imageSource={`${process.env.REACT_APP_BASE_URL}/${book.imageName}.png`}
+                  title={book.title}
+                  author={book.author ? book.author : "Unknown"}
+                  rating={5}
+                  remainingCount={4}
                 />
               );
             })}

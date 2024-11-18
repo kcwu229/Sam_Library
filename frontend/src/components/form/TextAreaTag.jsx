@@ -7,6 +7,7 @@ const TextAreaTag = ({ id, name, value, onChange, text }) => {
       value={value}
       placeholder={text}
       onChange={onChange}
+      maxlength="100"
     />
   );
 };

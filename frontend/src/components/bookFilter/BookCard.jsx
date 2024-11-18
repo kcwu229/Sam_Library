@@ -1,10 +1,14 @@
 import { FaStar } from "react-icons/fa";
 import Article1Image from "../../assets/images/article1.png";
 
-function BookCard({ title, author, rating, remainingCount }) {
+function BookCard({ title, author, rating, remainingCount, imageSource }) {
   return (
     <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
-      <img class="p-8 rounded-t-lg" src={Article1Image} alt="product image" />
+      <img
+        class="p-8 rounded-t-lg h-80"
+        src={imageSource}
+        alt="product image"
+      />
       <div class="px-5 pb-5">
         <a href="#">
           <h5 class="font-bold text-gray-900">{title}</h5>

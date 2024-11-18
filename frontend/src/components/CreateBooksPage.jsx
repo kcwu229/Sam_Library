@@ -25,7 +25,6 @@ const CreateBooksPage = () => {
 
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-  const [title, setTitle] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,17 +66,26 @@ const CreateBooksPage = () => {
     }
 
     if (book.publishedYear.trim()) {
-      errorsCopy.publishedYear = "";
+      const publishedYear = Number(book.publishedYear);
+      if (!Number.isInteger(publishedYear)) {
+        valid = false;
+        errorsCopy.publishedYear = "Publish Year must be an integer";
+      } else if (publishedYear < 0 || publishedYear > 30) {
+        valid = false;
+        errorsCopy.publishedYear = "Publish Year should be between 0 and 2022";
+      } else {
+        errorsCopy.publishedYear = "";
+      }
     } else {
       valid = false;
       errorsCopy.publishedYear = "Publish Year is required";
     }
 
-    if (title) {
-      errorsCopy.title = "";
+    if (file) {
+      errorsCopy.file = "";
     } else {
       valid = false;
-      errorsCopy.title = "Title is required";
+      errorsCopy.file = "Image is required";
     }
 
     setErrors(errorsCopy);
@@ -196,6 +204,7 @@ const CreateBooksPage = () => {
             onChange={handleFileChange}
             required
           />
+          {errors.file && <CreateBookErrorTag error={errors.file} />}
           {imagePreviewUrl && (
             <img
               src={imagePreviewUrl}

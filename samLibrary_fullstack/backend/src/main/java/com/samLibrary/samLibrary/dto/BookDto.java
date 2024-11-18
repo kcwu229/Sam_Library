@@ -24,5 +24,7 @@ public class BookDto {
     private String imageUrl;
 
     private String isbn;
+
+    private String bookIntroduction;
 }
 

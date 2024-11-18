@@ -18,8 +18,8 @@ function Navbar() {
           md:p-0 md:mt-0 rounded-lg"
           >
             <NavBarTag href="/" text="HomePage" ariaCurrent="page" />
-            <NavBarTag href="/books" text="Find Book" />
-            <NavBarTag href="#contact" text="Contact" />
+            <NavBarTag href="/books" text="Book Area" />
+            <NavBarTag href="/authors" text="Author Section" />
           </ul>
         </div>
 

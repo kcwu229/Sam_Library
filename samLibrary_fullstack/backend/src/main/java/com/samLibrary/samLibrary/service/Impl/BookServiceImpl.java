@@ -43,6 +43,7 @@ public class BookServiceImpl implements BookService {
         book.setIsbn(bookToBeUpdated.getIsbn());
         book.setTitle(bookToBeUpdated.getTitle());
         book.setPublishedYear(bookToBeUpdated.getPublishedYear());
+        book.setBookIntroduction(bookToBeUpdated.getBookIntroduction());
         Book updatedBook = bookRepository.save(book);
         return BookMapper.mapToBookDto(updatedBook);
     }

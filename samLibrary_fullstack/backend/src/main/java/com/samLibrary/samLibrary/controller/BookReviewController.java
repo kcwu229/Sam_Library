@@ -3,6 +3,7 @@ package com.samLibrary.samLibrary.controller;
 import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.service.BookReviewService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class BookReviewController {
     private BookReviewService bookReviewService;
 
     @PostMapping
-    public ResponseEntity<BookReviewDto> createBookReview(@RequestBody BookReviewDto bookReviewDto) {
+    public ResponseEntity<BookReviewDto> createBookReview(@Valid @RequestBody BookReviewDto bookReviewDto) {
         BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto);
         return new ResponseEntity<>(savedBookReview, HttpStatus.CREATED);
     }

@@ -2,6 +2,9 @@ package com.samLibrary.samLibrary.dto;
 
 import com.samLibrary.samLibrary.entity.Book;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +24,9 @@ public class BookReviewDto {
 
     private String review;
 
+    @NotNull(message = "rating is required")
     private int rating;
+
 
     private Book book;
 }

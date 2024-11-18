@@ -3,7 +3,7 @@ import LogoImage from "../assets/images/logo.png";
 import { useEffect, useState } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaRegCircleQuestion } from "react-icons/fa6";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import ErrorTag from "./form/ErrorTag";
 
 function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -100,14 +100,7 @@ function SignUpPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && (
-              <div>
-                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
-                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
-                </div>
-                <i className="text-red-500 text-sm">{errors.email}</i>
-              </div>
-            )}
+            {errors.email && <ErrorTag error={errors.email} />}
           </div>
 
           <button

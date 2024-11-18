@@ -5,6 +5,7 @@ import { login } from "../services/AuthService";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import ErrorTag from "./form/ErrorTag";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -96,14 +97,7 @@ function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
             />
 
-            {errors.username && (
-              <div>
-                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
-                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
-                </div>
-                <i className="text-red-500 text-sm">{errors.username}</i>
-              </div>
-            )}
+            {errors.username && <ErrorTag error={errors.username} />}
           </div>
 
           <div className="mb-10 relative">
@@ -120,14 +114,7 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            {errors.password && (
-              <div>
-                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
-                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
-                </div>
-                <i className="text-red-500 text-sm">{errors.password}</i>
-              </div>
-            )}
+            {errors.password && <ErrorTag error={errors.password} />}
           </div>
 
           <div className="flex items-center justify-between">

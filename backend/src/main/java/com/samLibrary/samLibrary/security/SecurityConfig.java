@@ -54,8 +54,9 @@ public class SecurityConfig {
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
-                        // Requiring authentication for all other requests
+                         //Requiring authentication for all other requests
                         .anyRequest().authenticated()
+
                 )
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication
                 .build();

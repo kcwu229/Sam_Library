@@ -14,7 +14,8 @@ public class BookMapper {
             book.getPublishedYear(),
             book.getImageName(),
             book.getIsbn(),
-                book.getBookDescription()
+                book.getBookDescription(),
+                book.getImageUrl()
         );
     }
 
@@ -27,7 +28,8 @@ public class BookMapper {
             bookDto.getPublishedYear(),
             bookDto.getImageName(),
             bookDto.getIsbn(),
-                bookDto.getBookDescription()
+                bookDto.getBookDescription(),
+                bookDto.getImageUrl()
         );
     }
 }

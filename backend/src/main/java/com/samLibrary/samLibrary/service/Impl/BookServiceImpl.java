@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
@@ -32,13 +33,16 @@ public class BookServiceImpl implements BookService {
         UUID bookId = UUID.randomUUID();
         String fileName = bookId.toString();
 
+        logger.info("bookId is :" + bookId);
+        logger.info("filename is :" + fileName);
+
         try {
             // Read the input file as a BufferedImage
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
 
             // Save the BufferedImage as a PNG file
             ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/" + fileName + ".png")));
-            logger.info("File uploaded and converted to PNG successfully");
+            //logger.info("File uploaded and converted to PNG successfully");
         } catch (IOException e) {
             logger.error("Error uploading and converting file", e);
         }
@@ -85,8 +89,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAllBooks() {
-        return bookRepository.findAll().stream()
-                .map(BookMapper::mapToBookDto)
+        List<Book> books = bookRepository.findAll();
+        return books.stream()
+                .map(book -> {
+                    BookDto bookDto = BookMapper.mapToBookDto(book);
+                    Path path = Paths.get("backend/" + book.getImageName() + ".png");
+                    bookDto.setImageUrl("backend/" + book.getImageName() + ".png"); // Set the image URL
+
+                    return bookDto;
+                })
                 .collect(Collectors.toList());
     }
 

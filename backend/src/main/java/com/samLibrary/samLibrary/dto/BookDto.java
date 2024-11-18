@@ -33,5 +33,8 @@ public class BookDto {
 
 
     private String bookDescription;
+
+    private String imageUrl;
+
 }
 

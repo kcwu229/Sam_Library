@@ -4,6 +4,7 @@ import SignUpPage from "./components/SignUpPage";
 import ForgetPassword from "./components/ForgetPassword";
 import BookPage from "./components/BookPage";
 import HomePage from "./components/HomePage";
+import CreateBooksPage from "./components/CreateBooksPage";
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
             element={
               <div className="flex items-center justify-center min-h-screen">
                 <BookPage />
+              </div>
+            }
+          />
+          <Route
+            path="/books/create-book"
+            element={
+              <div className="flex items-center justify-center min-h-screen">
+                <CreateBooksPage />
               </div>
             }
           />

@@ -6,3 +6,5 @@ const REST_API_URL = "http://localhost:8080/api";
 axios.defaults.baseURL = REST_API_URL;
 
 export const showBooks = (user) => axiosInstance.get(REST_API_URL + "/books");
+export const createBook = (book) =>
+  axiosInstance.post(REST_API_URL + "/books", book);

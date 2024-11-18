@@ -1,6 +1,7 @@
 package com.samLibrary.samLibrary.service.Impl;
 
 
+
 import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.entity.Book;
 import com.samLibrary.samLibrary.mapper.BookMapper;
@@ -8,7 +9,13 @@ import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -17,12 +24,45 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    @Override
-    public BookDto createBook(BookDto bookDto) {
-        Book book = BookMapper.mapToBookEntity(bookDto);
+
+    public BookDto createBook(BookDto bookDto, MultipartFile file) {
+        // Handle image upload
+        String fileName = file.getOriginalFilename();
+
+        logger.info("File Name: {}", fileName);
+        logger.info("File Size: {} bytes", file.getSize());
+        logger.info("File Content Type: {}", file.getContentType());
+        logger.info("File Name: {}", file.getName());
+        logger.info("File Original Filename: {}", file.getOriginalFilename());
+        logger.info("File Data: {}", file.toString());
+
+
+        try {
+            // Save the file to the desired location
+            Files.copy(file.getInputStream(), Paths.get("/samLibrary_fullstack/backend/images" + fileName));
+            System.out.println("File uploaded successfully");
+        } catch (IOException e) {
+            // Handle the exception
+            e.printStackTrace();
+        }
+        // Create a new Book entity from the BookDto
+        Book book = new Book();
+        book.setId(UUID.randomUUID());
+        book.setTitle(bookDto.getTitle());
+        book.setAuthor(bookDto.getAuthor());
+        book.setPublishedYear(bookDto.getPublishedYear());
+        book.setImageName(fileName);
+        book.setIsbn(bookDto.getIsbn());
+        book.setBookDescription(bookDto.getBookDescription());
+
+        // Save the Book entity to the database
         Book savedBook = bookRepository.save(book);
+
+        // Convert the saved Book entity back to a BookDto
         return BookMapper.mapToBookDto(savedBook);
+
     }
 
     @Override
@@ -39,11 +79,11 @@ public class BookServiceImpl implements BookService {
                 () -> new RuntimeException("Book not found")
         );
         book.setAuthor(bookToBeUpdated.getAuthor());
-        book.setImageUrl(bookToBeUpdated.getImageUrl());
+        book.setImageName(bookToBeUpdated.getImageName());
         book.setIsbn(bookToBeUpdated.getIsbn());
         book.setTitle(bookToBeUpdated.getTitle());
         book.setPublishedYear(bookToBeUpdated.getPublishedYear());
-        book.setBookIntroduction(bookToBeUpdated.getBookIntroduction());
+        book.setBookDescription(bookToBeUpdated.getBookDescription());
         Book updatedBook = bookRepository.save(book);
         return BookMapper.mapToBookDto(updatedBook);
     }

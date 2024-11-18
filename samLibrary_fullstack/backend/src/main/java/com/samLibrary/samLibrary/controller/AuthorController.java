@@ -2,6 +2,7 @@ package com.samLibrary.samLibrary.controller;
 
 import com.samLibrary.samLibrary.dto.AuthorDto;
 import com.samLibrary.samLibrary.service.AuthorService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AuthorController {
     private AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
+    public ResponseEntity<AuthorDto> createAuthor(@Valid @RequestBody AuthorDto authorDto) {
         AuthorDto savedAuthor = authorService.createAuthor(authorDto);
         return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
     }

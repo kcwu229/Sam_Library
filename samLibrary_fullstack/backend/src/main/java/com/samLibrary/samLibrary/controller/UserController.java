@@ -2,6 +2,7 @@ package com.samLibrary.samLibrary.controller;
 
 import com.samLibrary.samLibrary.dto.UserDto;
 import com.samLibrary.samLibrary.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto UserDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto UserDto) {
         UserDto savedUser = userService.createUser(UserDto);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }

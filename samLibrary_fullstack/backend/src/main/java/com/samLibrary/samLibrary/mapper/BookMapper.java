@@ -12,9 +12,9 @@ public class BookMapper {
             book.getTitle(),
             book.getAuthor(),
             book.getPublishedYear(),
-            book.getImageUrl(),
+            book.getImageName(),
             book.getIsbn(),
-                book.getBookIntroduction()
+                book.getBookDescription()
         );
     }
 
@@ -25,9 +25,9 @@ public class BookMapper {
             bookDto.getTitle(),
             bookDto.getAuthor(),
             bookDto.getPublishedYear(),
-            bookDto.getImageUrl(),
+            bookDto.getImageName(),
             bookDto.getIsbn(),
-                bookDto.getBookIntroduction()
+                bookDto.getBookDescription()
         );
     }
 }

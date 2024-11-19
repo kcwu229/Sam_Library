@@ -5,17 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Navbar from "./components/header/Navbar";
 import Footer from "./components/footer/Footer";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <div className="flex flex-col min-h-screen">
+    <BrowserRouter>
       <Navbar />
       <div className="flex-grow">
         <App />
       </div>
-      <Footer className="flex-shrink-0" />
-    </div>
+      <Footer className="flex-shrink-0 absolute bottom-0" />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

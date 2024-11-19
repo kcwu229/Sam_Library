@@ -3,6 +3,16 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      keyframes: {
+        push: {
+          "0%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(5px)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        push: "push 0.3s ease-in-out",
+      },
       fontFamily: {
         sans: ["Open Sans", "sans-serif"],
       },

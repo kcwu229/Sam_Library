@@ -1,25 +1,50 @@
+import { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import LogoImage from "../../assets/images/logo-inverted.png";
-import NavBarTag from "./NavBarTag";
 import UserSection from "../UserSection";
+import NavBarTag from "./NavBarTag";
 
 function Navbar() {
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.pathname);
+
+  useEffect(() => {
+    setActiveTab(location.pathname);
+  }, [location]);
+
+  const handleTabClick = (href) => {
+    setActiveTab(href);
+  };
+
   return (
-    <nav className="w-full fixed top-0 z-20 bg-gray-900">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto">
+    <nav className="w-full fixed top-0 z-20 bg-gray-900 shadow-lg items-center">
+      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img src={LogoImage} alt="logo" className="w-28" />
-          </a>
+          </Link>
         </div>
 
-        <div className="hidden md:flex flex-grow items-center justify-center">
-          <ul
-            className="flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse font-medium  
-          md:p-0 md:mt-0 rounded-lg"
-          >
-            <NavBarTag href="/" text="HomePage" ariaCurrent="page" />
-            <NavBarTag href="/books" text="Book Area" />
-            <NavBarTag href="/authors" text="Author Section" />
+        <div className="hidden md:flex flex-grow justify-center">
+          <ul className="flex items-center flex-col md:flex-row md:space-x-8 rtl:space-x-reverse font-medium md:p-0 md:mt-0 rounded-lg">
+            <NavBarTag
+              href="/"
+              text="HomePage"
+              isActive={activeTab === "/"}
+              onClick={() => handleTabClick("/")}
+            />
+            <NavBarTag
+              href="/books"
+              text="Books"
+              isActive={activeTab === "/books"}
+              onClick={() => handleTabClick("/books")}
+            />
+            <NavBarTag
+              href="/authors"
+              text="Authors"
+              isActive={activeTab === "/authors"}
+              onClick={() => handleTabClick("/authors")}
+            />
           </ul>
         </div>
 

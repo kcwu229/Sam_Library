@@ -5,6 +5,7 @@ import RatingFilter from "../bookPage/bookFilter/RatingFilter";
 import { VscClose } from "react-icons/vsc";
 import BookCard from "../bookPage/bookFilter/BookCard";
 import { useNavigate } from "react-router-dom";
+import { IoLibrarySharp } from "react-icons/io5";
 
 import {
   categories as categoryData,
@@ -67,7 +68,12 @@ function BookPage() {
 
   return (
     <div className="w-full">
-      <SearchBar buttonText="Book" onClickAction={createBook} />
+      <SearchBar
+        buttonText="Book"
+        onClickAction={createBook}
+        logo={<IoLibrarySharp className="text-4xl" />}
+        logoText={"BookList"}
+      />
       <div className="pt-32"></div>
       <h2 className="text-3xl font-bold text-center pt-32">
         Result for {result}

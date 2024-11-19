@@ -5,7 +5,7 @@ import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
 import { useNavigate } from "react-router-dom";
 
-function SearchBar({ buttonText, onClickAction }) {
+function SearchBar({ buttonText, onClickAction, logo, logoText }) {
   const [bookName, setBookName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ function SearchBar({ buttonText, onClickAction }) {
     <div className="fixed pt-4 top-28 w-full bg-white shadow z-50">
       <div className="flex items-center justify-between px-3 pb-4">
         <div className="hidden md:flex" id="bookLogo">
-          <IoLibrarySharp className="text-4xl" />
-          <span className="ml-2 text-4xl font-bold">Book List</span>
+          {logo}
+          <span className="ml-2 text-4xl font-bold">{logoText}</span>
         </div>
 
         <div className="flex w-8/12 md:w-full max-w-5xl ml-4">

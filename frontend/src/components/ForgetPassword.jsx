@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LogoImage from "../assets/images/logo.png";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaRegCircleQuestion } from "react-icons/fa6";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import InputTag from "./form/InputTag";
+import LabelsTag from "./form/LabelsTag";
+import CreateFormErrorTag from "./form/CreateFormErrorTag";
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({
-    eamil: "",
+    email: "",
   });
 
   function validateForm() {
@@ -16,7 +18,7 @@ function ForgetPassword() {
     const errorCopy = { ...errors };
 
     if (email === "") {
-      errorCopy.email = "Email is required !";
+      errorCopy.email = "Email is required!";
       valid = false;
     } else {
       errorCopy.email = "";
@@ -37,71 +39,61 @@ function ForgetPassword() {
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg w-3/5 h-4/5 flex">
-      <div className="w-1/2 flex items-center justify-center relative">
-        <div>
-          <FaRegCircleQuestion className="absolute top-0 right-20 w-6 h-6" />
-          <div className="group">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full md:w-4/5 lg:w-4/5 xl:w-4/5 h-auto flex flex-col md:flex-row mt-28 mx-auto">
+      <div className="w-full md:w-1/2 flex items-center justify-center relative p-4">
+        <div className="w-full max-w-sm">
+          <div className="absolute top-0 right-20">
+            <FaRegCircleQuestion className="w-6 h-6" />
+          </div>
+          <div className="group absolute top-0 right-10">
             <button>
-              <AiOutlineGlobal className="absolute top-0 right-10 w-6 h-6" />
+              <AiOutlineGlobal className="w-6 h-6" />
             </button>
-            <p className="absolute top-10 right-8 w-14 h-18 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
+            <p className="absolute top-10 right-0 w-24 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
               Click to change language
             </p>
           </div>
-        </div>
-
-        <form className="w-full max-w-sm relative mt-20">
-          <img className="w-20 h-18 mb-10" src={LogoImage}></img>
-          <h1 className="font-bold mb-10 text-orange-500 text-4xl">
-            Forget your password
-          </h1>
-          <p>
-            Please enter the email address you'd like your password reset
-            information sent to
-          </p>
-          <br />
-
-          <div className="mb-10 relative">
-            <input
-              className={`shadow appearance-none
-              border rounded w-full py-2 px-3
-               text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                 errors.email ? "border-red-500" : ""
-               }`}
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+          <form className="w-full relative mt-10" onSubmit={submitLoginForm}>
+            <img
+              className="w-20 h-18 mb-10 mx-auto"
+              src={LogoImage}
+              alt="Logo"
             />
-            {errors.email && (
-              <div>
-                <div className="mb-6 absolute right-2 inset-y-1 pt-1">
-                  <AiOutlineExclamationCircle className="text-red-500 w-6 h-6" />
-                </div>
-                <i className="text-red-500 text-sm">{errors.email}</i>
-              </div>
-            )}
-          </div>
+            <h1 className="font-bold mb-10 text-orange-500 text-4xl text-center">
+              Forget your password
+            </h1>
+            <p className="text-center">
+              Please enter the email address you'd like your password reset
+              information sent to
+            </p>
+            <br />
+            <div className="mb-10 relative">
+              <LabelsTag for="email" text="Email" />
+              <InputTag
+                id="email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                text="Enter your email"
+                error={errors.email}
+              />
+              {errors.email && <CreateFormErrorTag error={errors.email} />}
+            </div>
 
-          <button
-            className="bg-orange-500 hover:bg-orange-700 text-white 
-              font-bold py-3 px-40 rounded focus:outline-none mt-4 mb-8
-              focus:shadow-outline"
-            type="submit"
-            onClick={submitLoginForm}
-          >
-            Request
-          </button>
-          <div className="text-center mt-2 mb-8">
-            <a href="/sign-up" className="ml-6">
-              <b>
-                <i className="text-l text-blue-600">Back to Login</i>
-              </b>
-            </a>
-          </div>
-        </form>
+            <button
+              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-3 px-40 rounded focus:outline-none mt-4 mb-8 focus:shadow-outline w-full"
+              type="submit"
+            >
+              Request
+            </button>
+            <div className="text-center mt-2 mb-8">
+              <a href="/login" className="ml-2 text-blue-600 hover:underline">
+                Back to Login
+              </a>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

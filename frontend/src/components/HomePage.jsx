@@ -42,19 +42,19 @@ function HomePage() {
         <div className="relative z-10 text-center text-white">
           <br />
           <br />
-          <h1 className="text-5xl font-bold text-sam-gray opacity-90 w-3/5 text-left ml-32">
+          <h1 className="text-2xl md:text-5xl font-bold text-sam-gray opacity-90 w-3/5 text-left ml-32">
             <i>
               Every book holds a dream waiting to be discovered. Let your
               imagination soar as you turn each page.
             </i>
           </h1>
-          <p className="ml-40 mt-10 text-3xl text-sam-gray opacity-65 w-3/5 text-left mb-14">
+          <p className="ml-40 mt-10 md:text-3xl text text-sam-gray opacity-65 w-3/5 md:text-left mb-14">
             <i>Journey through stories that inspire and transform.</i>
           </p>
 
           <button
             onClick={navigateBookPage}
-            className=" rounded-2xl absolute right-60 text-sam-gray p-4 text-xl bg-sam-orange text-left mb-16"
+            className=" rounded-2xl absolute md:right-60 text-sam-gray p-4 md:font-light md:text-xl bg-sam-orange text-left mb-16"
           >
             Explore
           </button>
@@ -129,11 +129,14 @@ function HomePage() {
         <div>
           <div className="flex flex-col items-center justify-center ">
             {articles.map((article, index) => (
-              <div key={index} className="flex items-center mb-2 w-7/12 mt-10">
+              <div
+                key={index}
+                className="flex flex-col md:flex-row items-center mb-2 w-7/12 mt-10"
+              >
                 <div>
                   <img
                     src={article.image}
-                    className="w-3/4 h-32 object-cover mr-4"
+                    className="md:w-3/4 md:h-32 object-cover mr-4"
                   />
                 </div>
                 <div className="flex-grow text-left">
@@ -145,7 +148,7 @@ function HomePage() {
 
                 <div className="flex justify-end">
                   <button
-                    className="mt-4 text-white px-6 py-2 ml-7 rounded-xl bg-lime-600"
+                    className="mt-4 text-white px-6 py-2 md:ml-7 rounded-xl bg-lime-600"
                     onClick={(e) => {
                       alert("Coming soon!");
                     }}

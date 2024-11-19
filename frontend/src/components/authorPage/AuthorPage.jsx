@@ -5,6 +5,7 @@ import RatingFilter from "../authorPage/authorFilter/RatingFilter";
 import { VscClose } from "react-icons/vsc";
 import AuthorCard from "../authorPage/authorFilter/AuthorCard";
 import { useNavigate } from "react-router-dom";
+import { FaPenNib } from "react-icons/fa";
 
 import {
   categories as categoryData,
@@ -67,7 +68,12 @@ function AuthorPage() {
 
   return (
     <div className="w-full">
-      <SearchBar buttonText="Author" onClickAction={createAuthor} />
+      <SearchBar
+        buttonText="Author"
+        onClickAction={createAuthor}
+        logo={<FaPenNib className="text-4xl" />}
+        logoText={"AuthorList"}
+      />
       <div className="pt-32"></div>
       <h2 className="text-3xl font-bold text-center pt-32">
         Result for {result}

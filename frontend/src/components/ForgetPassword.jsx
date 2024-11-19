@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import LogoImage from "../assets/images/logo.png";
-import ExplainationIcon from "./atoms/ExplainationIcon";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { AiOutlineExclamationCircle } from "react-icons/ai";

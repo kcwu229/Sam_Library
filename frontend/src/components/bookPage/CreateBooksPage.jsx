@@ -12,6 +12,7 @@ const CreateBooksPage = () => {
     title: "",
     author: "",
     publishedYear: "",
+    catchPhrase: "",
     isbn: "",
     bookDescription: "",
     bookName: "", // This will store the image name
@@ -20,6 +21,7 @@ const CreateBooksPage = () => {
   const [errors, setErrors] = useState({
     title: "",
     publishedYear: "",
+    catchPhrase: "",
     file: "",
     bookDescription: "",
   });
@@ -32,14 +34,27 @@ const CreateBooksPage = () => {
 
     if (name === "bookDescription") {
       const wordCount = value.trim().split(/\s+/).length;
-      if (wordCount > 50) {
+      if (wordCount > 2000) {
         setErrors({
           ...errors,
-          bookDescription: "Description cannot exceed 50 words",
+          bookDescription: "bookDescription cannot exceed 2000 characters",
         });
         return;
       } else {
         setErrors({ ...errors, bookDescription: "" });
+      }
+    }
+
+    if (name === "catchPhrase") {
+      const wordCount = value.trim().split(/\s+/).length;
+      if (wordCount > 2000) {
+        setErrors({
+          ...errors,
+          catchPhrase: "CatchPhrase cannot exceed 2000 characters",
+        });
+        return;
+      } else {
+        setErrors({ ...errors, catchPhrase: "" });
       }
     }
 
@@ -78,6 +93,20 @@ const CreateBooksPage = () => {
     } else {
       valid = false;
       errorsCopy.title = "Title is required";
+    }
+
+    if (book.catchPhrase.trim()) {
+      errorsCopy.catchPhrase = "";
+    } else {
+      valid = false;
+      errorsCopy.catchPhrase = "CatchPhrase is required";
+    }
+
+    if (book.bookDescription.trim()) {
+      errorsCopy.bookDescription = "";
+    } else {
+      valid = false;
+      errorsCopy.bookDescription = "bookDescription is required";
     }
 
     if (book.publishedYear.trim()) {
@@ -189,19 +218,46 @@ const CreateBooksPage = () => {
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <LabelsTag for="description" text="Description" />
+        <div className="w-full px-3 relative">
+          <LabelsTag for="catchPhrase" text="CatchPhrase" required="*" />
           <TextAreaTag
-            id="description"
+            id="catchPhrase"
+            name="catchPhrase"
+            text="CatchPhrase"
+            onChange={handleInputChange}
+            value={book.catchPhrase}
+            error={errors.catchPhrase}
+          />
+          {errors.catchPhrase && (
+            <CreateFormErrorTag error={errors.catchPhrase} />
+          )}
+          <p className="mt-4 text-gray-600 text-xs italic">
+            Not more than 2000 characters
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3  relative">
+          <LabelsTag
+            for="bookDescription"
+            text="bookDescription"
+            required="*"
+          />
+          <TextAreaTag
+            id="bookDescription"
             name="bookDescription"
-            text="Description"
+            text="bookDescription"
             onChange={handleInputChange}
             value={book.bookDescription}
+            error={errors.bookDescription}
           />
           {errors.bookDescription && (
             <CreateFormErrorTag error={errors.bookDescription} />
           )}
-          <p className="text-gray-600 text-xs italic">Not more than 50 words</p>
+          <p className="text-gray-600 text-xs italic">
+            Not more than 2000 characters
+          </p>
         </div>
       </div>
 

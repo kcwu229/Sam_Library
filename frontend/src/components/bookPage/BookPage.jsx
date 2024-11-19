@@ -4,6 +4,7 @@ import SearchBar from "../header/SearchBar";
 import RatingFilter from "../bookPage/bookFilter/RatingFilter";
 import { VscClose } from "react-icons/vsc";
 import BookCard from "../bookPage/bookFilter/BookCard";
+import { useNavigate } from "react-router-dom";
 
 import {
   categories as categoryData,
@@ -29,6 +30,8 @@ function BookPage() {
     setShowButton(false);
   };
 
+  const navigate = useNavigate();
+
   const removeAllFilter = () => {};
 
   const toggleCategoryExpand = () => {
@@ -50,14 +53,22 @@ function BookPage() {
       });
   }
 
+  function createBook() {
+    navigate("/books/create-book");
+  }
+
+  function viewOrEditBook(id) {
+    navigate(`/books/${id}`);
+  }
+
   useEffect(() => {
     getAllBooks();
   }, []);
 
   return (
     <div className="w-full">
-      <SearchBar />
-      <div className="pt-20"></div>
+      <SearchBar buttonText="Book" onClickAction={createBook} />
+      <div className="pt-32"></div>
       <h2 className="text-3xl font-bold text-center pt-32">
         Result for {result}
       </h2>
@@ -172,14 +183,19 @@ function BookPage() {
           <div className="w-full mt-4 flex flex-wrap gap-5 mx-4">
             {books.map((book) => {
               return (
-                <BookCard
-                  key={book.id}
-                  imageSource={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
-                  title={book.title}
-                  author={book.author ? book.author : "Unknown"}
-                  rating={5}
-                  remainingCount={4}
-                />
+                <button
+                  className="w-full"
+                  onClick={() => viewOrEditBook(book.id)}
+                >
+                  <BookCard
+                    key={book.id}
+                    imageSource={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
+                    title={book.title}
+                    author={book.author ? book.author : "Unknown"}
+                    rating={5}
+                    remainingCount={4}
+                  />
+                </button>
               );
             })}
           </div>

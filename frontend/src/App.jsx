@@ -8,6 +8,7 @@ import CreateBooksPage from "./components/bookPage/CreateBooksPage";
 import AuthorPage from "./components/authorPage/AuthorPage";
 import CreateAuthorsPage from "./components/authorPage/CreateAuthorsPage";
 import AuthorDetailPage from "./components/authorPage/AuthorDetailPage";
+import BookDetailPage from "./components/bookPage/BookDetailPage";
 
 function App() {
   return (
@@ -43,6 +44,14 @@ function App() {
             element={
               <div className="flex items-center justify-center min-h-screen">
                 <CreateBooksPage />
+              </div>
+            }
+          />
+          <Route
+            path="/books/:id"
+            element={
+              <div className="flex items-center justify-center min-h-screen">
+                <BookDetailPage />
               </div>
             }
           />

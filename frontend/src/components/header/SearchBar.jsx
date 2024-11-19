@@ -5,7 +5,7 @@ import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
 import { useNavigate } from "react-router-dom";
 
-function SearchBar() {
+function SearchBar({ buttonText, onClickAction }) {
   const [bookName, setBookName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -20,10 +20,6 @@ function SearchBar() {
     }, 200); // Adjust the delay as needed
   };
 
-  const createBook = () => {
-    navigate("create-book");
-  };
-
   return (
     <div className="fixed pt-4 top-28 w-full bg-white shadow z-50">
       <div className="flex items-center justify-between px-3 pb-4">
@@ -32,15 +28,17 @@ function SearchBar() {
           <span className="ml-2 text-4xl font-bold">Book List</span>
         </div>
 
-        <div className="flex w-full max-w-5xl ml-4">
+        <div className="flex w-8/12 md:w-full max-w-5xl ml-4">
           <div className="relative group flex">
             <button
               id="dropdownButton"
               onClick={toggleDropdown}
-              className="text-sam-gray bg-blue-700 hover:bg-blue-800 
+              className="
+              hidden md:flex
+              text-sam-gray bg-blue-700 hover:bg-blue-800 
               focus:ring-4 focus:outline-none focus:ring-blue-300 
               rounded-l-lg px-4 py-2 text-center items-center 
-              dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex"
+             "
             >
               Category <MdExpandMore className="w-5 h-5 ml-2" />
             </button>
@@ -82,12 +80,13 @@ function SearchBar() {
           </button>
         </div>
         <button
-          class="text-sam-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
+          focus:outline-none focus:ring-gray-300 
             font-bold rounded-lg text-sm px-5 py-2.5 
             text-center"
-          onClick={createBook}
+          onClick={onClickAction}
         >
-          Create Book
+          Create {buttonText}
         </button>
         <div></div>
       </div>

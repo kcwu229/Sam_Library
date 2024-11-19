@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 const CreateAuthorsPage = () => {
   const navigate = useNavigate();
-  const [author, setauthor] = useState({
+  const [author, setAuthor] = useState({
     name: "",
     birthYear: "",
     deathYear: "",
     country: "",
-    authorDescription: "",
+    catchPhrase: "",
+    description: "",
     authorName: "", // This will store the image name
   });
 
@@ -21,7 +22,8 @@ const CreateAuthorsPage = () => {
     name: "",
     birthYear: "",
     file: "",
-    authorDescription: "",
+    catchPhrase: "",
+    description: "",
   });
 
   const [file, setFile] = useState(null);
@@ -30,20 +32,33 @@ const CreateAuthorsPage = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "authorDescription") {
+    if (name === "description") {
       const wordCount = value.trim().split(/\s+/).length;
-      if (wordCount > 50) {
+      if (wordCount > 2000) {
         setErrors({
           ...errors,
-          authorDescription: "Description cannot exceed 50 words",
+          description: "Description cannot exceed 2000 characters",
         });
         return;
       } else {
-        setErrors({ ...errors, authorDescription: "" });
+        setErrors({ ...errors, description: "" });
       }
     }
 
-    setauthor({ ...author, [name]: value });
+    if (name === "catchPhrase") {
+      const wordCount = value.trim().split(/\s+/).length;
+      if (wordCount > 2000) {
+        setErrors({
+          ...errors,
+          catchPhrase: "CatchPhrase cannot exceed 2000 characters",
+        });
+        return;
+      } else {
+        setErrors({ ...errors, catchPhrase: "" });
+      }
+    }
+
+    setAuthor({ ...author, [name]: value });
   };
 
   // file validation
@@ -56,7 +71,7 @@ const CreateAuthorsPage = () => {
         return;
       }
       setFile(file);
-      setauthor({ ...author, authorName: file.name }); // Update authorName with the image name
+      setAuthor({ ...author, authorName: file.name }); // Update authorName with the image name
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -77,15 +92,15 @@ const CreateAuthorsPage = () => {
       errorsCopy.name = "";
     } else {
       valid = false;
-      errorsCopy.name = "name is required";
+      errorsCopy.name = "Name is required";
     }
 
     if (author.birthYear.trim()) {
-      const deathYear = Number(author.birthYear);
-      if (!Number.isInteger(deathYear)) {
+      const birthYear = Number(author.birthYear);
+      if (!Number.isInteger(birthYear)) {
         valid = false;
         errorsCopy.birthYear = "Birth Year must be an integer";
-      } else if (deathYear < 0 || deathYear > 2022) {
+      } else if (birthYear < 0 || birthYear > 2022) {
         valid = false;
         errorsCopy.birthYear = "Birth Year should be between 0 and 2022";
       } else {
@@ -93,7 +108,21 @@ const CreateAuthorsPage = () => {
       }
     } else {
       valid = false;
-      errorsCopy.birthYear = "Birth Year is required !";
+      errorsCopy.birthYear = "Birth Year is required!";
+    }
+
+    if (author.catchPhrase.trim()) {
+      errorsCopy.catchPhrase = "";
+    } else {
+      valid = false;
+      errorsCopy.catchPhrase = "CatchPhrase is required";
+    }
+
+    if (author.description.trim()) {
+      errorsCopy.description = "";
+    } else {
+      valid = false;
+      errorsCopy.description = "Description is required";
     }
 
     if (file) {
@@ -110,6 +139,8 @@ const CreateAuthorsPage = () => {
   const saveOrUpdateAuthor = async (e) => {
     e.preventDefault();
 
+    console.log("Author object:", author);
+
     if (validateForm()) {
       const formData = new FormData();
       formData.append(
@@ -117,6 +148,9 @@ const CreateAuthorsPage = () => {
         new Blob([JSON.stringify(author)], { type: "application/json" })
       );
       formData.append("file", file);
+
+      // Debugging: Log the author object to verify the fields
+      console.log("Author object:", author);
 
       // create a new author
       try {
@@ -126,7 +160,7 @@ const CreateAuthorsPage = () => {
             "X-File-Name": file.name, // Custom header to pass the file name
           },
         });
-        console.log("author created successfully:", response.data);
+        console.log("Author created successfully:", response.data);
         navigate("/authors");
       } catch (error) {
         console.error("Error creating author:", error);
@@ -138,13 +172,13 @@ const CreateAuthorsPage = () => {
     <form className="w-full max-w-lg pt-40">
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
-          <LabelsTag for="name" text="name" required="*" />
+          <LabelsTag for="name" text="Name" required="*" />
           <InputTag
             id="name"
             name="name"
             value={author.name}
             onChange={handleInputChange}
-            text="name"
+            text="Name"
             error={errors.name}
           />
           {errors.name && <CreateFormErrorTag error={errors.name} />}
@@ -162,7 +196,7 @@ const CreateAuthorsPage = () => {
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0  relative">
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
           <LabelsTag for="birthYear" text="Year Of Birth" required="*" />
           <InputTag
             id="birthYear"
@@ -188,19 +222,42 @@ const CreateAuthorsPage = () => {
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <LabelsTag for="description" text="Description" />
+        <div className="w-full px-3 relative">
+          <LabelsTag for="catchPhrase" text="CatchPhrase" required="*" />
+          <TextAreaTag
+            id="catchPhrase"
+            name="catchPhrase"
+            text="CatchPhrase"
+            onChange={handleInputChange}
+            value={author.catchPhrase}
+            error={errors.catchPhrase}
+          />
+          {errors.catchPhrase && (
+            <CreateFormErrorTag error={errors.catchPhrase} />
+          )}
+          <p className="mt-4 text-gray-600 text-xs italic">
+            Not more than 2000 characters
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3 relative">
+          <LabelsTag for="description" text="Description" required="*" />
           <TextAreaTag
             id="description"
-            name="authorDescription"
+            name="description"
             text="Description"
             onChange={handleInputChange}
-            value={author.authorDescription}
+            value={author.description}
+            error={errors.description}
           />
-          {errors.authorDescription && (
-            <CreateFormErrorTag error={errors.authorDescription} />
+          {errors.description && (
+            <CreateFormErrorTag error={errors.description} />
           )}
-          <p className="text-gray-600 text-xs italic">Not more than 50 words</p>
+          <p className="text-gray-600 text-xs italic">
+            Not more than 2000 characters
+          </p>
         </div>
       </div>
 

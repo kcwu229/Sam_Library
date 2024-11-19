@@ -1,6 +1,6 @@
 import { listAuthors, showAuthors } from "../../services/AuthorServices";
 import { useEffect, useState } from "react";
-import AuthorSearchBar from "../authorPage/authorFilter/AuthorSearchBar";
+import SearchBar from "../header/SearchBar";
 import RatingFilter from "../authorPage/authorFilter/RatingFilter";
 import { VscClose } from "react-icons/vsc";
 import AuthorCard from "../authorPage/authorFilter/AuthorCard";
@@ -57,19 +57,23 @@ function AuthorPage() {
     navigate(`/authors/${id}`);
   }
 
+  function createAuthor() {
+    navigate("/authors/create-author");
+  }
+
   useEffect(() => {
     getAllauthors();
   }, []);
 
   return (
     <div className="w-full">
-      <AuthorSearchBar />
-      <div className="pt-20"></div>
+      <SearchBar buttonText="Author" onClickAction={createAuthor} />
+      <div className="pt-32"></div>
       <h2 className="text-3xl font-bold text-center pt-32">
         Result for {result}
       </h2>
       <div className="flex mt-1">
-        <div id="filter" className="hidden md:block w-3/12 h-80 pl-8">
+        <div id="filter" className="hidden md:block w-3/12 h-80 pl-10">
           <div id="categoryFilter">
             <h2 className="font-semibold mb-3">Category</h2>
             {categories.map((category, index) => {
@@ -135,32 +139,47 @@ function AuthorPage() {
           <div className="w-full">
             {showButton && (
               <button
-                className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center 
-              hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
+                className="text-sam-black border border-black rounded-3xl 
+                px-8 py-2 text-center 
+              hover:border-blue-500 hover:border items-center mr-4 relative 
+              hover:text-blue-500"
                 onClick={removeFilter}
               >
                 Fiction
-                <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500" />
+                <VscClose
+                  className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 
+                text-center pointer-events-auto  hover:text-blue-500"
+                />
               </button>
             )}
             {showButton && (
               <button
-                className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center 
-              hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
+                className="text-sam-black border border-black rounded-3xl 
+                px-8 py-2 text-center 
+              hover:border-blue-500 hover:border items-center mr-4 relative 
+              hover:text-blue-500"
                 onClick={removeFilter}
               >
                 Fiction
-                <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500" />
+                <VscClose
+                  className="w-6 h-6 absolute right-0 
+                inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500"
+                />
               </button>
             )}
             {showButton && (
               <button
-                className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center 
-              hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
+                className="text-sam-black border 
+                border-black rounded-3xl px-8 py-2 text-center 
+              hover:border-blue-500 hover:border items-center mr-4 relative 
+              hover:text-blue-500"
                 onClick={removeFilter}
               >
                 Fiction
-                <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto  hover:text-blue-500" />
+                <VscClose
+                  className="w-6 h-6 absolute right-0 inset-y-2 py-1 
+                mr-2 text-center pointer-events-auto  hover:text-blue-500"
+                />
               </button>
             )}
             <a
@@ -176,7 +195,7 @@ function AuthorPage() {
           <hr />
           <br />
           {/* 4. AuthorCard */}
-          <div className="w-full mt-4 flex flex-wrap gap-5 mx-4">
+          <div className="w-9/12 mt-4 flex flex-wrap gap-5 mx-4">
             {authors.map((author) => {
               return (
                 <button
@@ -188,7 +207,9 @@ function AuthorPage() {
                     id={author.id}
                     imageSource={`${process.env.REACT_APP_BASE_URL}/authors/${author.imageName}.png`}
                     name={author.name}
-                    yearOfBirth={author.birth_year ? author.author : "Unknown"}
+                    yearOfBirth={
+                      author.birthYear ? author.birthYear : "Unknown"
+                    }
                     rating={5}
                     remainingCount={4}
                   />

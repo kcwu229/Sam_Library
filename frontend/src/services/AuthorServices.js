@@ -7,3 +7,6 @@ export const listAuthors = (user) => axiosInstance.get(REST_AUTHOR_API_URL);
 
 export const viewAuthor = (authorId) =>
   axiosInstance.get(REST_AUTHOR_API_URL + "/" + authorId);
+
+export const deleteAuthor = (authorId) =>
+  axiosInstance.delete(REST_AUTHOR_API_URL + "/" + authorId);

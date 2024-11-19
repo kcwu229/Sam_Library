@@ -12,3 +12,6 @@ export const listBooks = (user) => axiosInstance.get(REST_BOOK_API_URL);
 
 export const viewBook = (bookId) =>
   axiosInstance.get(REST_BOOK_API_URL + "/" + bookId);
+
+export const deleteBook = (bookId) =>
+  axiosInstance.delete(REST_BOOK_API_URL + "/" + bookId);

@@ -100,6 +100,16 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
+        // Delete the image file associated with the book
+        String imagePath = "backend/images/books/" + book.getImageName() + ".png";
+
+        try {
+            Files.deleteIfExists(Paths.get(imagePath));
+            logger.info("Image file deleted successfully: " + imagePath);
+        } catch (IOException e) {
+            logger.error("Error deleting image file: " + imagePath, e);
+        }
+
         bookRepository.deleteById(bookId);
     }
 }

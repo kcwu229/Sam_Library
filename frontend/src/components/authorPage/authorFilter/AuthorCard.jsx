@@ -1,6 +1,13 @@
 import { FaStar } from "react-icons/fa";
 
-function AuthorCard({ name, yearOfBirth, rating, imageSource }) {
+function AuthorCard({
+  name,
+  yearOfBirth,
+  rating,
+  imageSource,
+  editAction,
+  deleteAction,
+}) {
   return (
     <div class="w-full md:w-5/12 max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
       <img
@@ -31,6 +38,32 @@ function AuthorCard({ name, yearOfBirth, rating, imageSource }) {
           >
             {rating}
           </span>
+        </div>
+        <div className="flex justify-between">
+          <button
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 
+            focus:outline-none focus:ring-blue-300 
+            font-medium rounded-lg text-sm px-5 py-2.5 
+            text-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              editAction();
+            }}
+          >
+            Edit
+          </button>
+          <button
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 
+            focus:outline-none focus:ring-blue-300 
+            font-medium rounded-lg text-sm px-5 py-2.5 
+            text-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteAction();
+            }}
+          >
+            Delete
+          </button>
         </div>
         <div class="flex items-center justify-between"></div>
       </div>

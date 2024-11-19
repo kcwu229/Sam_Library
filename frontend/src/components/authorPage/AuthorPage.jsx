@@ -6,6 +6,7 @@ import { VscClose } from "react-icons/vsc";
 import AuthorCard from "../authorPage/authorFilter/AuthorCard";
 import { useNavigate } from "react-router-dom";
 import { FaPenNib } from "react-icons/fa";
+import { deleteAuthor } from "../../services/AuthorServices";
 
 import {
   categories as categoryData,
@@ -43,7 +44,21 @@ function AuthorPage() {
     setLanguageExpand(!languageExpand);
   };
 
-  function getAllauthors() {
+  function deleteAction(id) {
+    deleteAuthor(id)
+      .then((response) => {
+        getAllAuthors();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function editAction(id) {
+    navigate(`/authors/${id}`);
+  }
+
+  function getAllAuthors() {
     listAuthors()
       .then((response) => {
         setAuthors(response.data);
@@ -63,23 +78,26 @@ function AuthorPage() {
   }
 
   useEffect(() => {
-    getAllauthors();
+    getAllAuthors();
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen pb-32">
       <SearchBar
         buttonText="Author"
         onClickAction={createAuthor}
         logo={<FaPenNib className="text-4xl" />}
         logoText={"AuthorList"}
       />
-      <div className="pt-32"></div>
+      <div className="pt-10"></div>
       <h2 className="text-3xl font-bold text-center pt-32">
         Result for {result}
       </h2>
-      <div className="flex mt-1">
-        <div id="filter" className="hidden md:block w-3/12 h-80 pl-10">
+      <div className="flex flex-col md:flex-row mt-1">
+        <div
+          id="filter"
+          className="w-full md:w-3/12 h-auto md:h-80 pl-10 mb-8 md:mb-0"
+        >
           <div id="categoryFilter">
             <h2 className="font-semibold mb-3">Category</h2>
             {categories.map((category, index) => {
@@ -128,14 +146,12 @@ function AuthorPage() {
             </a>
           </div>
           <br />
-          {/* 3. Rating Filter */}
           <div id="ratingFilter">
             <h2 className="font-semibold mb-3">Rating</h2>
             <RatingFilter />
           </div>
         </div>
-        <div className="w-9/12 flex flex-col space-y-4">
-          {/* Another halfpage */}
+        <div className="w-full md:w-9/12 flex flex-col space-y-4">
           <div id="resultList" className="">
             <div className="flex justify-between">
               {authors.length} products
@@ -200,16 +216,15 @@ function AuthorPage() {
           <br />
           <hr />
           <br />
-          {/* 4. AuthorCard */}
-          <div className="w-9/12 mt-4 flex flex-wrap gap-5 mx-4">
+          <div className="w-full mt-4 flex flex-wrap gap-5 mx-4">
             {authors.map((author) => {
               return (
                 <button
-                  className="w-full"
+                  key={author.id}
+                  className="w-full md:w-2/3 lg:w-2/3 xl:w-3/4"
                   onClick={() => viewOrEditAuthor(author.id)}
                 >
                   <AuthorCard
-                    key={author.id}
                     id={author.id}
                     imageSource={`${process.env.REACT_APP_BASE_URL}/authors/${author.imageName}.png`}
                     name={author.name}
@@ -218,6 +233,8 @@ function AuthorPage() {
                     }
                     rating={5}
                     remainingCount={4}
+                    deleteAction={() => deleteAction(author.id)}
+                    editAction={() => editAction(author.id)}
                   />
                 </button>
               );

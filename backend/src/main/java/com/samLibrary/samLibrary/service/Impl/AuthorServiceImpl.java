@@ -96,6 +96,16 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findById(authorId).orElseThrow(
                 () -> new RuntimeException("Authors not found")
         );
+
+        String imagePath = "backend/images/authors/" + author.getImageName() + ".png";
+
+        try {
+            Files.deleteIfExists(Paths.get(imagePath));
+            logger.info("Image file deleted successfully: " + imagePath);
+        } catch (IOException e) {
+            logger.error("Error deleting image file: " + imagePath, e);
+        }
+
         authorRepository.deleteById(authorId);
     }
 

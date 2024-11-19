@@ -22,7 +22,7 @@ function BookDetailPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-8/12">
-        <div className="w-full md:pt-20">
+        <div className="w-full md:pt-10">
           {/* hyperlink */}
           <div className="flex items-center text-left pt-4">
             <a href="/books" className="font-light">

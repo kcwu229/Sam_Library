@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { viewAuthor } from "../../services/AuthorServices";
-import { FaStar } from "react-icons/fa";
+import { FaRegStar, FaStar } from "react-icons/fa";
 import { useParams } from "react-router";
 import { FaChevronRight } from "react-icons/fa6";
 import { FaPenNib } from "react-icons/fa";
@@ -29,7 +29,7 @@ function AuthorDetailPage() {
   return (
     <div className="w-full pt-32">
       {/* hyperlink */}
-      <div className="flex items-center text-left pt-4 ml-16">
+      <div className="flex items-center text-left pt-4 ml-28">
         <a href="/authors" className="font-light">
           Author
         </a>{" "}
@@ -43,11 +43,11 @@ function AuthorDetailPage() {
       <br />
 
       {/* Heading */}
-      <h1 className="font-bold text-2xl mt-2 ml-16 md:flex-nowrap">
+      <h1 className="font-bold text-2xl mt-2 ml-28 md:flex-nowrap">
         Meet the Author: A Journey Through Words
       </h1>
       <div className="flex items-center w-full mt-10 flex-col md:flex-row">
-        <div className="w-5/12 h-80 md:ml-16">
+        <div className="w-5/12 h-80 md:ml-28">
           {author && (
             <img
               className="md:w-8/12 w-full"
@@ -55,10 +55,26 @@ function AuthorDetailPage() {
               alt="author image"
             ></img>
           )}
+
+          {/* Ratings */}
+          <div className="mt-10">
+            <div className="">
+              <p>
+                <b className="text-xl mt-10">Rating</b>
+              </p>
+            </div>
+            <div className="flex mt-4">
+              <FaStar className="w-8 h-8 text-yellow-500" />
+              <FaStar className="w-8 h-8 text-yellow-500 ml-4" />
+              <FaStar className="w-8 h-8 text-yellow-500 ml-4" />
+              <FaRegStar className="w-8 h-8 text-yellow-500 ml-4" />
+              <FaRegStar className="w-8 h-8 text-yellow-500 ml-4" />
+            </div>
+          </div>
         </div>
 
         {/* Birth Year to Death */}
-        <div className="w-7/12 h-80 mr-20">
+        <div className="w-7/12 h-80 mr-36">
           <hr className="bg-black text-black h-1 border-0"></hr>
           <div className="w-full md:flex hidden mt-8">
             {author && (
@@ -106,7 +122,7 @@ function AuthorDetailPage() {
           )}
           <div className="flex-col">
             <p>
-              <b className="text-2xl block mt-20">Description:</b>
+              <b className="text-xl block mt-20">Description:</b>
             </p>
             <p className="block mt-4 font-light tracking-widest leading-loose">
               {author && author.description}

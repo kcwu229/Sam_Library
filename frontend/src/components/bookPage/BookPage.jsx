@@ -1,17 +1,17 @@
-import { listBooks, showBooks } from "../services/BookServices";
+import { listBooks, showBooks } from "../../services/BookServices";
 import { useEffect, useState } from "react";
-import SearchBar from "./header/SearchBar";
-import RatingFilter from "./bookFilter/RatingFilter";
+import SearchBar from "../header/SearchBar";
+import RatingFilter from "../bookPage/bookFilter/RatingFilter";
 import { VscClose } from "react-icons/vsc";
-import BookCard from "./bookFilter/BookCard";
+import BookCard from "../bookPage/bookFilter/BookCard";
 
 import {
   categories as categoryData,
   languages as languageData,
   exampleBooks as exampleBooksData,
-} from "./bookFilter/BookFilterData";
+} from "../bookPage/bookFilter/BookFilterData";
 
-import SortFilter from "./bookFilter/SortFilter";
+import SortFilter from "../bookPage/bookFilter/SortFilter";
 
 function BookPage() {
   const [books, setBooks] = useState([]);
@@ -174,7 +174,7 @@ function BookPage() {
               return (
                 <BookCard
                   key={book.id}
-                  imageSource={`${process.env.REACT_APP_BASE_URL}/${book.imageName}.png`}
+                  imageSource={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                   title={book.title}
                   author={book.author ? book.author : "Unknown"}
                   rating={5}

@@ -1,5 +1,4 @@
 import { FaStar } from "react-icons/fa";
-import Article1Image from "../../assets/images/article1.png";
 
 function BookCard({ title, author, rating, remainingCount, imageSource }) {
   return (

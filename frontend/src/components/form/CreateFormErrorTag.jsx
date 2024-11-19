@@ -1,6 +1,6 @@
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
-function CreateBookErrorTag({ error }) {
+function CreateFormErrorTag({ error }) {
   return (
     <div>
       <div className="mt-5 absolute right-6 inset-y-2 pt-1">
@@ -11,4 +11,4 @@ function CreateBookErrorTag({ error }) {
   );
 }
 
-export default CreateBookErrorTag;
+export default CreateFormErrorTag;

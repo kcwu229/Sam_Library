@@ -1,10 +1,10 @@
-function LabelsTag({ forId, text }) {
+function LabelsTag({ forId, text, required }) {
   return (
     <label
-      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+      className="flex uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
       htmlFor="title"
     >
-      {text}
+      {text} <p className="text-red-500 pl-1">{required}</p>
     </label>
   );
 }

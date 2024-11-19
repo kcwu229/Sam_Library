@@ -1,6 +1,6 @@
 import { MdExpandMore } from "react-icons/md";
 import { useState } from "react";
-import DropdownTag from "../dropdown/DropdownTag";
+import DropdownTag from "../../dropdown/DropdownTag";
 
 function SortFilter() {
   const [dropdownOpen, setDropdownOpen] = useState(false);

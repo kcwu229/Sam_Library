@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import InputTag from "./form/InputTag";
-import LabelsTag from "./form/LabelsTag";
-import TextAreaTag from "./form/TextAreaTag";
-import CreateBookErrorTag from "./form/CreateBookErrorTag";
+import InputTag from "../form/InputTag";
+import LabelsTag from "../form/LabelsTag";
+import TextAreaTag from "../form/TextAreaTag";
+import CreateFormErrorTag from "../form/CreateFormErrorTag";
 import { useNavigate } from "react-router-dom";
 
 const CreateBooksPage = () => {
@@ -138,7 +138,7 @@ const CreateBooksPage = () => {
     <form className="w-full max-w-lg pt-40">
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
-          <LabelsTag for="title" text="Title" />
+          <LabelsTag for="title" text="Title" required="*" />
           <InputTag
             id="title"
             name="title"
@@ -147,7 +147,7 @@ const CreateBooksPage = () => {
             text="Title"
             error={errors.title}
           />
-          {errors.title && <CreateBookErrorTag error={errors.title} />}
+          {errors.title && <CreateFormErrorTag error={errors.title} />}
         </div>
         <div className="w-full md:w-1/2 px-3">
           <LabelsTag for="author" text="Author" />
@@ -173,7 +173,7 @@ const CreateBooksPage = () => {
           />
         </div>
         <div className="w-full md:w-1/2 px-3 relative">
-          <LabelsTag for="publishedYear" text="Published Year" />
+          <LabelsTag for="publishedYear" text="Published Year" required="*" />
           <InputTag
             id="publishedYear"
             name="publishedYear"
@@ -183,7 +183,7 @@ const CreateBooksPage = () => {
             text="1990"
           />
           {errors.publishedYear && (
-            <CreateBookErrorTag error={errors.publishedYear} />
+            <CreateFormErrorTag error={errors.publishedYear} />
           )}
         </div>
       </div>
@@ -199,7 +199,7 @@ const CreateBooksPage = () => {
             value={book.bookDescription}
           />
           {errors.bookDescription && (
-            <CreateBookErrorTag error={errors.bookDescription} />
+            <CreateFormErrorTag error={errors.bookDescription} />
           )}
           <p className="text-gray-600 text-xs italic">Not more than 50 words</p>
         </div>
@@ -207,7 +207,7 @@ const CreateBooksPage = () => {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <LabelsTag for="grid-zip" text="Image" />
+          <LabelsTag for="grid-zip" text="Image" required="*" />
           <input
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             type="file"
@@ -215,7 +215,7 @@ const CreateBooksPage = () => {
             onChange={handleFileChange}
             required
           />
-          {errors.file && <CreateBookErrorTag error={errors.file} />}
+          {errors.file && <CreateFormErrorTag error={errors.file} />}
           {imagePreviewUrl && (
             <img
               src={imagePreviewUrl}

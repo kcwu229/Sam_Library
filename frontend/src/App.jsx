@@ -2,9 +2,12 @@ import LoginPage from "./components/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUpPage from "./components/SignUpPage";
 import ForgetPassword from "./components/ForgetPassword";
-import BookPage from "./components/BookPage";
+import BookPage from "./components/bookPage/BookPage";
 import HomePage from "./components/HomePage";
-import CreateBooksPage from "./components/CreateBooksPage";
+import CreateBooksPage from "./components/bookPage/CreateBooksPage";
+import AuthorPage from "./components/authorPage/AuthorPage";
+import CreateAuthorsPage from "./components/authorPage/CreateAuthorsPage";
+import AuthorDetailPage from "./components/authorPage/AuthorDetailPage";
 
 function App() {
   return (
@@ -40,6 +43,31 @@ function App() {
             element={
               <div className="flex items-center justify-center min-h-screen">
                 <CreateBooksPage />
+              </div>
+            }
+          />
+
+          <Route
+            path="/authors"
+            element={
+              <div className="flex items-center justify-center min-h-screen">
+                <AuthorPage />
+              </div>
+            }
+          />
+          <Route
+            path="/authors/create-author"
+            element={
+              <div className="flex items-center justify-center min-h-screen">
+                <CreateAuthorsPage />
+              </div>
+            }
+          />
+          <Route
+            path="/authors/:id"
+            element={
+              <div className="flex items-center justify-center min-h-screen">
+                <AuthorDetailPage />
               </div>
             }
           />

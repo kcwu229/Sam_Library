@@ -32,8 +32,8 @@ public class Author {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "image_name")
+    private String imageName;
 
     @Column(name = "description")
     private String description;

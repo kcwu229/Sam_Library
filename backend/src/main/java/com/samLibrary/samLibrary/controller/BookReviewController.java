@@ -25,8 +25,8 @@ public class BookReviewController {
         return new ResponseEntity<>(savedBookReview, HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<BookReviewDto> getAuthorById(@PathVariable UUID bookReviewId) {
+    @GetMapping("/{id}")
+    public ResponseEntity<BookReviewDto> getAuthorById(@PathVariable("id") UUID bookReviewId) {
         BookReviewDto bookReviewDto = bookReviewService.getBookReviewById(bookReviewId);
         return ResponseEntity.ok(bookReviewDto);
     }

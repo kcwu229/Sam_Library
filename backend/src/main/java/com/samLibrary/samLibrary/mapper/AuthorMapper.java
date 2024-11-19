@@ -12,7 +12,7 @@ public class AuthorMapper {
                 author.getBirthYear(),
                 author.getDeathYear(),
                 author.getCountry(),
-                author.getImageUrl(),
+                author.getImageName(),
                 author.getDescription()
         );
     }
@@ -25,7 +25,7 @@ public class AuthorMapper {
                 authorDto.getBirthYear(),
                 authorDto.getDeathYear(),
                 authorDto.getCountry(),
-                authorDto.getImageUrl(),
+                authorDto.getImageName(),
                 authorDto.getDescription()
         );
     }

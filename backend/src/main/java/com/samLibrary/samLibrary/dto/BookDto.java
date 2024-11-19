@@ -31,7 +31,6 @@ public class BookDto {
 
     private String isbn;
 
-
     private String bookDescription;
 
     private String imageUrl;

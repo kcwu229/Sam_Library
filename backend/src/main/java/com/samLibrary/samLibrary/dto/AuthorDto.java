@@ -24,16 +24,12 @@ public class AuthorDto {
     @Min(value = 0, message = "birthYear should be greater than 0")
     private int birthYear;
 
-    @NotNull(message = "birthYear is required")
-    @Max(value = 3000, message = "birthYear should be less than 3000")
-    @Min(value = 0, message = "birthYear should be greater than 0")
     private int deathYear;
-
-    @NotBlank(message = "country is required")
+    
     private String country;
 
-    @NotBlank(message = "imageUrl is required")
-    private String imageUrl;
+    //@NotBlank(message = "imageUrl is required")
+    private String imageName;
 
     private String description;
 }

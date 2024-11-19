@@ -28,8 +28,8 @@ public class BookController {
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable UUID bookId) {
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDto> getBookById(@PathVariable("id") UUID bookId) {
         BookDto BookDto = bookService.getBookById(bookId);
         return ResponseEntity.ok(BookDto);
     }

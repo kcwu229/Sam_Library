@@ -51,6 +51,8 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/api/books").permitAll()
                         .requestMatchers("/api/books/create-book").permitAll()
+                        .requestMatchers("/api/authors").permitAll()
+                        .requestMatchers("/api/authors/create-author").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()

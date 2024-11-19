@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
 
             // Save the BufferedImage as a PNG file
-            ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/" + fileName + ".png")));
+            ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/books/" + fileName + ".png")));
             //logger.info("File uploaded and converted to PNG successfully");
         } catch (IOException e) {
             logger.error("Error uploading and converting file", e);

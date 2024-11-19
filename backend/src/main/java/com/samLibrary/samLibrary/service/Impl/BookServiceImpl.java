@@ -37,28 +37,23 @@ public class BookServiceImpl implements BookService {
         logger.info("filename is :" + fileName);
 
         try {
-            // Read the input file as a BufferedImage
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-
-            // Save the BufferedImage as a PNG file
             ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/books/" + fileName + ".png")));
-            //logger.info("File uploaded and converted to PNG successfully");
         } catch (IOException e) {
             logger.error("Error uploading and converting file", e);
         }
-        // Create a new Book entity from the BookDto
+
         Book book = new Book();
-        book.setId(bookId);
+        book.setId(bookId); // Ensure the UUID is set here
         book.setTitle(bookDto.getTitle());
         book.setAuthor(bookDto.getAuthor());
         book.setPublishedYear(bookDto.getPublishedYear());
         book.setImageName(fileName);
         book.setIsbn(bookDto.getIsbn());
+        book.setCatchPhrase(bookDto.getCatchPhrase());
         book.setBookDescription(bookDto.getBookDescription());
 
-        // Save the Book entity to the database
         Book savedBook = bookRepository.save(book);
-
         // Convert the saved Book entity back to a BookDto
         return BookMapper.mapToBookDto(savedBook);
 
@@ -94,7 +89,6 @@ public class BookServiceImpl implements BookService {
                 .map(book -> {
                     BookDto bookDto = BookMapper.mapToBookDto(book);
                     Path path = Paths.get("backend/" + book.getImageName() + ".png");
-                    bookDto.setImageUrl("backend/" + book.getImageName() + ".png"); // Set the image URL
 
                     return bookDto;
                 })

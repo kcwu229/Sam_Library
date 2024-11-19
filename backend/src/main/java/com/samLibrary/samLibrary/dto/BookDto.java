@@ -33,7 +33,8 @@ public class BookDto {
 
     private String bookDescription;
 
-    private String imageUrl;
+    @NotBlank(message = "CatchPhrase is required")
+    private String catchPhrase;
 
 }
 

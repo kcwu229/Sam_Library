@@ -24,12 +24,15 @@ public class AuthorDto {
     @Min(value = 0, message = "birthYear should be greater than 0")
     private int birthYear;
 
-    private int deathYear;
-    
     private String country;
+
+    private int deathYear;
 
     //@NotBlank(message = "imageUrl is required")
     private String imageName;
+
+    @NotBlank(message = "CatchPhrase is required")
+    private String catchPhrase;
 
     private String description;
 }

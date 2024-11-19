@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+                () -> new RuntimeException("User not found")
         );
         return UserMapper.mapToUserDto(user);
     }
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userToBeUpdate, UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+                () -> new RuntimeException("User not found")
         );
         user.setUsername(userToBeUpdate.getUsername());
         user.setEmail(userToBeUpdate.getEmail());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+                () -> new RuntimeException("User not found")
         );
         userRepository.deleteById(userId);
     }

@@ -1,6 +1,7 @@
 package com.samLibrary.samLibrary.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,9 +37,10 @@ public class Book {
     @Column(name = "isbn")
     private String isbn;
 
-    @Column(name = "book_description")
+    @Column(name = "book_description", columnDefinition = "MEDIUMTEXT")
     private String bookDescription;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "catch_phrase", columnDefinition = "MEDIUMTEXT")
+    private String catchPhrase;
+
 }

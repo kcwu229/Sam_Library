@@ -15,7 +15,7 @@ public class BookMapper {
             book.getImageName(),
             book.getIsbn(),
                 book.getBookDescription(),
-                book.getImageUrl()
+                book.getCatchPhrase()
         );
     }
 
@@ -29,7 +29,7 @@ public class BookMapper {
             bookDto.getImageName(),
             bookDto.getIsbn(),
                 bookDto.getBookDescription(),
-                bookDto.getImageUrl()
+                bookDto.getCatchPhrase()
         );
     }
 }

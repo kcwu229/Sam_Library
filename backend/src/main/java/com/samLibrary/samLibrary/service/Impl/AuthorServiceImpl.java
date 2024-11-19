@@ -48,17 +48,16 @@ public class AuthorServiceImpl implements AuthorService {
             logger.error("Error uploading and converting file", e);
         }
 
-
         Author author = new Author();
+
         author.setId(authorId);
         author.setName(authorDto.getName());
-        author.setCountry(author.getCountry());
-        author.setBirthYear(author.getBirthYear());
-        author.setDeathYear(author.getDeathYear());
-        author.setDescription(author.getDescription());
+        author.setBirthYear(authorDto.getBirthYear());
+        author.setCatchPhrase(authorDto.getCatchPhrase());
+        author.setDeathYear(authorDto.getDeathYear());
+        author.setCountry(authorDto.getCountry());
         author.setImageName(fileName);
-
-
+        author.setDescription(authorDto.getDescription());
 
         // Save the author entity to the database
         Author savedAuthor = authorRepository.save(author);
@@ -71,7 +70,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorDto getAuthorById(UUID authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+                () -> new RuntimeException("Authors not found")
         );
         return AuthorMapper.mappToAuthorDto(author);
     }
@@ -79,7 +78,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorDto updateAuthor(AuthorDto authorToUpdate, UUID authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+                () -> new RuntimeException("Authors not found")
         );
         author.setBirthYear(authorToUpdate.getBirthYear());
         author.setDeathYear(authorToUpdate.getDeathYear());
@@ -95,7 +94,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void deleteAuthor(UUID authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(
-                () -> new RuntimeException("Employee not found")
+                () -> new RuntimeException("Authors not found")
         );
         authorRepository.deleteById(authorId);
     }

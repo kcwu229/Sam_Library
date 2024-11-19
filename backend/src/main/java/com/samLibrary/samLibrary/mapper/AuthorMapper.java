@@ -10,9 +10,10 @@ public class AuthorMapper {
                 author.getId(),
                 author.getName(),
                 author.getBirthYear(),
-                author.getDeathYear(),
                 author.getCountry(),
+                author.getDeathYear(),
                 author.getImageName(),
+                author.getCatchPhrase(),
                 author.getDescription()
         );
     }
@@ -23,10 +24,12 @@ public class AuthorMapper {
                 authorDto.getId(),
                 authorDto.getName(),
                 authorDto.getBirthYear(),
+                authorDto.getCatchPhrase(),
                 authorDto.getDeathYear(),
                 authorDto.getCountry(),
                 authorDto.getImageName(),
                 authorDto.getDescription()
+
         );
     }
 }

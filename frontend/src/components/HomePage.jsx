@@ -5,9 +5,11 @@ import ArticleImage3 from "../assets/images/article3.png";
 import { FaShieldAlt } from "react-icons/fa";
 import { GrLicense } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function HomePage() {
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
   const articles = [
     {
       title: "The Future of Libraries in the Digital Age",
@@ -30,6 +32,10 @@ function HomePage() {
     navigate("/books");
   }
 
+  useEffect(() => {
+    setVisible(true);
+  }, []);
+
   return (
     <div>
       <div className="relative flex items-center justify-center min-h-screen">
@@ -38,23 +44,27 @@ function HomePage() {
           alt="Library"
           className="absolute w-full h-full inset-0 object-cover"
         />
-        <div className="absolute inset-0 bg-black opacity-80 "></div>
+        <div className="absolute inset-0 bg-black opacity-80"></div>
         <div className="relative z-10 text-center text-white">
           <br />
           <br />
           <h1 className="text-2xl md:text-5xl font-bold text-sam-gray opacity-90 w-3/5 text-left ml-32">
-            <i>
+            <i className={`${visible ? "animate-fade delay-1000" : ""}`}>
               Every book holds a dream waiting to be discovered. Let your
               imagination soar as you turn each page.
             </i>
           </h1>
           <p className="ml-40 mt-10 md:text-3xl text text-sam-gray opacity-65 w-3/5 md:text-left mb-14">
-            <i>Journey through stories that inspire and transform.</i>
+            <i className={`${visible ? "animate-fade delay-1100" : ""}`}>
+              Journey through stories that inspire and transform.
+            </i>
           </p>
 
           <button
             onClick={navigateBookPage}
-            className=" rounded-2xl absolute md:right-60 text-sam-gray p-4 md:font-light md:text-xl bg-sam-orange text-left mb-16"
+            className={`rounded-2xl absolute md:right-60 text-sam-gray p-4 md:font-light md:text-xl bg-sam-orange text-left mb-16 ${
+              visible ? "animate-fade delay-3000" : ""
+            }`}
           >
             Explore
           </button>

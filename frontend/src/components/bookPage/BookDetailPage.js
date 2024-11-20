@@ -105,7 +105,7 @@ function BookDetailPage() {
                 <p>
                   <b className="text-xl block">Description</b>
                 </p>
-                <p className="block mt-4 font-light tracking-widest leading-loose">
+                <p className="block mt-4 font-light tracking-widest leading-loose ">
                   {book && book.bookDescription}
                 </p>
               </div>

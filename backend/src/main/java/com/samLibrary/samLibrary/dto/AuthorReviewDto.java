@@ -16,11 +16,11 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Getter
-public class BookReviewDto {
+public class AuthorReviewDto {
     private UUID id;
 
     @NotNull(message = "Book ID is required")
-    private UUID bookId;
+    private UUID authorId;
 
     @NotBlank(message = "Title is required")
     private String title;

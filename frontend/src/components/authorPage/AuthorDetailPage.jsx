@@ -5,10 +5,12 @@ import { FaChevronRight, FaStar } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
 import RatingSection from "../RatingSection";
 import Comments from "../Comments";
+import LeaveComment from "../LeaveComment";
 
 function AuthorDetailPage() {
   const { id } = useParams();
   const [author, setAuthor] = useState(null);
+  const ratingType = "author";
 
   useEffect(() => {
     if (id) {
@@ -23,7 +25,7 @@ function AuthorDetailPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-8/12 lg:10/12">
+      <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-10/12 lg:w-11/12">
         <div className="w-full md:pt-20">
           {/* hyperlink */}
           <div className="flex items-center text-left pt-4">
@@ -43,7 +45,7 @@ function AuthorDetailPage() {
 
           <div className="flex flex-col md:flex-row mt-10">
             {/* Left Column */}
-            <div className="md:w-1/2 flex flex-col items-center">
+            <div className="md:w-1/3 flex flex-col items-center">
               {author && (
                 <img
                   className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
@@ -54,7 +56,7 @@ function AuthorDetailPage() {
             </div>
 
             {/* Right Column */}
-            <div className="md:w-1/2 md:pl-10 mt-10 md:mt-0 ">
+            <div className="md:w-2/3 md:pl-10 mt-10 md:mt-0 ">
               {/* ISBN and Publish Year */}
               <div className="flex items-start mb-10">
                 {author && author.country && (
@@ -107,6 +109,9 @@ function AuthorDetailPage() {
               <Comments />
               <Comments />
               <Comments />
+            </div>
+            <div className="w-full md:w-8/12 mx-auto mt-10">
+              {id ? <LeaveComment ratingType={ratingType} id={id} /> : null}
             </div>
           </div>
         </div>

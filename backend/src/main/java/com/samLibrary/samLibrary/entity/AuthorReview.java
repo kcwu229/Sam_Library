@@ -16,19 +16,19 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "book_review")
-public class BookReview {
+public class AuthorReview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    @JoinColumn(name = "author_id", nullable = false)
+    private Author author;
 
     @Column(name="title", nullable = false)
     private String title;
 
-    @Column(name="book_review", columnDefinition = "MEDIUMTEXT")
+    @Column(name="author_review", columnDefinition = "MEDIUMTEXT")
     private String review;
 
     @Column(name="rating")

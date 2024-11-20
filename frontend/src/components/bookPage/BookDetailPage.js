@@ -5,10 +5,12 @@ import { FaChevronRight } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
 import RatingSection from "../RatingSection";
 import Comments from "../Comments";
+import LeaveComment from "../LeaveComment";
 
 function BookDetailPage() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const ratingType = "book";
 
   useEffect(() => {
     if (id) {
@@ -24,7 +26,7 @@ function BookDetailPage() {
   return (
     <div className="container mx-auto px-4">
       <div className="flex flex-col min-h-screen">
-        <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-8/12 lg:w10/12">
+        <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-8/12 lg:w-11/12">
           <div className="w-full md:pt-10">
             {/* hyperlink */}
             <div className="flex items-center text-left pt-4">
@@ -44,7 +46,7 @@ function BookDetailPage() {
 
             <div className="flex flex-col md:flex-row mt-10">
               {/* Left Column */}
-              <div className="md:w-1/2 flex flex-col items-center">
+              <div className="md:w-1/3 flex flex-col items-center">
                 {book && (
                   <img
                     className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
@@ -55,7 +57,7 @@ function BookDetailPage() {
               </div>
 
               {/* Right Column */}
-              <div className="md:w-1/2 md:pl-10 mt-10 md:mt-0">
+              <div className="md:w-2/3 md:pl-10 mt-10 md:mt-0">
                 {/* ISBN and Publish Year */}
                 <div className="flex flex-col md:flex-row items-start mb-10">
                   {book && book.isbn && (
@@ -106,9 +108,10 @@ function BookDetailPage() {
               <RatingSection />
               <div className="flex flex-col gap-4">
                 <Comments />
-                <Comments />
-                <Comments />
               </div>
+            </div>
+            <div className="w-full md:w-8/12 mx-auto mt-10">
+              {id ? <LeaveComment ratingType={ratingType} id={id} /> : null}
             </div>
           </div>
         </div>

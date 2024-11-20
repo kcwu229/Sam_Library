@@ -15,14 +15,16 @@ import java.util.UUID;
 @CrossOrigin("*")
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/bookReview")
+@RequestMapping("/api/books-reviews")
 public class BookReviewController {
 
     private BookReviewService bookReviewService;
 
-    @PostMapping
-    public ResponseEntity<BookReviewDto> createBookReview(@Valid @RequestBody BookReviewDto bookReviewDto) {
-        BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto);
+    @PostMapping("/{id}")
+    public ResponseEntity<BookReviewDto> createBookReview(
+            @Valid @RequestBody BookReviewDto bookReviewDto,
+            @PathVariable("id") UUID bookId) {
+        BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto, bookId);
         return new ResponseEntity<>(savedBookReview, HttpStatus.CREATED);
     }
 
@@ -32,7 +34,7 @@ public class BookReviewController {
         return ResponseEntity.ok(bookReviewDto);
     }
 
-    @GetMapping("/book/{bookId}")
+    @GetMapping("/books/{bookId}")
     public ResponseEntity<List<BookReviewDto>> getAllBookReview(@PathVariable UUID bookId) {
         List<BookReviewDto> bookReviewDto = bookReviewService.getAllBookReviews(bookId);
         return ResponseEntity.ok(bookReviewDto);
@@ -40,8 +42,8 @@ public class BookReviewController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookReviewDto> updateUser(@RequestBody BookReviewDto updatedBookReview, @PathVariable("id") UUID bookReviewId , @PathVariable("authorId") UUID authorId) {
-        BookReviewDto bookReviewDto = bookReviewService.updateBookReview(updatedBookReview, bookReviewId, authorId);
+    public ResponseEntity<BookReviewDto> updateUser(@RequestBody BookReviewDto updatedBookReview, @PathVariable("id") UUID bookReviewId) {
+        BookReviewDto bookReviewDto = bookReviewService.updateBookReview(updatedBookReview, bookReviewId);
         return ResponseEntity.ok(bookReviewDto);
     }
 

@@ -43,8 +43,11 @@ public class BookController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookDto> updateBook(@RequestBody BookDto updatedBook, @PathVariable("id") UUID bookId) {
-        BookDto bookDto = bookService.updateBook(updatedBook, bookId);
+    public ResponseEntity<BookDto> updateBook(
+            @RequestPart("book") BookDto updatedBook,
+            @PathVariable("id") UUID bookId,
+            @RequestPart("file") @Valid MultipartFile file) {
+        BookDto bookDto = bookService.updateBook(updatedBook, bookId, file);
         return ResponseEntity.ok(bookDto);
     }
 

@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface BookService {
     BookDto createBook(BookDto bookDto, MultipartFile file);
     BookDto getBookById(UUID bookId);
-    BookDto updateBook(BookDto bookDto, UUID bookId);
+    BookDto updateBook(BookDto bookToBeUpdated, UUID bookId, MultipartFile file);
     void deleteBook(UUID bookId);
     List<BookDto> getAllBooks();
 }

@@ -72,6 +72,10 @@ function BookPage() {
     navigate(`/books/${id}`);
   }
 
+  function editAction(id) {
+    navigate(`/books/update-book/${id}`);
+  }
+
   useEffect(() => {
     getAllBooks();
   }, []);
@@ -225,6 +229,7 @@ function BookPage() {
                     author={book.author ? book.author : "Unknown"}
                     rating={5}
                     remainingCount={4}
+                    editAction={() => editAction(book.id)}
                     deleteAction={() => deleteAction(book.id)}
                   />
                 </button>

@@ -55,7 +55,7 @@ function AuthorPage() {
   }
 
   function editAction(id) {
-    navigate(`/authors/${id}`);
+    navigate(`/authors/update-author/${id}`);
   }
 
   function getAllAuthors() {

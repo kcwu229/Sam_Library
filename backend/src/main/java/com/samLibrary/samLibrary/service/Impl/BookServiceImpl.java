@@ -37,8 +37,8 @@ public class BookServiceImpl implements BookService {
         logger.info("filename is :" + fileName);
 
         try {
-            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-            ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/books/" + fileName + ".png")));
+            Files.copy(file.getInputStream(), Paths.get("backend/images/books/" + fileName + ".png"));
+            logger.info("File uploaded successfully");
         } catch (IOException e) {
             logger.error("Error uploading and converting file", e);
         }
@@ -67,19 +67,43 @@ public class BookServiceImpl implements BookService {
         return BookMapper.mapToBookDto(book);
     }
 
-    @Override
-    public BookDto updateBook(BookDto bookToBeUpdated, UUID bookId) {
+
+
+    public BookDto updateBook(BookDto bookToBeUpdated, UUID bookId, MultipartFile file) {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
-        book.setAuthor(bookToBeUpdated.getAuthor());
-        book.setImageName(bookToBeUpdated.getImageName());
-        book.setIsbn(bookToBeUpdated.getIsbn());
+
+        // if the user uploads a new image, delete the old image and save the new one
+        String fileName = book.getImageName();
+        logger.info("bookId is :" + bookId);
+        logger.info("filename is :" + fileName);
+
+        try {
+            Files.copy(file.getInputStream(), Paths.get("backend/images/books/" + fileName + ".png"));
+            logger.info("File uploaded successfully");
+        } catch (IOException e) {
+            logger.error("Error uploading and converting file", e);
+        }
+
+        logger.info("1");
         book.setTitle(bookToBeUpdated.getTitle());
+        logger.info("2");
+        book.setAuthor(bookToBeUpdated.getAuthor());
+        logger.info("3");
         book.setPublishedYear(bookToBeUpdated.getPublishedYear());
+        logger.info("4");
+        book.setImageName(fileName);
+        logger.info("5");
+        book.setIsbn(bookToBeUpdated.getIsbn());
+        logger.info("6");
+        book.setCatchPhrase(bookToBeUpdated.getCatchPhrase());
+        logger.info("7");
         book.setBookDescription(bookToBeUpdated.getBookDescription());
-        Book updatedBook = bookRepository.save(book);
-        return BookMapper.mapToBookDto(updatedBook);
+
+        Book savedBook = bookRepository.save(book);
+        // Convert the saved Book entity back to a BookDto
+        return BookMapper.mapToBookDto(savedBook);
     }
 
     @Override

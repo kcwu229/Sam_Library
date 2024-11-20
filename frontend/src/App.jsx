@@ -4,9 +4,9 @@ import SignUpPage from "./components/SignUpPage";
 import ForgetPassword from "./components/ForgetPassword";
 import BookPage from "./components/bookPage/BookPage";
 import HomePage from "./components/HomePage";
-import CreateBooksPage from "./components/bookPage/CreateBooksPage";
+import CreateOrUpdateBookPage from "./components/bookPage/CreateOrUpdateBookPage";
 import AuthorPage from "./components/authorPage/AuthorPage";
-import CreateAuthorsPage from "./components/authorPage/CreateAuthorsPage";
+import CreateOrUpdateAuthorPage from "./components/authorPage/CreateOrUpdateAuthorPage";
 import AuthorDetailPage from "./components/authorPage/AuthorDetailPage";
 import BookDetailPage from "./components/bookPage/BookDetailPage";
 
@@ -42,7 +42,7 @@ function App() {
           path="/books/create-book"
           element={
             <div className="flex items-center justify-center min-h-screen">
-              <CreateBooksPage />
+              <CreateOrUpdateBookPage />
             </div>
           }
         />
@@ -51,6 +51,14 @@ function App() {
           element={
             <div className="flex items-center justify-center min-h-screen">
               <BookDetailPage />
+            </div>
+          }
+        />
+        <Route
+          path="/books/update-book/:id"
+          element={
+            <div className="flex items-center justify-center min-h-screen">
+              <CreateOrUpdateBookPage />
             </div>
           }
         />
@@ -67,7 +75,7 @@ function App() {
           path="/authors/create-author"
           element={
             <div className="flex items-center justify-center min-h-screen">
-              <CreateAuthorsPage />
+              <CreateOrUpdateAuthorPage />
             </div>
           }
         />
@@ -76,6 +84,15 @@ function App() {
           element={
             <div className="flex items-center justify-center min-h-screen">
               <AuthorDetailPage />
+            </div>
+          }
+        />
+
+        <Route
+          path="/authors/update-author/:id"
+          element={
+            <div className="flex items-center justify-center min-h-screen">
+              <CreateOrUpdateAuthorPage />
             </div>
           }
         />

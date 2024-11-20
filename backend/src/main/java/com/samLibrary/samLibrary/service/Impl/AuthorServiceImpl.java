@@ -38,12 +38,9 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("filename is :" + fileName);
 
         try {
-            // Read the input file as a BufferedImage
-            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-
             // Save the BufferedImage as a PNG file
-            ImageIO.write(bufferedImage, "png", Files.newOutputStream(Paths.get("backend/images/authors/" + fileName + ".png")));
-            //logger.info("File uploaded and converted to PNG successfully");
+            Files.copy(file.getInputStream(), Paths.get("backend/images/authors/" + fileName + ".png"));
+            logger.info("File uploaded and converted to PNG successfully");
         } catch (IOException e) {
             logger.error("Error uploading and converting file", e);
         }
@@ -76,14 +73,29 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto updateAuthor(AuthorDto authorToUpdate, UUID authorId) {
+    public AuthorDto updateAuthor(AuthorDto authorToUpdate, UUID authorId, MultipartFile file) {
         Author author = authorRepository.findById(authorId).orElseThrow(
                 () -> new RuntimeException("Authors not found")
         );
+
+        String fileName = author.getImageName();
+        logger.info("authorId is :" + authorId);
+        logger.info("filename is :" + fileName);
+
+        try {
+            Files.copy(file.getInputStream(), Paths.get("backend/images/authors/" + fileName + ".png"));
+            logger.info("File updated successfully");
+        } catch (IOException e) {
+            logger.error("Error uploading and converting file", e);
+        }
+
+        author.setId(authorId); // Ensure the UUID is set here
+        author.setName(authorToUpdate.getName());
         author.setBirthYear(authorToUpdate.getBirthYear());
+        author.setCatchPhrase(authorToUpdate.getCatchPhrase());
         author.setDeathYear(authorToUpdate.getDeathYear());
         author.setCountry(authorToUpdate.getCountry());
-        author.setName(authorToUpdate.getName());
+        author.setImageName(fileName);
         author.setDescription(authorToUpdate.getDescription());
 
         // need to rewrite this part

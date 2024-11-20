@@ -1,33 +1,78 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import InputTag from "../form/InputTag";
 import LabelsTag from "../form/LabelsTag";
 import TextAreaTag from "../form/TextAreaTag";
 import CreateFormErrorTag from "../form/CreateFormErrorTag";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getBook } from "../../services/BookServices";
+import FileInput from "../form/FileInput";
 
-const CreateBooksPage = () => {
+const CreateOrUpdateBookPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [book, setBook] = useState({
     title: "",
     author: "",
     publishedYear: "",
-    catchPhrase: "",
     isbn: "",
+    catchPhrase: "",
     bookDescription: "",
-    bookName: "", // This will store the image name
+    imageName: "", // This will store the image name
   });
 
   const [errors, setErrors] = useState({
     title: "",
+    author: "",
     publishedYear: "",
     catchPhrase: "",
-    file: "",
     bookDescription: "",
+    file: "",
   });
 
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getBook(id)
+        .then((response) => {
+          setBook(response.data);
+          if (response.data.imageName) {
+            const imageUrl = `${process.env.REACT_APP_BASE_URL}/books/${response.data.imageName}.png`;
+            setImagePreviewUrl(imageUrl);
+            fetch(imageUrl, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+              },
+            })
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.blob();
+              })
+              .then((blob) => {
+                if (blob.size > 0) {
+                  const file = new File([blob], response.data.imageName, {
+                    type: blob.type,
+                  });
+                  setFile(file);
+                  console.log("File: ", file);
+                } else {
+                  console.error(
+                    "Failed to fetch the image blob. Blob size is 0."
+                  );
+                }
+              })
+              .catch((error) =>
+                console.error("Error fetching the image blob:", error)
+              );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,9 +106,8 @@ const CreateBooksPage = () => {
     setBook({ ...book, [name]: value });
   };
 
-  // file validation
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (fileList) => {
+    const file = fileList[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
       if (file.size > 1048576) {
         // 1 MB = 1048576 bytes
@@ -71,7 +115,7 @@ const CreateBooksPage = () => {
         return;
       }
       setFile(file);
-      setBook({ ...book, bookName: file.name }); // Update bookName with the image name
+      setBook({ ...book, imageName: file.name }); // Update imageName with the image name
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -95,6 +139,32 @@ const CreateBooksPage = () => {
       errorsCopy.title = "Title is required";
     }
 
+    if (book.author.trim()) {
+      errorsCopy.author = "";
+    } else {
+      valid = false;
+      errorsCopy.author = "Author is required";
+    }
+
+    if (book.publishedYear && book.publishedYear.toString().trim()) {
+      const publishedYear = Number(book.publishedYear);
+      if (!Number.isInteger(publishedYear)) {
+        valid = false;
+        errorsCopy.publishedYear = "Published Year must be an integer";
+      } else if (
+        publishedYear < 0 ||
+        publishedYear > new Date().getFullYear()
+      ) {
+        valid = false;
+        errorsCopy.publishedYear = `Publication Year should be between 0 and ${new Date().getFullYear()}`;
+      } else {
+        errorsCopy.publishedYear = "";
+      }
+    } else {
+      valid = false;
+      errorsCopy.publishedYear = "Publication Year is required!";
+    }
+
     if (book.catchPhrase.trim()) {
       errorsCopy.catchPhrase = "";
     } else {
@@ -109,27 +179,11 @@ const CreateBooksPage = () => {
       errorsCopy.bookDescription = "bookDescription is required";
     }
 
-    if (book.publishedYear.trim()) {
-      const publishedYear = Number(book.publishedYear);
-      if (!Number.isInteger(publishedYear)) {
-        valid = false;
-        errorsCopy.publishedYear = "Publish Year must be an integer";
-      } else if (publishedYear < 0 || publishedYear > 2022) {
-        valid = false;
-        errorsCopy.publishedYear = "Publish Year should be between 0 and 2022";
-      } else {
-        errorsCopy.publishedYear = "";
-      }
-    } else {
+    if (!id && !file) {
       valid = false;
-      errorsCopy.publishedYear = "Publish Year is required !";
-    }
-
-    if (file) {
+      errorsCopy.file = "Cover image is required";
+    } else {
       errorsCopy.file = "";
-    } else {
-      valid = false;
-      errorsCopy.file = "Image is required";
     }
 
     setErrors(errorsCopy);
@@ -139,32 +193,52 @@ const CreateBooksPage = () => {
   const saveOrUpdateBook = async (e) => {
     e.preventDefault();
 
+    console.log("Book object:", book);
+
     if (validateForm()) {
+      // Create a new FormData object
       const formData = new FormData();
       formData.append(
         "book",
         new Blob([JSON.stringify(book)], { type: "application/json" })
       );
-      formData.append("file", file);
+      if (file) {
+        formData.append("file", file);
+        console.log("File: before submit ??", file);
+      }
 
-      // create a new book
+      // Debugging: Log the book object to verify the fields
+      console.log("Book object:", book);
+
       try {
-        const response = await axios.post("/books", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "X-File-Name": file.name, // Custom header to pass the file name
-          },
-        });
-        console.log("Book created successfully:", response.data);
+        const headers = {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+        };
+
+        if (id) {
+          // Update existing book
+          console.log("File: after submit ??", file);
+          const response = await axios.put(`/books/${id}`, formData, {
+            headers,
+          });
+          console.log("Book updated successfully:", response.data);
+        } else {
+          // Create a new book
+          const response = await axios.post("/books", formData, {
+            headers,
+          });
+          console.log("Book created successfully:", response.data);
+        }
         navigate("/books");
       } catch (error) {
-        console.error("Error creating book:", error);
+        console.error("Error saving book:", error);
       }
     }
   };
 
   return (
-    <form className="w-full max-w-lg pt-40">
+    <form className="w-full max-w-lg pt-40" onSubmit={saveOrUpdateBook}>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
           <LabelsTag for="title" text="Title" required="*" />
@@ -179,41 +253,43 @@ const CreateBooksPage = () => {
           {errors.title && <CreateFormErrorTag error={errors.title} />}
         </div>
         <div className="w-full md:w-1/2 px-3">
-          <LabelsTag for="author" text="Author" />
+          <LabelsTag for="author" text="Author" required="*" />
           <InputTag
             id="author"
             name="author"
             value={book.author}
             onChange={handleInputChange}
-            text="Tom Chan"
+            text="Author"
+            error={errors.author}
           />
+          {errors.author && <CreateFormErrorTag error={errors.author} />}
         </div>
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <LabelsTag for="isbn" text="ISBN" />
-          <InputTag
-            id="isbn"
-            name="isbn"
-            value={book.isbn}
-            onChange={handleInputChange}
-            text="978-3-16-148410-0"
-          />
-        </div>
-        <div className="w-full md:w-1/2 px-3 relative">
-          <LabelsTag for="publishedYear" text="Published Year" required="*" />
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
+          <LabelsTag for="publishedYear" text="Publication Year" required="*" />
           <InputTag
             id="publishedYear"
             name="publishedYear"
             value={book.publishedYear}
             onChange={handleInputChange}
             error={errors.publishedYear}
-            text="1990"
+            text="Publication Year"
           />
           {errors.publishedYear && (
             <CreateFormErrorTag error={errors.publishedYear} />
           )}
+        </div>
+        <div className="w-full md:w-1/2 px-3 relative">
+          <LabelsTag for="isbn" text="isbn" />
+          <InputTag
+            id="isbn"
+            name="isbn"
+            value={book.isbn}
+            onChange={handleInputChange}
+            text="isbn"
+          />
         </div>
       </div>
 
@@ -238,7 +314,7 @@ const CreateBooksPage = () => {
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3  relative">
+        <div className="w-full px-3 relative">
           <LabelsTag
             for="bookDescription"
             text="bookDescription"
@@ -263,21 +339,18 @@ const CreateBooksPage = () => {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <LabelsTag for="grid-zip" text="Image" required="*" />
-          <input
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            type="file"
-            accept="image/jpeg, image/png"
-            onChange={handleFileChange}
-            required
-          />
+          <LabelsTag for="imageName" text="Cover Image" required="*" />
+          <FileInput value={file ? [file] : []} onChange={handleFileChange} />
           {errors.file && <CreateFormErrorTag error={errors.file} />}
           {imagePreviewUrl && (
-            <img
-              src={imagePreviewUrl}
-              alt="Image Preview"
-              className="mt-4 w-1/3"
-            />
+            <div className="mt-4">
+              <img
+                src={imagePreviewUrl}
+                alt="Image Preview"
+                className="w-1/3 mb-4"
+              />
+              <p className="text-gray-600 text-xs italic">Current Image</p>
+            </div>
           )}
         </div>
       </div>
@@ -285,13 +358,12 @@ const CreateBooksPage = () => {
       <button
         className="mb-20 bg-rose-500 rounded-xl px-8 py-2 text-center text-white 
               hover:border-rose-600 hover:border items-center mr-4 relative"
-        onClick={saveOrUpdateBook}
         type="submit"
       >
-        Create
+        {id ? "Update" : "Create"}
       </button>
     </form>
   );
 };
 
-export default CreateBooksPage;
+export default CreateOrUpdateBookPage;

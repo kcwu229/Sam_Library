@@ -42,8 +42,11 @@ public class AuthorController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorDto updatedAuthor, @PathVariable("id") UUID authorId) {
-        AuthorDto authorDto = authorService.updateAuthor(updatedAuthor, authorId);
+    public ResponseEntity<AuthorDto> updateAuthor(
+            @RequestPart("author") AuthorDto updatedAuthor,
+            @PathVariable("id") UUID authorId,
+            @RequestPart("file") @Valid MultipartFile file) {
+        AuthorDto authorDto = authorService.updateAuthor(updatedAuthor, authorId, file);
         return ResponseEntity.ok(authorDto);
     }
 

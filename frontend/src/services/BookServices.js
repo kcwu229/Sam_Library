@@ -10,7 +10,7 @@ const REST_BOOK_API_URL = "http://localhost:8080/api/books";
 
 export const listBooks = (user) => axiosInstance.get(REST_BOOK_API_URL);
 
-export const viewBook = (bookId) =>
+export const getBook = (bookId) =>
   axiosInstance.get(REST_BOOK_API_URL + "/" + bookId);
 
 export const deleteBook = (bookId) =>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { viewBook } from "../../services/BookServices";
+import { getBook } from "../../services/BookServices";
 import { FaChevronRight, FaStar } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
 
@@ -10,7 +10,7 @@ function BookDetailPage() {
 
   useEffect(() => {
     if (id) {
-      viewBook(id)
+      getBook(id)
         .then((response) => {
           setBook(response.data);
           console.log("Book detail obj", response.data);

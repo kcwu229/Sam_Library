@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import InputTag from "../form/InputTag";
 import LabelsTag from "../form/LabelsTag";
 import TextAreaTag from "../form/TextAreaTag";
 import CreateFormErrorTag from "../form/CreateFormErrorTag";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getAuthor } from "../../services/AuthorServices";
+import FileInput from "../form/FileInput";
 
-const CreateAuthorsPage = () => {
+const CreateOrUpdateAuthorPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [author, setAuthor] = useState({
     name: "",
@@ -28,6 +31,47 @@ const CreateAuthorsPage = () => {
 
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getAuthor(id)
+        .then((response) => {
+          setAuthor(response.data);
+          if (response.data.imageName) {
+            const imageUrl = `${process.env.REACT_APP_BASE_URL}/authors/${response.data.imageName}.png`;
+            setImagePreviewUrl(imageUrl);
+            fetch(imageUrl, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+              },
+            })
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.blob();
+              })
+              .then((blob) => {
+                if (blob.size > 0) {
+                  const file = new File([blob], response.data.imageName, {
+                    type: blob.type,
+                  });
+                  setFile(file);
+                  console.log("File: ", file);
+                } else {
+                  console.error(
+                    "Failed to fetch the image blob. Blob size is 0."
+                  );
+                }
+              })
+              .catch((error) =>
+                console.error("Error fetching the image blob:", error)
+              );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,9 +105,8 @@ const CreateAuthorsPage = () => {
     setAuthor({ ...author, [name]: value });
   };
 
-  // file validation
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (fileList) => {
+    const file = fileList[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
       if (file.size > 1048576) {
         // 1 MB = 1048576 bytes
@@ -95,14 +138,14 @@ const CreateAuthorsPage = () => {
       errorsCopy.name = "Name is required";
     }
 
-    if (author.birthYear.trim()) {
+    if (author.birthYear.toString().trim()) {
       const birthYear = Number(author.birthYear);
       if (!Number.isInteger(birthYear)) {
         valid = false;
         errorsCopy.birthYear = "Birth Year must be an integer";
-      } else if (birthYear < 0 || birthYear > 2022) {
+      } else if (birthYear < 0 || birthYear > new Date().getFullYear()) {
         valid = false;
-        errorsCopy.birthYear = "Birth Year should be between 0 and 2022";
+        errorsCopy.birthYear = `Birth Year should be between 0 and ${new Date().getFullYear()}`;
       } else {
         errorsCopy.birthYear = "";
       }
@@ -125,11 +168,11 @@ const CreateAuthorsPage = () => {
       errorsCopy.description = "Description is required";
     }
 
-    if (file) {
-      errorsCopy.file = "";
-    } else {
+    if (!id && !file) {
       valid = false;
       errorsCopy.file = "Image is required";
+    } else {
+      errorsCopy.file = "";
     }
 
     setErrors(errorsCopy);
@@ -142,34 +185,49 @@ const CreateAuthorsPage = () => {
     console.log("Author object:", author);
 
     if (validateForm()) {
+      // Create a new FormData object
       const formData = new FormData();
       formData.append(
         "author",
         new Blob([JSON.stringify(author)], { type: "application/json" })
       );
-      formData.append("file", file);
+      if (file) {
+        formData.append("file", file);
+        console.log("File: before submit ??", file);
+      }
 
       // Debugging: Log the author object to verify the fields
       console.log("Author object:", author);
 
-      // create a new author
       try {
-        const response = await axios.post("/authors", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "X-File-Name": file.name, // Custom header to pass the file name
-          },
-        });
-        console.log("Author created successfully:", response.data);
+        const headers = {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+        };
+
+        if (id) {
+          // Update existing author
+          console.log("File: after submit ??", file);
+          const response = await axios.put(`/authors/${id}`, formData, {
+            headers,
+          });
+          console.log("Author updated successfully:", response.data);
+        } else {
+          // Create a new author
+          const response = await axios.post("/authors", formData, {
+            headers,
+          });
+          console.log("Author created successfully:", response.data);
+        }
         navigate("/authors");
       } catch (error) {
-        console.error("Error creating author:", error);
+        console.error("Error saving author:", error);
       }
     }
   };
 
   return (
-    <form className="w-full max-w-lg pt-40">
+    <form className="w-full max-w-lg pt-40" onSubmit={saveOrUpdateAuthor}>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
           <LabelsTag for="name" text="Name" required="*" />
@@ -264,20 +322,17 @@ const CreateAuthorsPage = () => {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <LabelsTag for="grid-zip" text="Image" required="*" />
-          <input
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            type="file"
-            accept="image/jpeg, image/png"
-            onChange={handleFileChange}
-            required
-          />
+          <FileInput value={file ? [file] : []} onChange={handleFileChange} />
           {errors.file && <CreateFormErrorTag error={errors.file} />}
           {imagePreviewUrl && (
-            <img
-              src={imagePreviewUrl}
-              alt="Image Preview"
-              className="mt-4 w-1/3"
-            />
+            <div className="mt-4">
+              <img
+                src={imagePreviewUrl}
+                alt="Image Preview"
+                className="w-1/3 mb-4"
+              />
+              <p className="text-gray-600 text-xs italic">Current Image</p>
+            </div>
           )}
         </div>
       </div>
@@ -285,13 +340,12 @@ const CreateAuthorsPage = () => {
       <button
         className="mb-20 bg-rose-500 rounded-xl px-8 py-2 text-center text-white 
               hover:border-rose-600 hover:border items-center mr-4 relative"
-        onClick={saveOrUpdateAuthor}
         type="submit"
       >
-        Create
+        {id ? "Update" : "Create"}
       </button>
     </form>
   );
 };
 
-export default CreateAuthorsPage;
+export default CreateOrUpdateAuthorPage;

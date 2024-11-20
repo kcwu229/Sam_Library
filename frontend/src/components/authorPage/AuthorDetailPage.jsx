@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { viewAuthor } from "../../services/AuthorServices";
+import { getAuthor } from "../../services/AuthorServices";
 import { FaChevronRight, FaStar } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
 
@@ -10,7 +10,7 @@ function AuthorDetailPage() {
 
   useEffect(() => {
     if (id) {
-      viewAuthor(id)
+      getAuthor(id)
         .then((response) => {
           setAuthor(response.data);
           console.log("Author detail obj", response.data);

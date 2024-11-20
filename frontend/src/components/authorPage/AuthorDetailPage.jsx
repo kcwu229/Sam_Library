@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getAuthor } from "../../services/AuthorServices";
 import { FaChevronRight, FaStar } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
+import RatingSection from "../RatingSection";
+import Comments from "../Comments";
 
 function AuthorDetailPage() {
   const { id } = useParams();
@@ -21,7 +23,7 @@ function AuthorDetailPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-8/12">
+      <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-8/12 lg:10/12">
         <div className="w-full md:pt-20">
           {/* hyperlink */}
           <div className="flex items-center text-left pt-4">
@@ -110,6 +112,10 @@ function AuthorDetailPage() {
                 </p>
               </div>
             </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-rows-2 gap-4 mt-10">
+            <RatingSection />
+            <Comments />
           </div>
         </div>
       </div>

@@ -1,11 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const noop = () => {};
 
-const FileInput = ({ value, onChange = noop, ...rest }) => {
+const FileInput = ({ value, onChange = noop, error, ...rest }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [files, setFiles] = useState(value);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    setFiles(value);
+  }, [value]);
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -43,9 +47,10 @@ const FileInput = ({ value, onChange = noop, ...rest }) => {
     <div
       className={`border-2 border-dashed 
       rounded-lg p-6 text-center 
+      ${error ? "border-red-600 bg-red-40" : ""}
       transition-colors duration-300 ${
         isDragging ? "border-blue-400 bg-blue-50" : "border-gray-300"
-      }`}
+      } `}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}

@@ -16,7 +16,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -83,10 +85,24 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("filename is :" + fileName);
 
         try {
-            Files.copy(file.getInputStream(), Paths.get("backend/images/authors/" + fileName + ".png"));
-            logger.info("File updated successfully");
+            // Get the original file size
+            long originalFileSize = file.getSize();
+            logger.info("Original file size: " + originalFileSize + " bytes");
+
+            // Copy the file directly
+            Path destinationPath = Paths.get("backend/images/authors/" + fileName + ".png");
+            Files.copy(file.getInputStream(), destinationPath,  StandardCopyOption.REPLACE_EXISTING);
+            logger.info("File uploaded successfully");
+
+            // Verify the copied file size
+            long copiedFileSize = Files.size(destinationPath);
+            logger.info("Copied file size: " + copiedFileSize + " bytes");
+
+            if (originalFileSize != copiedFileSize) {
+                logger.warn("File size mismatch: original (" + originalFileSize + " bytes) vs copied (" + copiedFileSize + " bytes)");
+            }
         } catch (IOException e) {
-            logger.error("Error uploading and converting file", e);
+            logger.error("Error uploading and copying file", e);
         }
 
         author.setId(authorId); // Ensure the UUID is set here

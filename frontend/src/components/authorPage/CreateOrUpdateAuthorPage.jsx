@@ -182,8 +182,6 @@ const CreateOrUpdateAuthorPage = () => {
   const saveOrUpdateAuthor = async (e) => {
     e.preventDefault();
 
-    console.log("Author object:", author);
-
     if (validateForm()) {
       // Create a new FormData object
       const formData = new FormData();
@@ -197,7 +195,6 @@ const CreateOrUpdateAuthorPage = () => {
       }
 
       // Debugging: Log the author object to verify the fields
-      console.log("Author object:", author);
 
       try {
         const headers = {
@@ -207,17 +204,14 @@ const CreateOrUpdateAuthorPage = () => {
 
         if (id) {
           // Update existing author
-          console.log("File: after submit ??", file);
           const response = await axios.put(`/authors/${id}`, formData, {
             headers,
           });
-          console.log("Author updated successfully:", response.data);
         } else {
           // Create a new author
           const response = await axios.post("/authors", formData, {
             headers,
           });
-          console.log("Author created successfully:", response.data);
         }
         navigate("/authors");
       } catch (error) {
@@ -319,10 +313,14 @@ const CreateOrUpdateAuthorPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap -mx-3 mb-6">
+      <div className="flex flex-wrap -mx-3 mb-6 relative">
         <div className="w-full px-3">
           <LabelsTag for="grid-zip" text="Image" required="*" />
-          <FileInput value={file ? [file] : []} onChange={handleFileChange} />
+          <FileInput
+            value={file ? [file] : []}
+            onChange={handleFileChange}
+            error={errors.file}
+          />
           {errors.file && <CreateFormErrorTag error={errors.file} />}
           {imagePreviewUrl && (
             <div className="mt-4">

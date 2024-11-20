@@ -340,7 +340,11 @@ const CreateOrUpdateBookPage = () => {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <LabelsTag for="imageName" text="Cover Image" required="*" />
-          <FileInput value={file ? [file] : []} onChange={handleFileChange} />
+          <FileInput
+            value={file ? [file] : []}
+            onChange={handleFileChange}
+            error={errors.file}
+          />
           {errors.file && <CreateFormErrorTag error={errors.file} />}
           {imagePreviewUrl && (
             <div className="mt-4">

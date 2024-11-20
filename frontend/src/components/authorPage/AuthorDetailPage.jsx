@@ -32,7 +32,10 @@ function AuthorDetailPage() {
             </a>
             <FaChevronRight className="w-3 h-3 ml-2 font-light" />
             {author && (
-              <a href={`/authors/${id}`} className="ml-2 font-light">
+              <a
+                href={`/authors/${id}`}
+                className="ml-2 font-light text-gray-500"
+              >
                 {author.name}
               </a>
             )}
@@ -48,21 +51,6 @@ function AuthorDetailPage() {
                   alt="author cover"
                 />
               )}
-              <div className="flex mt-8">
-                {[...Array(5)].map((star, index) => (
-                  <FaStar
-                    key={index}
-                    className="text-yellow-500 w-6 h-6 mx-1"
-                  />
-                ))}
-
-                <div></div>
-              </div>
-              <div className="flex-col">
-                <p className="block mt-4 font-light tracking-widest leading-loose">
-                  5 stars
-                </p>
-              </div>
             </div>
 
             {/* Right Column */}
@@ -70,16 +58,16 @@ function AuthorDetailPage() {
               {/* ISBN and Publish Year */}
               <div className="flex items-start mb-10">
                 {author && author.country && (
-                  <div className="p-4 rounded-lg border border-black">
-                    <p className="text-lg font-semibold">
-                      Country: {author.country}
+                  <div className="p-3 rounded-2xl border border-black">
+                    <p className="font-light text-sm">
+                      Country : {author.country}
                     </p>
                   </div>
                 )}
                 <div className="w-6"></div>
                 {author && (
-                  <div className="p-4 rounded-lg border border-black mb-4">
-                    <p className="text-lg font-semibold">
+                  <div className="p-3 rounded-2xl border border-black mb-4">
+                    <p className="font-light text-sm">
                       Published Year:{" "}
                       {author.birthYear !== 0 ? author.birthYear : "Unknown"}
                     </p>
@@ -97,7 +85,7 @@ function AuthorDetailPage() {
                 <p>
                   <b className="text-xl block">Author</b>
                 </p>
-                <p className="block mt-4 font-light tracking-widest leading-loose">
+                <p className="block mt-4 font-light tracking-widest leading-loose text-gray-500">
                   {author && author.name}
                 </p>
               </div>
@@ -107,15 +95,19 @@ function AuthorDetailPage() {
                 <p>
                   <b className="text-xl block">Description</b>
                 </p>
-                <p className="block mt-4 font-light tracking-widest leading-loose">
+                <p className="block mt-4 font-light tracking-widest leading-loose text-gray-500">
                   {author && author.description}
                 </p>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-rows-2 gap-4 mt-10">
+          <div className="grid grid-cols-1 md:grid-rows gap-4">
             <RatingSection />
-            <Comments />
+            <div className="flex flex-col gap-4">
+              <Comments />
+              <Comments />
+              <Comments />
+            </div>
           </div>
         </div>
       </div>

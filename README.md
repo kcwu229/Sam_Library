@@ -39,12 +39,14 @@
 ### 4. Forget password page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/ef824247-fc34-4eca-8b6d-4415def16da1">
 
-
-
 ### 5. Book Page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/489ae533-b866-4649-b59f-adb9bd6bb7c2">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/0c551751-2cc6-41d0-855e-e0309dc4114e">
+<img width="1710" alt="image" src="https://github.com/user-attachments/assets/00e1efff-f5bf-4cdb-b429-7d3e7ca5204a">
 
+### 6. Author Page
+<img width="1710" alt="image" src="https://github.com/user-attachments/assets/ccd11a75-6d51-4ea1-a656-af800109e340">
+
+### 7. Detail Page
+<img width="1447" alt="image" src="https://github.com/user-attachments/assets/6cdf505e-9ce9-41b2-9ec6-36c66b51fe8e">
 
 
 

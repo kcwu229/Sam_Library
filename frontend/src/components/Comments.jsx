@@ -1,40 +1,44 @@
 // Comments.jsx
 import React from "react";
 import { FaStar } from "react-icons/fa";
-import LogoImage from "../assets/images/logo.png";
 
-function Comments() {
+function Comments({ logoImage, user, title, rating, date, review }) {
+  // Format the date
+  const formattedDate = new Date(date).toLocaleDateString();
+
   return (
-    <div
-      className="py-4 grid grid-cols-12 border px-8 rounded-2xl 
-    border-stone-950 max-xl:max-w-2xl max-xl:mx-auto"
-    >
-      <div className="grid col-span-2 md:col-span-1">
+    <div className="w-full md:w-10/12 lg:w-4/12 xl:w-3/12 bg-white shadow-xl rounded-lg text-gray-900 p-6 relative gap-8 mt-8">
+      <div className="mx-auto w-28 h-28 relative -mt-16 border-4 border-white rounded-full overflow-hidden z-10">
         <img
-          src={LogoImage}
-          alt=""
-          className="md:w-8 md:h-8 rounded-full w-6 h-6 mt-2"
+          className="object-cover object-center h-full w-full"
+          src={logoImage}
+          alt="User"
         />
       </div>
-      <div className="grid col-span-10 md:col-span-11">
-        <h4 className="font-normal md:font-semibold text-lg text-black flex-row">
-          John Watson
-        </h4>
-        <div className="mt-1 flex items-center gap-2">
-          <FaStar className="text-yellow-500 md:w-4 md:h-4 w-3 h-3" />
-          <FaStar className="text-yellow-500 md:w-4 md:h-4 w-3 h-3" />
-          <FaStar className="text-yellow-500 md:w-4 md:h-4 w-3 h-3" />
-          <FaStar className="text-yellow-500 md:w-4 md:h-4 w-3 h-3" />
-          <FaStar className="text-yellow-500 md:w-4 md:h-4 w-3 h-3" />
+      <div className="text-center mt-8">
+        <h2 className="font-bold text-xl text-black">{user}</h2>
+        <div className="text-center mt-4 text-sm text-slate-400">
+          {formattedDate}
         </div>
-        <p className="mt-1 md:text-base text-sm font-light leading-8 text-gray-600 flex-row">
-          Nov 01, 2023
+        <p className="text-lg mt-4 text-gray-600 break-words whitespace-pre-wrap">
+          {title}
         </p>
-        <p className="mt-1 text-gray-600 flex-row font-light tracking-widest text-left text-sm md:text-base mb-0">
-          One of the standout features of Pagedone is its intuitive and
-          user-friendly interface. Navigating through the system feels natural,
-          and the layout makes it easy to locate and utilize various design
-          elements.
+      </div>
+
+      <div className="mt-4 text-center text-base text-slate-400 px-4 break-words whitespace-pre-wrap">
+        {review}
+      </div>
+      <div className="py-4 mt-4 text-gray-700 flex items-center justify-center">
+        {[...Array(5)].map((_, index) => (
+          <FaStar
+            key={index}
+            className={`${
+              index < rating ? "text-yellow-500" : "text-gray-300"
+            } w-4 h-4`}
+          />
+        ))}
+        <p className="text-xs ml-4 text-center text-gray-600 font-light break-words whitespace-pre-wrap">
+          {rating} out of 5
         </p>
       </div>
     </div>

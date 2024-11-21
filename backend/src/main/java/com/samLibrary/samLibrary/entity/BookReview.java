@@ -2,6 +2,8 @@
 package com.samLibrary.samLibrary.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,13 +27,13 @@ public class BookReview {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @Column(name="title", nullable = false)
+    @NotBlank(message = "Title is required")
     private String title;
 
-    @Column(name="book_review", columnDefinition = "MEDIUMTEXT")
+    @NotBlank(message = "Review is required")
     private String review;
 
-    @Column(name="rating")
+    @NotNull(message = "Rating is required")
     private int rating;
 
     private LocalDateTime createTimestamp;
@@ -47,5 +49,4 @@ public class BookReview {
     protected void onUpdate() {
         editTimestamp = LocalDateTime.now();
     }
-
 }

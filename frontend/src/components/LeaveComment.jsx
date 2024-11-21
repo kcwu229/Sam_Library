@@ -4,19 +4,24 @@ import LabelsTag from "./form/LabelsTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
 import TextAreaTag from "./form/TextAreaTag";
 import { FaStar } from "react-icons/fa";
-import { createAuthorReview } from "../services/AuthorReviewServices";
-import { createBookReview } from "../services/BookReviewServices";
+import {
+  createAuthorReview,
+  listAllAuthorReviews,
+} from "../services/AuthorReviewServices";
+import {
+  createBookReview,
+  listAllBookReviews,
+} from "../services/BookReviewServices";
 
-function LeaveComment({ ratingType, id }) {
+function LeaveComment({ ratingType, id, onReviewAdded }) {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [errors, setErrors] = useState({
     title: "",
     review: "",
     rating: "",
   });
-  const [bookId, setBookId] = useState("");
 
   function validateForm() {
     let valid = true;
@@ -30,11 +35,11 @@ function LeaveComment({ ratingType, id }) {
       errorCopy.title = "";
     }
 
-    if (content === "") {
-      errorCopy.content = "Content is required!";
+    if (review === "") {
+      errorCopy.review = "review is required!";
       valid = false;
     } else {
-      errorCopy.content = "";
+      errorCopy.review = "";
     }
 
     setErrors(errorCopy);
@@ -49,23 +54,29 @@ function LeaveComment({ ratingType, id }) {
         if (ratingType === "book") {
           const reviewData = {
             title,
-            content,
+            review,
             rating,
             bookId: id,
           };
 
-          const response = await createBookReview(reviewData);
+          // call api to create book reviews
+          const response = await createBookReview(id, reviewData);
           console.log("Book review created:", response.data);
+          const updatedReviews = await listAllBookReviews(id);
+          onReviewAdded(updatedReviews.data);
         } else if (ratingType === "author") {
           const reviewData = {
             title,
-            content,
+            review,
             rating,
             authorId: id,
           };
 
-          const response = await createBookReview(reviewData);
+          // call api to create author reviews
+          const response = await createAuthorReview(id, reviewData);
           console.log("Book review created:", response.data);
+          const updatedReviews = await listAllAuthorReviews(id);
+          onReviewAdded(updatedReviews.data);
         }
       } catch (error) {
         console.error(error);
@@ -123,23 +134,19 @@ function LeaveComment({ ratingType, id }) {
           </div>
 
           <div className="mb-10 relative">
-            <LabelsTag
-              htmlFor="content"
-              text="Write your review"
-              required="*"
-            />
+            <LabelsTag htmlFor="review" text="Write your review" required="*" />
             <TextAreaTag
-              id="content"
-              name="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              text="Enter your content"
-              error={errors.content}
+              id="review"
+              name="review"
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              text="Enter your review"
+              error={errors.review}
             />
             <p className="mt-4 text-gray-600 text-xs italic">
               Not more than 2000 characters
             </p>
-            {errors.content && <CreateFormErrorTag error={errors.content} />}
+            {errors.review && <CreateFormErrorTag error={errors.review} />}
           </div>
 
           <button

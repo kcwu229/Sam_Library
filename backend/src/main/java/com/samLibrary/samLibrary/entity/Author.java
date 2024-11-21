@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -29,7 +30,6 @@ public class Author {
     @Column(name = "country")
     private String country;
 
-
     @Column(name = "death_year")
     private int deathYear;
 
@@ -41,4 +41,19 @@ public class Author {
 
     @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     private String description;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AuthorReview> reviews;
+
+    public Author(UUID id, String name, String country, int birthYear,
+                  int deathYear,String imageName, String description, String catchPhrase) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
+        this.imageName = imageName;
+        this.description = description;
+        this.catchPhrase = catchPhrase;
+    }
 }

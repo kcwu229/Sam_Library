@@ -6,10 +6,13 @@ import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
 import RatingSection from "../RatingSection";
 import Comments from "../Comments";
 import LeaveComment from "../LeaveComment";
+import { listAllAuthorReviews } from "../../services/AuthorReviewServices";
+import LogoImage from "../../assets/images/article1.png";
 
 function AuthorDetailPage() {
   const { id } = useParams();
   const [author, setAuthor] = useState(null);
+  const [reiews, setReviews] = useState([]);
   const ratingType = "author";
 
   useEffect(() => {
@@ -21,7 +24,25 @@ function AuthorDetailPage() {
         })
         .catch((error) => console.error(error));
     }
+
+    listAllAuthorReviews(id)
+      .then((response) => {
+        setReviews(response.data);
+      })
+      .catch((error) => console.error(error));
   }, [id]);
+
+  useEffect(() => {
+    console.log(reiews);
+  }, [reiews]);
+
+  const handleReviewAdded = (updatedReviews) => {
+    setReviews(updatedReviews);
+  };
+
+  const sortedReviews = [...reiews].sort(
+    (a, b) => new Date(b.createdTimestamp) - new Date(a.createdTimestamp)
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -103,18 +124,36 @@ function AuthorDetailPage() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-rows gap-4">
-            <RatingSection />
-            <div className="flex flex-col gap-4">
-              <Comments />
-              <Comments />
-              <Comments />
-            </div>
-            <div className="w-full md:w-8/12 mx-auto mt-10">
-              {id ? <LeaveComment ratingType={ratingType} id={id} /> : null}
-            </div>
-          </div>
         </div>
+      </div>
+      <div className="w-full flex flex-col items-center mt-20">
+        <RatingSection />
+        <div className="w-full flex flex-wrap justify-center gap-8 mt-20">
+          {sortedReviews.length > 0 ? (
+            sortedReviews.map((review, i) => (
+              <Comments
+                key={i}
+                date={review.createTimestamp}
+                logoImage={LogoImage}
+                user="gggg"
+                review={review.review}
+                rating={review.rating}
+                title={review.title}
+              />
+            ))
+          ) : (
+            <p>No reviews yet</p>
+          )}
+        </div>
+      </div>
+      <div className="w-full md:w-8/12 mx-auto mt-20">
+        {id ? (
+          <LeaveComment
+            ratingType={ratingType}
+            id={id}
+            onReviewAdded={handleReviewAdded}
+          />
+        ) : null}
       </div>
     </div>
   );

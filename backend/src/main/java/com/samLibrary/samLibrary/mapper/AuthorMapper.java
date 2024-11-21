@@ -23,13 +23,12 @@ public class AuthorMapper {
         return new Author(
                 authorDto.getId(),
                 authorDto.getName(),
-                authorDto.getBirthYear(),
                 authorDto.getCatchPhrase(),
+                authorDto.getBirthYear(),
                 authorDto.getDeathYear(),
                 authorDto.getCountry(),
                 authorDto.getImageName(),
                 authorDto.getDescription()
-
         );
     }
 }

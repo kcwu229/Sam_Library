@@ -34,7 +34,7 @@ public class AuthorReviewController {
         return ResponseEntity.ok(AuthorReviewDto);
     }
 
-    @GetMapping("/authors/{authorId}")
+    @GetMapping("/all/{authorId}")
     public ResponseEntity<List<AuthorReviewDto>> getAllAuthorReview(@PathVariable UUID authorId) {
         List<AuthorReviewDto> AuthorReviewDto = AuthorReviewService.getAllAuthorReviews(authorId);
         return ResponseEntity.ok(AuthorReviewDto);

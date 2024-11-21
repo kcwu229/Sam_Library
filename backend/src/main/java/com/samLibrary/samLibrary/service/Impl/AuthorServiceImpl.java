@@ -105,7 +105,14 @@ public class AuthorServiceImpl implements AuthorService {
             logger.error("Error uploading and copying file", e);
         }
 
-        author.setId(authorId); // Ensure the UUID is set here
+        logger.info("author Id is :" + authorId);
+        logger.info("author Name is :" + author.getName());
+        logger.info("description is :" + author.getDescription());
+        logger.info("country :" + author.getCountry());
+        logger.info("catch phrase :" + author.getCatchPhrase());
+        logger.info("birth year is :" + author.getBirthYear());
+        logger.info("death year is :" + author.getDeathYear());
+
         author.setName(authorToUpdate.getName());
         author.setBirthYear(authorToUpdate.getBirthYear());
         author.setCatchPhrase(authorToUpdate.getCatchPhrase());

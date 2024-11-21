@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "book_review")
+@Table(name = "author_review")
 public class AuthorReview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class AuthorReview {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
-    @Column(name="title", nullable = false)
+    @Column(name="title", nullable = true)
     private String title;
 
     @Column(name="author_review", columnDefinition = "MEDIUMTEXT")

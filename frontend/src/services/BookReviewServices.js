@@ -1,10 +1,10 @@
 import axios from "axios";
 import axiosInstance from "../axioConfig";
 
-const REST_BOOK_API_URL = "http://localhost:8080/api/books-reviews";
+const REST_BOOKREVIEW_API_URL = "http://localhost:8080/api/books-reviews";
 
-export const createBookReview = (bookId) =>
-  axiosInstance.post(REST_BOOK_API_URL + "/" + bookId);
+export const createBookReview = (bookId, bookReviewData) =>
+  axiosInstance.post(REST_BOOKREVIEW_API_URL + "/" + bookId, bookReviewData);
 
-export const listBookReviews = (bookId) =>
-  axiosInstance.get(REST_BOOK_API_URL + "/" + bookId);
+export const listAllBookReviews = (bookId) =>
+  axiosInstance.get(REST_BOOKREVIEW_API_URL + "/all/" + bookId);

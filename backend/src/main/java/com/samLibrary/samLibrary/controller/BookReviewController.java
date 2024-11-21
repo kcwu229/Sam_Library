@@ -24,6 +24,9 @@ public class BookReviewController {
     public ResponseEntity<BookReviewDto> createBookReview(
             @Valid @RequestBody BookReviewDto bookReviewDto,
             @PathVariable("id") UUID bookId) {
+        if (bookReviewDto.getTitle() == null || bookReviewDto.getTitle().isBlank()) {
+            return ResponseEntity.badRequest().body(null);
+        }
         BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto, bookId);
         return new ResponseEntity<>(savedBookReview, HttpStatus.CREATED);
     }
@@ -34,7 +37,7 @@ public class BookReviewController {
         return ResponseEntity.ok(bookReviewDto);
     }
 
-    @GetMapping("/books/{bookId}")
+    @GetMapping("/all/{bookId}")
     public ResponseEntity<List<BookReviewDto>> getAllBookReview(@PathVariable UUID bookId) {
         List<BookReviewDto> bookReviewDto = bookReviewService.getAllBookReviews(bookId);
         return ResponseEntity.ok(bookReviewDto);

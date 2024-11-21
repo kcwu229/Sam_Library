@@ -23,12 +23,13 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
 
     @Override
     public AuthorReviewDto createAuthorReview(AuthorReviewDto AuthorReviewDto, UUID authorId) {
-        Author Author = authorRepository.findById(AuthorReviewDto.getAuthorId())
+        Author Author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("Author not found with id " + AuthorReviewDto.getAuthorId()));
 
         AuthorReview authorReview = new AuthorReview();
         authorReview.setAuthor(Author);
         authorReview.setReview(AuthorReviewDto.getReview());
+        authorReview.setTitle(AuthorReviewDto.getTitle());
         authorReview.setRating(AuthorReviewDto.getRating());
         authorReview.setCreateTimestamp(LocalDateTime.now());
         authorReview = authorReviewRepository.save(authorReview);

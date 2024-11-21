@@ -10,6 +10,8 @@ import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.repository.BookReviewRepository;
 import com.samLibrary.samLibrary.service.BookReviewService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,18 +24,24 @@ import java.util.stream.Collectors;
 public class BookReviewServiceImpl implements BookReviewService {
     private BookReviewRepository bookReviewRepository;
     private BookRepository bookRepository;
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     @Override
     public BookReviewDto createBookReview(BookReviewDto bookReviewDto, UUID bookId) {
-        Book book = bookRepository.findById(bookReviewDto.getBookId())
+        Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found with id " + bookReviewDto.getBookId()));
+
+        logger.info("THE BOOK OBJ is : {}", book);
 
         BookReview bookReview = new BookReview();
         bookReview.setBook(book);
         bookReview.setReview(bookReviewDto.getReview());
         bookReview.setRating(bookReviewDto.getRating());
+        bookReview.setTitle(bookReviewDto.getTitle());
         bookReview.setCreateTimestamp(LocalDateTime.now());
         bookReview = bookReviewRepository.save(bookReview);
+
+        logger.info("THE BOOK REVIEW OBJ is : {}", BookReviewMapper.mapToBookReviewDto(bookReview));
         return BookReviewMapper.mapToBookReviewDto(bookReview);
     }
 
@@ -55,6 +63,7 @@ public class BookReviewServiceImpl implements BookReviewService {
 
         existingBookReview.setBook(book);
         existingBookReview.setReview(bookReviewDto.getReview());
+        existingBookReview.setTitle(bookReviewDto.getTitle());
         existingBookReview.setRating(bookReviewDto.getRating());
         BookReview updatedBookReview = bookReviewRepository.save(existingBookReview);
         return BookReviewMapper.mapToBookReviewDto(updatedBookReview);

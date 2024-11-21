@@ -19,16 +19,12 @@ import java.util.UUID;
 public class AuthorReviewDto {
     private UUID id;
 
-    @NotNull(message = "Book ID is required")
     private UUID authorId;
 
-    @NotBlank(message = "Title is required")
     private String title;
 
-    @NotBlank(message = "Review is required")
     private String review;
 
-    @NotNull(message = "Rating is required")
     private int rating;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

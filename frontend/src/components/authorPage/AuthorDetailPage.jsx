@@ -124,36 +124,36 @@ function AuthorDetailPage() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full flex flex-col items-center mt-20">
-        <RatingSection />
-        <div className="w-full flex flex-wrap justify-center gap-8 mt-20">
-          {sortedReviews.length > 0 ? (
-            sortedReviews.map((review, i) => (
-              <Comments
-                key={i}
-                date={review.createTimestamp}
-                logoImage={LogoImage}
-                user="gggg"
-                review={review.review}
-                rating={review.rating}
-                title={review.title}
+          <div className="w-full flex flex-col items-center mt-20">
+            <RatingSection />
+            <div className="w-full flex flex-wrap justify-center gap-8 mt-20">
+              {sortedReviews.length > 0 ? (
+                sortedReviews.map((review, i) => (
+                  <Comments
+                    key={i}
+                    date={review.createTimestamp}
+                    logoImage={LogoImage}
+                    user="gggg"
+                    review={review.review}
+                    rating={review.rating}
+                    title={review.title}
+                  />
+                ))
+              ) : (
+                <p>No reviews yet</p>
+              )}
+            </div>
+          </div>
+          <div className="w-full md:w-8/12 mx-auto mt-20">
+            {id ? (
+              <LeaveComment
+                ratingType={ratingType}
+                id={id}
+                onReviewAdded={handleReviewAdded}
               />
-            ))
-          ) : (
-            <p>No reviews yet</p>
-          )}
+            ) : null}
+          </div>
         </div>
-      </div>
-      <div className="w-full md:w-8/12 mx-auto mt-20">
-        {id ? (
-          <LeaveComment
-            ratingType={ratingType}
-            id={id}
-            onReviewAdded={handleReviewAdded}
-          />
-        ) : null}
       </div>
     </div>
   );

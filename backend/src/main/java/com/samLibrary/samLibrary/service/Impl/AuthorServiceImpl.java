@@ -106,12 +106,12 @@ public class AuthorServiceImpl implements AuthorService {
         }
 
         logger.info("author Id is :" + authorId);
-        logger.info("author Name is :" + author.getName());
-        logger.info("description is :" + author.getDescription());
-        logger.info("country :" + author.getCountry());
-        logger.info("catch phrase :" + author.getCatchPhrase());
-        logger.info("birth year is :" + author.getBirthYear());
-        logger.info("death year is :" + author.getDeathYear());
+        logger.info("author aaaName is :" + authorToUpdate.getName());
+        logger.info("description aa is :" + authorToUpdate.getDescription());
+        logger.info("country aaa :" + authorToUpdate.getCountry());
+        logger.info("catch phrase aaa :" + authorToUpdate.getCatchPhrase());
+        logger.info("birth year is. aaa :" + authorToUpdate.getBirthYear());
+        logger.info("death year is aaa :" + authorToUpdate.getDeathYear());
 
         author.setName(authorToUpdate.getName());
         author.setBirthYear(authorToUpdate.getBirthYear());
@@ -123,7 +123,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         // need to rewrite this part
         author.setImageName(authorToUpdate.getImageName());
-        return null;
+        return AuthorMapper.mappToAuthorDto(authorRepository.save(author));
     }
 
     @Override

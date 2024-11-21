@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface AuthorService {
     AuthorDto createAuthor(AuthorDto authorDto, MultipartFile file);
     AuthorDto getAuthorById(UUID authorId);
-    AuthorDto updateAuthor(AuthorDto authorDto, UUID authorId,MultipartFile file);
+    AuthorDto updateAuthor(AuthorDto authorToBeUpdated, UUID authorId,MultipartFile file);
     void deleteAuthor(UUID authorId);
     List<AuthorDto> getAllAuthors();
 }

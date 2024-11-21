@@ -150,7 +150,7 @@ function BookDetailPage() {
                 )}
               </div>
             </div>
-            <div className="w-full md:w-8/12 mx-auto mt-20">
+            <div className="w-full md:w-8/12 lg:w-6/12 mx-auto mt-20">
               {id ? (
                 <LeaveComment
                   ratingType={ratingType}

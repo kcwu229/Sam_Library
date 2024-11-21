@@ -31,6 +31,7 @@ public class BookReview {
     private String title;
 
     @NotBlank(message = "Review is required")
+    @Column(name = "book_review",columnDefinition = "MEDIUMTEXT")
     private String review;
 
     @NotNull(message = "Rating is required")

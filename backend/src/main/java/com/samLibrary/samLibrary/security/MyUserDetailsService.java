@@ -18,7 +18,6 @@ public class MyUserDetailsService implements UserDetailsService {
     * authentication and authorization.
     * */
 
-
     private final UserRepository userRepository;
 
     // Constructor to inject the UserRepository dependency

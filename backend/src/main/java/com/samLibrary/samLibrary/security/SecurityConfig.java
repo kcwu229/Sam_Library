@@ -48,19 +48,19 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
-                        //.requestMatchers("/login").permitAll()
+                        .requestMatchers("/login").permitAll()
                         //.requestMatchers("/api/books").permitAll()
                         //.requestMatchers("/api/books/create-book").permitAll()
                         //.requestMatchers("/api/books/{id}").permitAll()
                         //.requestMatchers("/api/authors").permitAll()
                         //.requestMatchers("/api/authors/create-author").permitAll()
                         //.requestMatchers("/api/authors/{id}").permitAll()
-                        //.requestMatchers("/signup").permitAll()
-                        //.requestMatchers("/forget-password").permitAll()
-                        //.requestMatchers("/api/users/register").permitAll()
+                        .requestMatchers("/signup").permitAll()
+                        .requestMatchers("/forget-password").permitAll()
+                        .requestMatchers("/api/users/register").permitAll()
                          //Requiring authentication for all other requests
-                        //.anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
+                        //.anyRequest().permitAll()
 
                 )
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication

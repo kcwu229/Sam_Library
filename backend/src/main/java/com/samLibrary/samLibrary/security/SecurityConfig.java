@@ -1,5 +1,6 @@
 package com.samLibrary.samLibrary.security;
 
+import com.samLibrary.samLibrary.config.JwtFilter;
 import com.samLibrary.samLibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,6 +39,8 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private JwtFilter jwtFilter;
     // Configuring the security filter chain
     // Configuring the security filter chain
     @Bean
@@ -75,6 +79,7 @@ public class SecurityConfig {
 
                 )
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

@@ -1,5 +1,5 @@
 import LoginImage from "../assets/images/login.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
@@ -25,6 +25,8 @@ function LoginPage() {
     username: "",
     password: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -61,19 +63,24 @@ function LoginPage() {
   const submitLoginForm = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await loginUser(formData);
-      const userId = response.data;
-      // Set the user ID in the context
-      setUser(userId);
-      if (response.status === 200) {
-        login();
-        showToast("Successfully login !", "success");
-        navigate("/books");
+    if (validateForm()) {
+      setIsSubmitting(true);
+      try {
+        const response = await loginUser(formData);
+        const userId = response.data;
+        // Set the user ID in the context
+        setUser(userId);
+        if (response.status === 200) {
+          login();
+          showToast("Successfully login !", "success");
+          navigate("/books");
+        }
+      } catch (error) {
+        console.error(error);
+        showToast("Login failed. Please try again.", "error");
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error) {
-      console.error(error);
-      showToast("Login failed. Please try again.", "error");
     }
   };
 
@@ -168,6 +175,7 @@ function LoginPage() {
                 px-10 lg:px-10 xl:px-20 md:px-5 rounded focus:outline-none mt-10 mb-8 
                 focus:shadow-outline w-full"
                 type="submit"
+                disabled={isSubmitting}
               >
                 Login
               </button>

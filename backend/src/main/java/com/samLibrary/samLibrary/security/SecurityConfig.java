@@ -79,6 +79,7 @@ public class SecurityConfig {
 
                 )
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication
+
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

@@ -7,7 +7,7 @@ import { FaRedditSquare } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="shadow bg-gray-900">
+    <footer className="shadow bg-gray-900 w-full bottom-0">
       <div className="w-full mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between font-medium">
           <a

@@ -7,4 +7,4 @@ export const createAuthorReview = (authorId, reviewData) =>
   axiosInstance.post(REST_AUTHOR_API_URL + "/" + authorId, reviewData);
 
 export const listAllAuthorReviews = (authorId) =>
-  axiosInstance.get(REST_AUTHOR_API_URL + "/all/" + authorId);
+  axios.get(REST_AUTHOR_API_URL + "/all/" + authorId);

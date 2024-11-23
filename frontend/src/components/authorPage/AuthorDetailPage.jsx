@@ -69,6 +69,7 @@ function AuthorDetailPage() {
             <div className="md:w-1/3 flex flex-col items-center">
               {author && (
                 <img
+                  loading="lazy"
                   className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
                   src={`${process.env.REACT_APP_BASE_URL}/authors/${author.imageName}.png`}
                   alt="author cover"

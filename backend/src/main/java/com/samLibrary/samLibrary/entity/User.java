@@ -28,6 +28,7 @@ public class User {
     @Column(name="last_name")
     private String lastName;
 
+    // store the password as a hash
     @Column(name="password")
     private String password;
 

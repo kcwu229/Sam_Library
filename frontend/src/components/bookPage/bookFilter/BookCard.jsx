@@ -12,6 +12,7 @@ function BookCard({
   return (
     <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
       <img
+        loading="lazy"
         class="p-8 rounded-t-lg h-80"
         src={imageSource}
         alt="product image"

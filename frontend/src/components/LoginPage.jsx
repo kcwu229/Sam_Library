@@ -1,35 +1,51 @@
 import LoginImage from "../assets/images/login.png";
-import LogoImage from "../assets/images/logo.png";
 import { useState } from "react";
-import { login } from "../services/AuthService";
-import { AiOutlineGlobal } from "react-icons/ai";
-import { FaRegCircleQuestion } from "react-icons/fa6";
-import ErrorTag from "./form/ErrorTag";
+import { useNavigate } from "react-router-dom";
 import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
+import { ToastContainer, toast } from "react-toastify";
+import { loginUser } from "../services/UserSevices";
+import { useAuth } from "./Context/AuthContext";
+import { useUser } from "./Context/UserContext";
+import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "./Context/ToastMessageContext";
 
 function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({
     username: "",
     password: "",
   });
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { setUser } = useUser();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   function validateForm() {
     let valid = true;
 
     const errorCopy = { ...errors };
 
-    if (username === "") {
+    if (formData.username === "") {
       errorCopy.username = "Username is required !";
       valid = false;
     } else {
       errorCopy.username = "";
     }
 
-    if (password === "") {
+    if (formData.password === "") {
       errorCopy.password = "Password is required !";
       valid = false;
     } else {
@@ -40,112 +56,132 @@ function LoginPage() {
     return valid;
   }
 
-  async function submitLoginForm(e) {
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  const submitLoginForm = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      try {
-        const response = await login({ username, password });
-        if (response.data === "Login successful") {
-          alert("Login successful");
-        } else {
-          alert("Login failed");
-        }
-      } catch (error) {
-        console.error("There was an error logging in!", error);
+    try {
+      const response = await loginUser(formData);
+      const userId = response.data;
+      // Set the user ID in the context
+      setUser(userId);
+      if (response.status === 200) {
+        login();
+        showToast("Successfully login !", "success");
+        navigate("/books");
       }
+    } catch (error) {
+      console.error(error);
+      showToast("Login failed. Please try again.", "error");
     }
-  }
+  };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg w-full md:w-4/5 lg:w-3/5 xl:w-4/5 h-auto flex flex-col md:flex-row mt-28 mx-auto">
-      <div className="w-full md:w-1/2 flex">
-        <img
-          className="w-full h-full object-cover"
-          src={LoginImage}
-          alt="Login"
-        />
-      </div>
-      <div className="w-full md:w-1/2 flex items-center justify-center relative p-4">
-        <div className="w-full max-w-sm">
-          <div className="absolute top-0 right-20">
-            <FaRegCircleQuestion className="w-6 h-6" />
-          </div>
-          <div className="group absolute top-0 right-10">
-            <button>
-              <AiOutlineGlobal className="w-6 h-6" />
-            </button>
-            <p className="absolute top-10 right-0 w-24 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
-              Click to change language
-            </p>
-          </div>
-          <form className="w-full relative mt-10" onSubmit={submitLoginForm}>
-            <img
-              className="w-20 h-18 mb-10 mx-auto"
-              src={LogoImage}
-              alt="Logo"
-            />
-            <h1 className="font-bold mb-4 mt-1 text-blue-500 text-4xl text-center">
-              Welcome Back
-            </h1>
-            <p className="text-center">Log in to your account</p>
-            <br />
-            <div className="mb-4 relative">
-              <LabelsTag for="username" text="Username" />
-              <InputTag
-                id="username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                text="Username"
-                error={errors.username}
-              />
-              {errors.username && (
-                <CreateFormErrorTag error={errors.username} />
-              )}
-            </div>
+    <div
+      id="background"
+      className="flex justify-center items-center w-screen h-screen bg-slate-200"
+    >
+      <div
+        id="container"
+        className="w-9/12 flex flex-row bg-white rounded-3xl shadow-lg h-min"
+      >
+        {/* image */}
+        <div className="hidden lg:flex md:w-full md:relative md:m-6">
+          <img
+            loading="lazy"
+            className="hidden md:block rounded-2xl md:w-11/12 lg:w-full h-full "
+            src={LoginImage}
+            alt="Login"
+          />
+          <div
+            id="color-filter"
+            className="rounded-2xl bg-black opacity-15 absolute inset-0 md:w-11/12 lg:w-full h-full"
+          ></div>
+          <p
+            className="absolute font-bold text-white 
+          lg:text-3xl md:text-lg bottom-10 m-16 tracking-wider leading-loose"
+          >
+            "Access a World of Knowledge Anytime, Anywhere. Your Library
+            Awaits—Login to Discover Endless Reading Adventures!"
+          </p>
+        </div>
 
-            <div className="mb-10 relative">
-              <LabelsTag for="password" text="Password" />
-              <InputTag
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                text="Enter your password"
-                error={errors.password}
-              />
-              {errors.password && (
-                <CreateFormErrorTag error={errors.password} />
-              )}
-            </div>
+        {/* Login Form */}
+        <div className="w-full lg:w-5/12 flex items-center justify-center relative p-8">
+          <div className="w-full max-w-sm">
+            <form className="w-full relative" onSubmit={submitLoginForm}>
+              <h1 className="mb:text-lg font-bold mb-4 mt-1 text-4xl text-center text-slate-700">
+                Welcome Back
+              </h1>
+              <p className="text-center">Log in to your account</p>
+              <br />
 
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <input type="checkbox" className="w-4 h-4" />
-                <label className="inline-flex items-center ml-3">
-                  Remember me
-                </label>
+              {/* username */}
+              <div className="mb-4 relative mt-10">
+                <LabelsTag for="username" text="Username" />
+                <InputTag
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  text="Enter your username"
+                  error={errors.username}
+                />
+                {errors.username && (
+                  <CreateFormErrorTag error={errors.username} />
+                )}
               </div>
-              <a href="/forget-password" className="text-sm">
-                Forget Password?
-              </a>
-            </div>
 
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-40 rounded focus:outline-none mt-4 mb-8 focus:shadow-outline w-full"
-              type="submit"
-            >
-              Login
-            </button>
-            <div className="text-center mt-2 mb-20">
-              Don't have an account?
-              <a href="/sign-up" className="ml-2 text-blue-500 hover:underline">
-                Sign up
-              </a>
-            </div>
-          </form>
+              {/* password */}
+              <div className="mb-10 relative mt-10">
+                <LabelsTag for="password" text="Password" />
+                <InputTag
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  text="Enter your password"
+                  type="password"
+                  error={errors.password}
+                />
+                {errors.password && (
+                  <CreateFormErrorTag error={errors.password} />
+                )}
+              </div>
+
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <input type="checkbox" className="w-4 h-4" />
+                  <label className=" inline-flex items-center ml-3 md:">
+                    Remember me
+                  </label>
+                </div>
+                <a href="/forget-password" className="text-sm">
+                  Forget Password?
+                </a>
+              </div>
+
+              <button
+                className="bg-slate-700 hover:bg-slate-900 
+                text-white font-bold py-3 
+                px-10 lg:px-10 xl:px-20 md:px-5 rounded focus:outline-none mt-10 mb-8 
+                focus:shadow-outline w-full"
+                type="submit"
+              >
+                Login
+              </button>
+              <div className="text-center mt-2">
+                Don't have an account?
+                <a
+                  href="/sign-up"
+                  className="ml-2 text-slate-700 hover:underline"
+                >
+                  Sign up
+                </a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

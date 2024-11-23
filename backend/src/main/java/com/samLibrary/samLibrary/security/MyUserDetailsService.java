@@ -29,14 +29,11 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Find the user by username
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("This user does not exist in the database"));
 
-        // If user is not found, throw an exception
-        if (user == null) {
-            throw new UsernameNotFoundException("This user does not exist in the database");
-        } else {
             // If user is found, return a UserPrincipal object
             return new UserPrincipal(user);
-        }
+
     }
 }

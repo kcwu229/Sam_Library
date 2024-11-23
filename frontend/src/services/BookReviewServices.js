@@ -7,4 +7,4 @@ export const createBookReview = (bookId, bookReviewData) =>
   axiosInstance.post(REST_BOOKREVIEW_API_URL + "/" + bookId, bookReviewData);
 
 export const listAllBookReviews = (bookId) =>
-  axiosInstance.get(REST_BOOKREVIEW_API_URL + "/all/" + bookId);
+  axios.get(REST_BOOKREVIEW_API_URL + "/all/" + bookId);

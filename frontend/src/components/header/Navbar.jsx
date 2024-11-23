@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import LogoImage from "../../assets/images/logo-inverted.png";
-import UserSection from "../UserSection";
+import UserSection from "./UserSection";
 import NavBarTag from "./NavBarTag";
 
 function Navbar() {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.pathname);
+
+  // flag
+  const isLoggedIn = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
     setActiveTab(location.pathname);
@@ -17,8 +20,8 @@ function Navbar() {
   };
 
   return (
-    <nav className="w-full fixed top-0 z-20 bg-gray-900 shadow-lg items-center h-16">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto px-4 h-full">
+    <nav className="w-full top-0 z-20 bg-gray-900 shadow-lg items-center h-30">
+      <div className="flex items-center justify-between mx-auto px-4 h-full">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <Link to="/" className="flex items-center">
             <img src={LogoImage} alt="logo" className="w-20 h-auto" />
@@ -49,7 +52,7 @@ function Navbar() {
         </div>
 
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <UserSection userLoggedIn={false} />
+          <UserSection userLoggedIn={isLoggedIn} />
         </div>
       </div>
     </nav>

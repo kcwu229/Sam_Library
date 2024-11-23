@@ -7,6 +7,7 @@ const axiosInstance = axios.create({
   },
 });
 
+// to do list --> store and use jwt token for authentification
 axiosInstance.interceptors.request.use(
   (config) => {
     const username = process.env.REACT_APP_API_USERNAME;

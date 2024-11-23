@@ -1,4 +1,4 @@
-const InputTag = ({ id, name, value, onChange, text, error }) => {
+const InputTag = ({ id, name, value, onChange, text, error, type }) => {
   return (
     <input
       className={`relative shadow appearance-none border 
@@ -8,10 +8,11 @@ const InputTag = ({ id, name, value, onChange, text, error }) => {
               }`}
       id={id}
       name={name}
-      type="text"
+      type={type ? type : "text"}
       value={value}
       onChange={onChange}
       placeholder={text}
+      maxLength={20}
     />
   );
 };

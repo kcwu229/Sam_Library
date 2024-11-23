@@ -1,4 +1,4 @@
-import { deleteBook, listBooks, showBooks } from "../../services/BookServices";
+import { deleteBook, listBooks } from "../../services/BookServices";
 import { useEffect, useState } from "react";
 import SearchBar from "../header/SearchBar";
 import RatingFilter from "../bookPage/bookFilter/RatingFilter";
@@ -17,7 +17,6 @@ import SortFilter from "../bookPage/bookFilter/SortFilter";
 
 function BookPage() {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [result, setResult] = useState("Fiction");
   const [categoryExpand, setCategoryExpand] = useState(false);
   const [languageExpand, setLanguageExpand] = useState(false);
@@ -89,9 +88,7 @@ function BookPage() {
         logoText={"BookList"}
       />
       <div className="pt-10"></div>
-      <h2 className="text-3xl font-bold text-center pt-32">
-        Result for {result}
-      </h2>
+      <h2 className="text-3xl font-bold text-center">Result for {result}</h2>
       <div className="flex flex-col md:flex-row mt-1">
         <div
           id="filter"

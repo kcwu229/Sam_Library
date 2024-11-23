@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { IoLibrarySharp } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
@@ -21,7 +20,7 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
   };
 
   return (
-    <div className="fixed pt-4 top-16 w-full bg-white shadow z-50">
+    <div className="pt-4 top-16 w-full bg-white shadow z-50">
       <div className="flex items-center justify-between px-3 pb-4">
         <div className="hidden md:flex" id="bookLogo">
           {logo}

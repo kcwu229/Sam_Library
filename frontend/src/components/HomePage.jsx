@@ -44,7 +44,10 @@ function HomePage() {
           alt="Library"
           className="absolute w-full h-full inset-0 object-cover"
         />
-        <div className="absolute inset-0 bg-black opacity-80"></div>
+        <div
+          id="color-filter"
+          className="absolute inset-0 bg-black opacity-80"
+        ></div>
         <div className="relative z-10 text-center text-white">
           <br />
           <br />

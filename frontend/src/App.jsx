@@ -1,5 +1,5 @@
 import LoginPage from "./components/LoginPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignUpPage from "./components/SignUpPage";
 import ForgetPassword from "./components/ForgetPassword";
 import BookPage from "./components/bookPage/BookPage";
@@ -9,10 +9,17 @@ import AuthorPage from "./components/authorPage/AuthorPage";
 import CreateOrUpdateAuthorPage from "./components/authorPage/CreateOrUpdateAuthorPage";
 import AuthorDetailPage from "./components/authorPage/AuthorDetailPage";
 import BookDetailPage from "./components/bookPage/BookDetailPage";
+import { AuthProvider } from "./components/Context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/header/Navbar";
+import Footer from "./components/footer/Footer";
+import { ToastContainer } from "react-toastify";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   return (
     <>
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -30,6 +37,23 @@ function App() {
             </div>
           }
         />
+        <Route
+          path="/sign-up"
+          element={
+            <div className="flex items-center justify-center min-h-screen">
+              <SignUpPage />
+            </div>
+          }
+        />
+        <Route
+          path="/user-profile"
+          element={
+            <div className="flex items-center justify-center min-h-screen">
+              <UserProfile />
+            </div>
+          }
+        />
+
         <Route
           path="/books"
           element={
@@ -58,7 +82,9 @@ function App() {
           path="/books/update-book/:id"
           element={
             <div className="flex items-center justify-center min-h-screen">
-              <CreateOrUpdateBookPage />
+              <ProtectedRoute>
+                <CreateOrUpdateBookPage />
+              </ProtectedRoute>
             </div>
           }
         />
@@ -115,6 +141,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }

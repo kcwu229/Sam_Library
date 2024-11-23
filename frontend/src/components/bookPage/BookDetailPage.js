@@ -75,6 +75,7 @@ function BookDetailPage() {
               <div className="md:w-1/3 flex flex-col items-center">
                 {book && (
                   <img
+                    loading="lazy"
                     className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
                     src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"

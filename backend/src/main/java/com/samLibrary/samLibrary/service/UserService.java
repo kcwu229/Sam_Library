@@ -11,4 +11,6 @@ public interface UserService {
     UserDto updateUser(UserDto userDto, UUID userId);
     void deleteUser(UUID userId);
     List<UserDto> getAllUsers();
+    boolean authenticate(String username, String password);
+    UserDto getUserByUsername(String username);
 }

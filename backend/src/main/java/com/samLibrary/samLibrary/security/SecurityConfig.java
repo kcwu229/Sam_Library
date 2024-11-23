@@ -3,6 +3,7 @@ package com.samLibrary.samLibrary.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -48,13 +49,18 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
-                        .requestMatchers("/login").permitAll()
-                        //.requestMatchers("/api/books").permitAll()
+                        .requestMatchers("/api/users/login").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/books").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/books/{id}/.png").permitAll()
                         //.requestMatchers("/api/books/create-book").permitAll()
-                        //.requestMatchers("/api/books/{id}").permitAll()
-                        //.requestMatchers("/api/authors").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/books/{id}").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/books-reviews/all/{bookId}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/authors").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/authors/{id}/.png").permitAll()
                         //.requestMatchers("/api/authors/create-author").permitAll()
-                        //.requestMatchers("/api/authors/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/authors/{id}").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/authors-reviews/all/{authorId}").permitAll()
+                        //
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()

@@ -11,6 +11,7 @@ function AuthorCard({
   return (
     <div class="w-full md:w-5/12 max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
       <img
+        loading="lazy"
         class="p-10 rounded-t-lg h-80"
         src={imageSource}
         alt="author image"

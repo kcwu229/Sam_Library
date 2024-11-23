@@ -1,15 +1,19 @@
 package com.samLibrary.samLibrary.security;
 
+import com.samLibrary.samLibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -47,20 +51,21 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) // Disabling CSRF protection
                 .cors(Customizer.withDefaults())
+                // Disabling session management
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
                         .requestMatchers("/api/users/login").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/books").permitAll()
+                        //.requestMatchers(HttpMethod.GET,"/api/books").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/books/{id}/.png").permitAll()
-                        //.requestMatchers("/api/books/create-book").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/books/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/books-reviews/all/{bookId}").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/authors").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/authors/{id}/.png").permitAll()
-                        //.requestMatchers("/api/authors/create-author").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/authors/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/authors-reviews/all/{authorId}").permitAll()
-                        //
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
@@ -91,6 +96,12 @@ public class SecurityConfig {
         provider.setPasswordEncoder(bCryptPasswordEncoder());
         // Returning the configured authentication provider
         return provider;
+    }
+
+    // authentication manager will talk to the authentication provider to authenticate the user
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
     @Bean

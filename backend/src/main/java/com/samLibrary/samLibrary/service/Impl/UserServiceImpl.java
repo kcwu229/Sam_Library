@@ -5,18 +5,20 @@ import com.samLibrary.samLibrary.entity.User;
 import com.samLibrary.samLibrary.exception.UserAlreadyExistsException;
 import com.samLibrary.samLibrary.mapper.UserMapper;
 import com.samLibrary.samLibrary.repository.UserRepository;
+import com.samLibrary.samLibrary.service.JWTService;
 import com.samLibrary.samLibrary.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private UserRepository userRepository;
+
+    private JWTService jwtService;
+    AuthenticationManager authManager;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -74,29 +79,30 @@ public class UserServiceImpl implements UserService {
                 () -> new RuntimeException("User not found")
         );
 
-
         userRepository.deleteById(userId);
     }
 
+    // authentication part
     @Override
-    public boolean authenticate(String username, String password) {
+    public String authenticate(String username, String password) {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isEmpty()) {
             throw new UsernameNotFoundException("User does not exist in the database");
         }
 
-        User user = userOptional.get();
-
-
-        boolean isPasswordMatch = bCryptPasswordEncoder.matches(password, user.getPassword());
-        logger.info("Result of password comparison: " + isPasswordMatch);
-
-        if (!isPasswordMatch) {
-            throw new BadCredentialsException("The password is incorrect");
+        try {
+            Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            boolean isAuthenticated = authentication.isAuthenticated();
+            logger.info("Authentication result: " + isAuthenticated);
+            if (isAuthenticated) {
+                return jwtService.generateToken(username);
+            }
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("The username or password is incorrect", e);
         }
 
-        return true;
+        return null;
     }
 
     @Override

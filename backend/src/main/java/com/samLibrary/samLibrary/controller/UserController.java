@@ -35,16 +35,16 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest, HttpSession session) {
         try {
-            boolean isAuthenticated = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
-        if (isAuthenticated) {
-            UserDto userDto = userService.getUserByUsername(loginRequest.getUsername());
-            session.setAttribute("user", loginRequest.getUsername());
-            return new ResponseEntity<>(userDto.getId(), HttpStatus.OK);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            String jwtToken= userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+            if (jwtToken != null) {
+                UserDto userDto = userService.getUserByUsername(loginRequest.getUsername());
+                session.setAttribute("user", loginRequest.getUsername());
+                return new ResponseEntity<>(jwtToken, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
             }
         } catch (Exception e) {
+            logger.error("Login failed", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Invalid username or password");
         }
     }

@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import SearchBar from "../header/SearchBar";
 import RatingFilter from "../bookPage/bookFilter/RatingFilter";
 import { VscClose } from "react-icons/vsc";
-import BookCard from "../bookPage/bookFilter/BookCard";
 import { useNavigate } from "react-router-dom";
 import { IoLibrarySharp } from "react-icons/io5";
+import { useUser } from "../Context/UserContext";
+import { FaStar } from "react-icons/fa";
 
 import {
   categories as categoryData,
@@ -25,6 +26,7 @@ function BookPage() {
   const categories = categoryData;
   const languages = languageData;
   const exampleBooks = exampleBooksData;
+  const [userRole, setUserRole] = useState(null);
 
   const removeFilter = () => {
     setShowButton(false);
@@ -77,6 +79,10 @@ function BookPage() {
   }
 
   useEffect(() => {
+    const storedRole = localStorage.getItem("userRole");
+    if (storedRole) {
+      setUserRole(storedRole);
+    }
     getAllBooks();
   }, []);
 
@@ -221,15 +227,81 @@ function BookPage() {
                   className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
                   onClick={() => viewOrEditBook(book.id)}
                 >
-                  <BookCard
-                    imageSource={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
-                    title={book.title}
-                    author={book.author ? book.author : "Unknown"}
-                    rating={5}
-                    remainingCount={4}
-                    editAction={() => editAction(book.id)}
-                    deleteAction={() => deleteAction(book.id)}
-                  />
+                  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
+                    <img
+                      loading="lazy"
+                      class="p-8 rounded-t-lg h-80"
+                      src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
+                      alt="product image"
+                    />
+                    <div class="px-5 pb-5 text-left">
+                      <a href="#">
+                        <h5 class="font-bold text-gray-900 tracking-wider">
+                          {book.title}
+                        </h5>
+                        <p class="text-gray-900 font-light mt-2 tracking-wide">
+                          {book.author ? book.author : "Unknown"}
+                        </p>
+                      </a>
+                      <div class="flex items-center mt-2.5 mb-5">
+                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                          <FaStar className="w-4 h-4 text-yellow-400" />
+                          <FaStar className="w-4 h-4 text-yellow-400" />
+                          <FaStar className="w-4 h-4 text-yellow-400" />
+                          <FaStar className="w-4 h-4 text-yellow-400" />
+                          <FaStar className="w-4 h-4 text-yellow-400" />
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
+                          5
+                        </span>
+                        <span class="absolute  text-black text-right right-3 p-3 font-l">
+                          4 item left
+                        </span>
+                      </div>
+                      <div class="flex items-center justify-between">
+                        {userRole === "USER" && (
+                          <button
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+            font-medium rounded-lg text-sm px-5 py-2.5 
+            text-center"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              alert("Coming Soon!");
+                            }}
+                          >
+                            Borrow Now
+                          </button>
+                        )}
+                        {userRole === "ADMIN" && (
+                          <button
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+            font-medium rounded-lg text-sm px-5 py-2.5 
+            text-center"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              editAction(book.id);
+                            }}
+                          >
+                            Edit
+                          </button>
+                        )}
+                        {userRole === "ADMIN" && (
+                          <button
+                            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 
+            focus:outline-none focus:ring-blue-300 
+            font-medium rounded-lg text-sm px-5 py-2.5 
+            text-center"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteAction(book.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </button>
               );
             })}

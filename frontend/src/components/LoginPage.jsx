@@ -7,7 +7,6 @@ import CreateFormErrorTag from "./form/CreateFormErrorTag";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticateUser } from "../services/AuthenticationService";
 import { useAuth } from "./Context/AuthContext";
-import { useUser } from "./Context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "./Context/ToastMessageContext";
 import Cookies from "js-cookie";
@@ -20,7 +19,6 @@ function LoginPage() {
   const { showToast } = useToast();
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { setUserId, setRole } = useUser();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -69,12 +67,17 @@ function LoginPage() {
       try {
         const response = await authenticateUser(formData);
         console.log("login obj is : ", response);
-        const userId = response.data;
+
         // Set the user ID in the context
         if (response.status === 200 || response.status === 201) {
           login();
-          setUserId(userId);
-          setRole(userId);
+          console.log("response", response.data);
+          // setUserId(response.data.id);
+          const userId = response.data.id;
+          localStorage.setItem("userId", userId);
+          // Set the user role in the context
+          const userRole = response.data.role;
+          localStorage.setItem("userRole", userRole);
           const jwtToken = response.data.access_token;
           Cookies.set("token", jwtToken, { expires: 7 });
           //setCookie("jwtToken", jwtToken, { path: "/" });

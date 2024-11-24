@@ -24,29 +24,32 @@
 ## Current works: 
 
 ### 1. Home page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/195c8b49-d3ab-47ef-9afe-759161a0d88c">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/bfeee42e-996d-4e95-919c-4e2dd1481ca3">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/e45c0c38-eb3f-47e8-97c5-d8a5322d781c">
+
 
 ### 2. Login page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/de8b4770-2d96-4a2f-8383-972f60c5426c">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/24ba5cfe-a07a-4e8a-b733-365e8ae5aa4e">
-
-### 3. Sign Up page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/2274e6a2-8b29-44f3-84ed-cd58d5e09c58">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/624f21e1-7132-479f-91bc-ae77533000b8">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/ecc24579-1dd2-4f5d-afd5-56032f36b7e6">
 
 
-### 4. Forget password page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/ef824247-fc34-4eca-8b6d-4415def16da1">
+### 3. Book Page
+Features: 
+#### Vistors: preview only, no access right on borrowing books and edit / deleting
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/de5ddad1-14e2-4846-9fd6-3842dd86bbda">
 
-### 5. Book Page
-<img width="1710" alt="image" src="https://github.com/user-attachments/assets/00e1efff-f5bf-4cdb-b429-7d3e7ca5204a">
+#### Admin: has access right on creating and edit / deleting and leave comment
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b7df541d-7ecf-4fe8-8e06-4d63d4397cdc">
 
-### 6. Author Page
-<img width="1710" alt="image" src="https://github.com/user-attachments/assets/ccd11a75-6d51-4ea1-a656-af800109e340">
+#### member: has access right on borrowing books and  leave comment
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/04af3a36-550b-4ad4-9fb2-d1dbe1b80062">
 
-### 7. Detail Page
-<img width="1447" alt="image" src="https://github.com/user-attachments/assets/6cdf505e-9ce9-41b2-9ec6-36c66b51fe8e">
+### 4. Author Page -> follows the features of book page
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/ccd11a75-6d51-4ea1-a656-af800109e340">
+
+### 5. Detail Page
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/6cdf505e-9ce9-41b2-9ec6-36c66b51fe8e">
+
+### 6. Oauth2 login  (Working on it)
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/c39063e5-d360-4e6e-81f7-3fcd5079d35b">
 
 
 

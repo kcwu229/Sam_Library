@@ -62,6 +62,8 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
+                // Configuring the requests that need to be authorized
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
                                 .requestMatchers(StaticResources).permitAll()
@@ -77,10 +79,29 @@ public class SecurityConfig {
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
+                                // for redirecting to google and github login pages
+                                .requestMatchers("/api/oauth/login").permitAll()
 
                          //Requiring authentication for all other requests
                         .anyRequest().authenticated()
                         )
+
+                        // Configuring the login page with oauth2Login and httpBasic
+                        .oauth2Login(oauth2 -> oauth2
+                                .loginPage("/api/oauth/login")
+                                .authorizationEndpoint(authorization -> authorization
+                                        // set the url as
+                                        // http://localhost:8080/api/auth/oauth2/authorize/google
+                                        // and
+                                        // http://localhost:8080/api/auth/oauth2/authorize/github
+                                        .baseUri("/api/auth/oauth2/authorize")
+                                )
+                                        .redirectionEndpoint(redirection -> redirection
+                                                .baseUri("/oauth2/callback/*")
+                                )
+                                .defaultSuccessUrl("/home", true)
+                        )
+
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

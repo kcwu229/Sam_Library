@@ -2,6 +2,7 @@ import DefaultImage from "../../assets/images/user.png";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function UserSection({ userLoggedIn }) {
   const { logout } = useAuth();
@@ -15,6 +16,7 @@ function UserSection({ userLoggedIn }) {
   function handleLogout() {
     //
     logout();
+    Cookies.remove("token");
     notifyLogout();
     navigate("/");
   }

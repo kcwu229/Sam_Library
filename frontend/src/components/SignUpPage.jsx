@@ -1,6 +1,6 @@
 import SignUpImage from "../assets/images/signUp.png";
 import { useState } from "react";
-import { createUser } from "../services/UserSevices";
+import { registrateUser } from "../services/AuthenticationService";
 import { useNavigate } from "react-router-dom";
 import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
@@ -14,6 +14,7 @@ function SignUpPage() {
   const [errors, setErrors] = useState({
     username: "",
     password: "",
+    email: "",
     firstName: "",
     lastName: "",
   });
@@ -22,12 +23,8 @@ function SignUpPage() {
     username: "",
     password: "",
     firstName: "",
+    email: "",
     lastName: "",
-  });
-
-  const [loginData, setLoginData] = useState({
-    username: "",
-    password: "",
   });
 
   const handleChange = (e) => {
@@ -65,6 +62,13 @@ function SignUpPage() {
       errorCopy.username = "";
     }
 
+    if (formData.email === "") {
+      errorCopy.email = "Email is required !";
+      valid = false;
+    } else {
+      errorCopy.email = "";
+    }
+
     if (formData.password === "") {
       errorCopy.password = "Password is required !";
       valid = false;
@@ -82,16 +86,11 @@ function SignUpPage() {
     e.preventDefault();
 
     if (validateForm()) {
-      setLoginData({
-        username: formData.username,
-        password: formData.password,
-      });
-
       try {
-        const response = await createUser(formData);
+        const response = await registrateUser(formData);
         console.log("response", response);
 
-        if (response.status === 201) {
+        if (response.status === 200 || response.status === 201) {
           showToast("Successfully registration !", "success");
           await sleep(2000);
           showToast("Redirecting you to login page", "success");
@@ -169,6 +168,21 @@ function SignUpPage() {
                 {errors.lastName && (
                   <CreateFormErrorTag error={errors.lastName} />
                 )}
+              </div>
+
+              {/* username */}
+              <div className="mb-4 relative">
+                <LabelsTag for="email" text="Email" />
+                <InputTag
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  text="Enter your email"
+                  error={errors.email}
+                />
+                {errors.email && <CreateFormErrorTag error={errors.email} />}
               </div>
 
               {/* username */}

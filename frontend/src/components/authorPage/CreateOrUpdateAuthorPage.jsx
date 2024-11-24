@@ -7,6 +7,8 @@ import CreateFormErrorTag from "../form/CreateFormErrorTag";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAuthor } from "../../services/AuthorServices";
 import FileInput from "../form/FileInput";
+import Cookies from "js-cookie";
+import { createAuthor, updateAuthor } from "../../services/AuthorServices";
 
 const CreateOrUpdateAuthorPage = () => {
   const { id } = useParams();
@@ -42,7 +44,7 @@ const CreateOrUpdateAuthorPage = () => {
             setImagePreviewUrl(imageUrl);
             fetch(imageUrl, {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+                Authorization: `Bearer ${Cookies.get("token")}`, // Include the token in the request headers
               },
             })
               .then((res) => {
@@ -197,21 +199,12 @@ const CreateOrUpdateAuthorPage = () => {
       // Debugging: Log the author object to verify the fields
 
       try {
-        const headers = {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
-        };
-
         if (id) {
           // Update existing author
-          const response = await axios.put(`/authors/${id}`, formData, {
-            headers,
-          });
+          const response = await updateAuthor(id, formData);
         } else {
           // Create a new author
-          const response = await axios.post("/authors", formData, {
-            headers,
-          });
+          const response = await createAuthor(formData);
         }
         navigate("/authors");
       } catch (error) {

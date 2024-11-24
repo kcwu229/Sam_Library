@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    UserDto createUser(UserDto userDto);
     UserDto getUserById(UUID userId);
     UserDto updateUser(UserDto userDto, UUID userId);
     void deleteUser(UUID userId);
     List<UserDto> getAllUsers();
-    String authenticate(String username, String password);
     UserDto getUserByUsername(String username);
 }

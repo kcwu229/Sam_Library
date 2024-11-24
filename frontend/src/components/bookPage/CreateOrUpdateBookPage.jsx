@@ -7,6 +7,8 @@ import CreateFormErrorTag from "../form/CreateFormErrorTag";
 import { useNavigate, useParams } from "react-router-dom";
 import { getBook } from "../../services/BookServices";
 import FileInput from "../form/FileInput";
+import Cookies from "js-cookie";
+import axiosInstance from "../../axioConfig";
 
 const CreateOrUpdateBookPage = () => {
   const { id } = useParams();
@@ -34,6 +36,7 @@ const CreateOrUpdateBookPage = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
   useEffect(() => {
+    console.log("token: ", Cookies.get("token"));
     if (id) {
       getBook(id)
         .then((response) => {
@@ -43,7 +46,7 @@ const CreateOrUpdateBookPage = () => {
             setImagePreviewUrl(imageUrl);
             fetch(imageUrl, {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+                Authorization: `Bearer ${Cookies.get("token")}`, // Include the token in the request headers
               },
             })
               .then((res) => {
@@ -213,7 +216,7 @@ const CreateOrUpdateBookPage = () => {
       try {
         const headers = {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
+          Authorization: `Bearer ${Cookies.get("token")}`, // Include the token in the request headers
         };
 
         if (id) {

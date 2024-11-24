@@ -45,6 +45,7 @@ function BookPage() {
   function getAllBooks() {
     listBooks()
       .then((response) => {
+        console.log("I am now sending ...");
         setBooks(response.data);
         console.log(response.data);
       })

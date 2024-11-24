@@ -1,6 +1,6 @@
 package com.samLibrary.samLibrary.controller;
 
-import com.samLibrary.samLibrary.dto.LoginRequest;
+import com.samLibrary.samLibrary.dto.RegisterRequest;
 import com.samLibrary.samLibrary.dto.UserDto;
 import com.samLibrary.samLibrary.service.Impl.BookServiceImpl;
 import com.samLibrary.samLibrary.service.UserService;
@@ -25,29 +25,6 @@ public class UserController {
     private UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    @PostMapping("/register")
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserDto UserDto) {
-            UserDto savedUser = userService.createUser(UserDto);
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
-
-    // login and return user id for later use
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest, HttpSession session) {
-        try {
-            String jwtToken= userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
-            if (jwtToken != null) {
-                UserDto userDto = userService.getUserByUsername(loginRequest.getUsername());
-                session.setAttribute("user", loginRequest.getUsername());
-                return new ResponseEntity<>(jwtToken, HttpStatus.OK);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-            }
-        } catch (Exception e) {
-            logger.error("Login failed", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Invalid username or password");
-        }
-    }
 
     // user profile
     @GetMapping("/{id}")

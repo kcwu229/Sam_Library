@@ -40,19 +40,22 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    AuthenticationProvider authenticationProvider;
+
+    @Autowired
     private JwtFilter jwtFilter;
-    // Configuring the security filter chain
-    // Configuring the security filter chain
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        /*
-        The SecurityFilterChain bean configures the security filter chain for the application.
-        It defines how HTTP security is handled, including which endpoints are accessible without
-        authentication and which require authentication.
-         */
+        // image png files for permitted access
+        String[] StaticResources = {
+                "/books/{id}.png",
+                "/authors/{id}.png"
+        };
+        return
 
-        return httpSecurity
+                httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) // Disabling CSRF protection
                 .cors(Customizer.withDefaults())
                 // Disabling session management
@@ -61,54 +64,30 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
+                                .requestMatchers(StaticResources).permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/login").permitAll()
-                        //.requestMatchers(HttpMethod.GET,"/api/books").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/books/{id}/.png").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/books").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/books/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/books-reviews/all/{bookId}").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/authors").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/authors/{id}/.png").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/authors/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/authors-reviews/all/{authorId}").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
+
                          //Requiring authentication for all other requests
                         .anyRequest().authenticated()
-                        //.anyRequest().permitAll()
-
-                )
+                        )
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication
-
+                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     // Configuring the authentication provider with user details service and password encoder
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-
-        /*
-        DaoAuthenticationProvider: A specific implementation of AuthenticationProvider that
-        retrieves user details from a UserDetailsService and uses a PasswordEncoder to
-        validate the password.
-         */
-
-        // Creating an instance of DaoAuthenticationProvider
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        // Setting the UserDetailsService to retrieve user details
-        provider.setUserDetailsService(userDetailsService);
-        // Setting the PasswordEncoder to encode and verify passwords
-        provider.setPasswordEncoder(bCryptPasswordEncoder());
-        // Returning the configured authentication provider
-        return provider;
-    }
-
-    // authentication manager will talk to the authentication provider to authenticate the user
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

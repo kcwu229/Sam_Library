@@ -5,11 +5,12 @@ import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
 import { ToastContainer, toast } from "react-toastify";
-import { loginUser } from "../services/UserSevices";
+import { authenticateUser } from "../services/AuthenticationService";
 import { useAuth } from "./Context/AuthContext";
 import { useUser } from "./Context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "./Context/ToastMessageContext";
+import Cookies from "js-cookie";
 
 function LoginPage() {
   const [errors, setErrors] = useState({
@@ -19,7 +20,7 @@ function LoginPage() {
   const { showToast } = useToast();
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { setUser } = useUser();
+  const { setUserId, setRole } = useUser();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -66,12 +67,17 @@ function LoginPage() {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const response = await loginUser(formData);
+        const response = await authenticateUser(formData);
+        console.log("login obj is : ", response);
         const userId = response.data;
         // Set the user ID in the context
-        setUser(userId);
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
           login();
+          setUserId(userId);
+          setRole(userId);
+          const jwtToken = response.data.access_token;
+          Cookies.set("token", jwtToken, { expires: 7 });
+          //setCookie("jwtToken", jwtToken, { path: "/" });
           showToast("Successfully login !", "success");
           navigate("/books");
         }

@@ -1,18 +1,19 @@
 package com.samLibrary.samLibrary.service;
 
-
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
 import java.util.function.Function;
 
 public interface JWTService {
+    String extractUserName(String jwtToken);
+    boolean validateToken(String jwtToken, Object userDetails);
     String generateToken(String username);
-
-    String extractUserName(String token);
-
-    boolean validateToken(String token, UserDetails userDetails);
+    <T> T extractClaim(String jwtToken, Function<Claims, T> claimsResolver);
+    String generateToken(UserDetails userDetails);
+    boolean isTokenValid(String token, UserDetails userDetails);
+    boolean isTokenExpired(String token);
+    Date extractExipration(String token);
 
 }

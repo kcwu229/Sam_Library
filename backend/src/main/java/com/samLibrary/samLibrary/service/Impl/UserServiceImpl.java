@@ -29,28 +29,18 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    private JWTService jwtService;
+    private UserMapper userMapper;
+
     AuthenticationManager authManager;
 
-    @Override
-    public UserDto createUser(UserDto userDto) {
-        // Check if username already exists
-        if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
-            throw new UserAlreadyExistsException("Username already exists");
-        }
 
-        User user = UserMapper.mapToUserEntity(userDto);
-        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        User savedUser = userRepository.save(user);
-        return UserMapper.mapToUserDto(savedUser);
-    }
 
     @Override
     public UserDto getUserById(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
-        return UserMapper.mapToUserDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override
@@ -64,7 +54,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userToBeUpdate.getFirstName());
         user.setLastName(userToBeUpdate.getLastName());
         User savedUpdated = userRepository.save(user);
-        return UserMapper.mapToUserDto(savedUpdated);
+        return userMapper.toDto(savedUpdated);
     }
 
 
@@ -82,28 +72,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
-    // authentication part
-    @Override
-    public String authenticate(String username, String password) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
 
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User does not exist in the database");
-        }
-
-        try {
-            Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            boolean isAuthenticated = authentication.isAuthenticated();
-            logger.info("Authentication result: " + isAuthenticated);
-            if (isAuthenticated) {
-                return jwtService.generateToken(username);
-            }
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("The username or password is incorrect", e);
-        }
-
-        return null;
-    }
 
     @Override
     public UserDto getUserByUsername(String username) {
@@ -113,6 +82,6 @@ public class UserServiceImpl implements UserService {
         }
         User user = optionalUser.get();
 
-        return UserMapper.mapToUserDto(user);
+        return userMapper.toDto(user);
     }
 }

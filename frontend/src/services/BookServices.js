@@ -14,7 +14,7 @@ export const deleteBook = (bookId) =>
   axiosInstance.delete(REST_BOOK_API_URL + "/" + bookId);
 
 export const createBook = (formData) =>
-  axiosFileInstance.post(REST_BOOK_API_URL + "/", formData);
+  axiosFileInstance.post(REST_BOOK_API_URL, formData);
 
 export const updateBook = (bookId, formData) =>
   axiosFileInstance.put(REST_BOOK_API_URL + "/" + bookId, formData);

@@ -14,8 +14,13 @@ function AuthorDetailPage() {
   const [author, setAuthor] = useState(null);
   const [reiews, setReviews] = useState([]);
   const ratingType = "author";
+  const [userRole, setUerRole] = useState(null);
 
   useEffect(() => {
+    const storedRole = localStorage.getItem("userRole");
+    if (storedRole) {
+      setUerRole(storedRole);
+    }
     if (id) {
       getAuthor(id)
         .then((response) => {
@@ -24,7 +29,6 @@ function AuthorDetailPage() {
         })
         .catch((error) => console.error(error));
     }
-
     listAllAuthorReviews(id)
       .then((response) => {
         setReviews(response.data);
@@ -145,15 +149,15 @@ function AuthorDetailPage() {
               )}
             </div>
           </div>
-          <div className="w-full md:w-8/12 mx-auto mt-20">
-            {id ? (
+          {userRole && (
+            <div className="w-full md:w-8/12 mx-auto mt-20">
               <LeaveComment
                 ratingType={ratingType}
                 id={id}
                 onReviewAdded={handleReviewAdded}
               />
-            ) : null}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

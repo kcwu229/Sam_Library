@@ -256,7 +256,7 @@ function AuthorPage() {
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        {userRole === "ROLE_ADMIN" && (
+                        {userRole === "ADMIN" && (
                           <button
                             class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 
             focus:outline-none focus:ring-blue-300 
@@ -271,7 +271,7 @@ function AuthorPage() {
                           </button>
                         )}
 
-                        {userRole === "ROLE_ADMIN" && (
+                        {userRole === "ADMIN" && (
                           <button
                             class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 
             focus:outline-none focus:ring-blue-300 

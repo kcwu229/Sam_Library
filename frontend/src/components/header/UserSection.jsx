@@ -17,6 +17,8 @@ function UserSection({ userLoggedIn }) {
     //
     logout();
     Cookies.remove("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userRole");
     notifyLogout();
     navigate("/");
   }

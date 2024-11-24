@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
@@ -8,6 +8,7 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
   const [bookName, setBookName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(null);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -18,6 +19,11 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
       setDropdownOpen(false);
     }, 200); // Adjust the delay as needed
   };
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("userRole");
+    setUserRole(userRole);
+  }, []);
 
   return (
     <div className="pt-4 top-16 w-full bg-white shadow z-50">
@@ -78,15 +84,18 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
             <IoMdSearch className="w-5 h-5" />
           </button>
         </div>
-        <button
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
+
+        {userRole === "ADMIN" && (
+          <button
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
           focus:outline-none focus:ring-gray-300 
             font-bold rounded-lg text-sm px-5 py-2.5 
             text-center"
-          onClick={onClickAction}
-        >
-          Create {buttonText}
-        </button>
+            onClick={onClickAction}
+          >
+            Create {buttonText}
+          </button>
+        )}
         <div></div>
       </div>
     </div>

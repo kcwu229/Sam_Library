@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getBook } from "../../services/BookServices";
 import FileInput from "../form/FileInput";
 import Cookies from "js-cookie";
-import axiosInstance from "../../axioConfig";
+import { createBook, updateBook } from "../../services/BookServices";
 
 const CreateOrUpdateBookPage = () => {
   const { id } = useParams();
@@ -214,23 +214,14 @@ const CreateOrUpdateBookPage = () => {
       console.log("Book object:", book);
 
       try {
-        const headers = {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${Cookies.get("token")}`, // Include the token in the request headers
-        };
-
         if (id) {
           // Update existing book
           console.log("File: after submit ??", file);
-          const response = await axios.put(`/books/${id}`, formData, {
-            headers,
-          });
+          const response = await updateBook(id, formData);
           console.log("Book updated successfully:", response.data);
         } else {
           // Create a new book
-          const response = await axios.post("/books", formData, {
-            headers,
-          });
+          const response = await createBook(formData);
           console.log("Book created successfully:", response.data);
         }
         navigate("/books");

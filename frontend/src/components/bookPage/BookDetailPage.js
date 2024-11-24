@@ -13,6 +13,7 @@ function BookDetailPage() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [userRole, setUserRole] = useState(null);
   const ratingType = "book";
 
   useEffect(() => {
@@ -37,6 +38,10 @@ function BookDetailPage() {
   }, [id]);
 
   useEffect(() => {
+    const storedRole = localStorage.getItem("userRole");
+    if (storedRole) {
+      setUserRole(storedRole);
+    }
     console.log(reviews);
   }, [reviews]);
 
@@ -152,13 +157,13 @@ function BookDetailPage() {
               </div>
             </div>
             <div className="w-full md:w-8/12 lg:w-6/12 mx-auto mt-20">
-              {id ? (
+              {userRole && (
                 <LeaveComment
                   ratingType={ratingType}
                   id={id}
                   onReviewAdded={handleReviewAdded}
                 />
-              ) : null}
+              )}
             </div>
           </div>
         </div>

@@ -10,6 +10,8 @@ import { useAuth } from "./Context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "./Context/ToastMessageContext";
 import Cookies from "js-cookie";
+import { BsGithub } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
 
 function LoginPage() {
   const [errors, setErrors] = useState({
@@ -33,6 +35,13 @@ function LoginPage() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const googleLogin = () =>
+    (window.location.href =
+      "http://localhost:8080/api/auth/oauth2/authorize/google");
+  const githubLogin = () =>
+    (window.location.href =
+      "http://localhost:8080/api/auth/oauth2/authorize/github");
 
   function validateForm() {
     let valid = true;
@@ -127,14 +136,12 @@ function LoginPage() {
         <div className="w-full lg:w-5/12 flex items-center justify-center relative p-8">
           <div className="w-full max-w-sm">
             <form className="w-full relative" onSubmit={submitLoginForm}>
-              <h1 className="mb:text-lg font-bold mb-4 mt-1 text-4xl text-center text-slate-700">
-                Welcome Back
+              <h1 className="mb:text-lg font-bold mb-4 mt-1 text-4xl text-left text-slate-700">
+                Login
               </h1>
-              <p className="text-center">Log in to your account</p>
               <br />
-
               {/* username */}
-              <div className="mb-4 relative mt-10">
+              <div className="mb-4 relative">
                 <LabelsTag for="username" text="Username" />
                 <InputTag
                   id="username"
@@ -148,7 +155,6 @@ function LoginPage() {
                   <CreateFormErrorTag error={errors.username} />
                 )}
               </div>
-
               {/* password */}
               <div className="mb-10 relative mt-10">
                 <LabelsTag for="password" text="Password" />
@@ -165,7 +171,6 @@ function LoginPage() {
                   <CreateFormErrorTag error={errors.password} />
                 )}
               </div>
-
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
                   <input type="checkbox" className="w-4 h-4" />
@@ -173,31 +178,51 @@ function LoginPage() {
                     Remember me
                   </label>
                 </div>
-                <a href="/forget-password" className="text-sm">
-                  Forget Password?
-                </a>
               </div>
-
               <button
                 className="bg-slate-700 hover:bg-slate-900 
                 text-white font-bold py-3 
-                px-10 lg:px-10 xl:px-20 md:px-5 rounded focus:outline-none mt-10 mb-8 
+                px-10 lg:px-10 xl:px-20 md:px-5 rounded focus:outline-none mb-8 
                 focus:shadow-outline w-full"
                 type="submit"
                 disabled={isSubmitting}
               >
                 Login
               </button>
-              <div className="text-center mt-2">
-                Don't have an account?
-                <a
-                  href="/sign-up"
-                  className="ml-2 text-slate-700 hover:underline"
-                >
-                  Sign up
+              <div className="flex">
+                <a href="/forget-password" className="text-sm text-right">
+                  Forget Password?
                 </a>
               </div>
+              <br />
+              <hr />
             </form>
+            <div className="flex justify-center items-center gap-8 mt-6">
+              <button
+                className="w-14 h-14 p-2 border border-black rounded-full 
+              flex justify-center items-center hover:bg-slate-50"
+                onClick={githubLogin}
+              >
+                <BsGithub className="w-7 h-7" />
+              </button>
+
+              <button
+                className="w-14 h-14 p-2 border border-orange-600 rounded-full 
+              flex justify-center items-center hover:bg-slate-50"
+                onClick={googleLogin}
+              >
+                <FcGoogle className="w-7 h-7" />
+              </button>
+            </div>
+            <div className="text-center mt-8">
+              Don't have an account?
+              <a
+                href="/sign-up"
+                className="block ml-2 text-slate-700 hover:underline"
+              >
+                Sign up
+              </a>
+            </div>
           </div>
         </div>
       </div>

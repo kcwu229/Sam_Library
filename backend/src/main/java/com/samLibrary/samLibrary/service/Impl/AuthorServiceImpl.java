@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository authorRepository;
+    private AuthorMapper authorMapper;
     private static final Logger logger = LoggerFactory.getLogger(AuthorServiceImpl.class);
 
 
@@ -62,7 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author savedAuthor = authorRepository.save(author);
 
         // Convert the saved author entity back to a authorDto
-        return AuthorMapper.mappToAuthorDto(savedAuthor);
+        return authorMapper.toDto(savedAuthor);
 
     }
 
@@ -71,7 +70,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findById(authorId).orElseThrow(
                 () -> new RuntimeException("Authors not found")
         );
-        return AuthorMapper.mappToAuthorDto(author);
+        return authorMapper.toDto(author);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         // need to rewrite this part
         author.setImageName(authorToUpdate.getImageName());
-        return AuthorMapper.mappToAuthorDto(authorRepository.save(author));
+        return authorMapper.toDto(authorRepository.save(author));
     }
 
     @Override
@@ -147,7 +146,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<AuthorDto> getAllAuthors() {
         return authorRepository.findAll().stream()
-                .map(AuthorMapper::mappToAuthorDto)
+                .map(authorMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

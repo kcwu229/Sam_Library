@@ -11,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +25,7 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
+    private BookMapper BookMapper;
 
 
     public BookDto createBook(BookDto bookDto, MultipartFile file) {
@@ -62,15 +61,17 @@ public class BookServiceImpl implements BookService {
         book.setId(bookId); // Ensure the UUID is set here
         book.setTitle(bookDto.getTitle());
         book.setAuthor(bookDto.getAuthor());
-        book.setPublishedYear(bookDto.getPublishedYear());
-        book.setImageName(fileName);
+        book.setPublishedDate(bookDto.getPublishedDate());
+        book.setPublisher(bookDto.getPublisher());
+        book.setCategory(bookDto.getCategory());
+        book.setImage(fileName);
         book.setIsbn(bookDto.getIsbn());
         book.setCatchPhrase(bookDto.getCatchPhrase());
         book.setBookDescription(bookDto.getBookDescription());
 
         Book savedBook = bookRepository.save(book);
         // Convert the saved Book entity back to a BookDto
-        return BookMapper.mapToBookDto(savedBook);
+        return BookMapper.toDto(savedBook);
 
     }
 
@@ -79,7 +80,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
-        return BookMapper.mapToBookDto(book);
+        return BookMapper.toDto(book);
     }
 
 
@@ -90,7 +91,7 @@ public class BookServiceImpl implements BookService {
         );
 
         // if the user uploads a new image, delete the old image and save the new one
-        String fileName = book.getImageName();
+        String fileName = book.getImage();
         logger.info("bookId is :" + bookId);
         logger.info("filename is :" + fileName);
 
@@ -120,9 +121,13 @@ public class BookServiceImpl implements BookService {
 
         book.setAuthor(bookToBeUpdated.getAuthor());
 
-        book.setPublishedYear(bookToBeUpdated.getPublishedYear());
+        book.setPublishedDate(bookToBeUpdated.getPublishedDate());
 
-        book.setImageName(fileName);
+        book.setPublisher(bookToBeUpdated.getPublisher());
+
+        book.setImage(fileName);
+
+        book.setCategory(bookToBeUpdated.getCategory());
 
         book.setIsbn(bookToBeUpdated.getIsbn());
 
@@ -132,7 +137,7 @@ public class BookServiceImpl implements BookService {
 
         Book savedBook = bookRepository.save(book);
         // Convert the saved Book entity back to a BookDto
-        return BookMapper.mapToBookDto(savedBook);
+        return BookMapper.toDto(savedBook);
     }
 
     @Override
@@ -140,8 +145,8 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.findAll();
         return books.stream()
                 .map(book -> {
-                    BookDto bookDto = BookMapper.mapToBookDto(book);
-                    Path path = Paths.get("backend/" + book.getImageName() + ".png");
+                    BookDto bookDto = BookMapper.toDto(book);
+                    Path path = Paths.get("backend/" + book.getImage() + ".png");
 
                     return bookDto;
                 })
@@ -154,7 +159,7 @@ public class BookServiceImpl implements BookService {
                 () -> new RuntimeException("Book not found")
         );
         // Delete the image file associated with the book
-        String imagePath = "backend/images/books/" + book.getImageName() + ".png";
+        String imagePath = "backend/images/books/" + book.getImage() + ".png";
 
         try {
             Files.deleteIfExists(Paths.get(imagePath));

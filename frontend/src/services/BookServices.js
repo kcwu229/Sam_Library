@@ -5,7 +5,13 @@ import { axiosInstance, axiosFileInstance } from "../axioConfig";
 const REST_BOOK_API_URL = "http://localhost:8080/api/books";
 
 // common list book function, no need auth
-export const listBooks = (books) => axiosInstance.get(REST_BOOK_API_URL);
+export const listBooks = (page, pageSize) =>
+  axiosInstance.get(REST_BOOK_API_URL, {
+    params: {
+      page: page,
+      per_page: pageSize,
+    },
+  });
 
 export const getBook = (bookId) =>
   axiosInstance.get(REST_BOOK_API_URL + "/" + bookId);

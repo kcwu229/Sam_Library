@@ -82,7 +82,9 @@ function BookDetailPage() {
                   <img
                     loading="lazy"
                     className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
-                    src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
+                    // to-do add handling for missing image && if image is on server or local
+                    src={book.image}
+                    //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"
                   />
                 )}
@@ -90,7 +92,7 @@ function BookDetailPage() {
 
               {/* Right Column */}
               <div className="md:w-2/3 md:pl-10 mt-10 md:mt-0">
-                {/* ISBN and Publish Year */}
+                {/* ISBN and Publish Date */}
                 <div className="flex flex-col md:flex-row items-start mb-10">
                   {book && book.isbn && (
                     <div className="p-3 rounded-2xl border border-black mb-4 md:mb-0">
@@ -101,9 +103,9 @@ function BookDetailPage() {
                   {book && (
                     <div className="p-3 rounded-2xl border border-black">
                       <p className="text-sm font-light">
-                        Published Year:{" "}
-                        {book.publishedYear !== 0
-                          ? book.publishedYear
+                        Published Date:{" "}
+                        {book.publishedDate !== 0
+                          ? book.publishedDate
                           : "Unknown"}
                       </p>
                     </div>
@@ -111,9 +113,11 @@ function BookDetailPage() {
                 </div>
 
                 {/* BlockQuote */}
-                <div className="mt-10 md:mt-0">
-                  <BlockQuote text={book && book.catchPhrase} />
-                </div>
+                {book && book.catchPhrase && (
+                  <div className="mt-10 md:mt-0">
+                    <BlockQuote text={book && book.catchPhrase} />
+                  </div>
+                )}
 
                 {/* Author */}
                 <div className="flex-col mt-10">
@@ -122,6 +126,16 @@ function BookDetailPage() {
                   </p>
                   <p className="block mt-4 font-light tracking-widest leading-loose text-gray-500">
                     {book && book.author}
+                  </p>
+                </div>
+
+                {/* Author */}
+                <div className="flex-col mt-10">
+                  <p>
+                    <b className="text-xl block">Publisher</b>
+                  </p>
+                  <p className="block mt-4 font-light tracking-widest leading-loose text-gray-500">
+                    {book && book.publisher}
                   </p>
                 </div>
 

@@ -42,12 +42,14 @@ function Navbar() {
               isActive={activeTab === "/books"}
               onClick={() => handleTabClick("/books")}
             />
+            {/*  Hide the Authors tab
             <NavBarTag
               href="/authors"
               text="Authors"
               isActive={activeTab === "/authors"}
               onClick={() => handleTabClick("/authors")}
             />
+             */}
           </ul>
         </div>
 

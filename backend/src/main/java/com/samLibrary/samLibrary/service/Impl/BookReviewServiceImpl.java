@@ -1,6 +1,5 @@
 package com.samLibrary.samLibrary.service.Impl;
 
-import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.entity.Book;
 import com.samLibrary.samLibrary.entity.BookReview;
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 public class BookReviewServiceImpl implements BookReviewService {
     private BookReviewRepository bookReviewRepository;
     private BookRepository bookRepository;
+    private BookReviewMapper bookReviewMapper;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     @Override
@@ -39,10 +39,10 @@ public class BookReviewServiceImpl implements BookReviewService {
         bookReview.setRating(bookReviewDto.getRating());
         bookReview.setTitle(bookReviewDto.getTitle());
         bookReview.setCreateTimestamp(LocalDateTime.now());
-        bookReview = bookReviewRepository.save(bookReview);
+        bookReview = bookReviewRepository.save(bookReviewMapper.toEntity(bookReviewDto));
 
-        logger.info("THE BOOK REVIEW OBJ is : {}", BookReviewMapper.mapToBookReviewDto(bookReview));
-        return BookReviewMapper.mapToBookReviewDto(bookReview);
+        logger.info("THE BOOK REVIEW OBJ is : {}", bookReview);
+        return bookReviewMapper.toDto(bookReview);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class BookReviewServiceImpl implements BookReviewService {
         existingBookReview.setTitle(bookReviewDto.getTitle());
         existingBookReview.setRating(bookReviewDto.getRating());
         BookReview updatedBookReview = bookReviewRepository.save(existingBookReview);
-        return BookReviewMapper.mapToBookReviewDto(updatedBookReview);
+        return bookReviewMapper.toDto(updatedBookReview);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Override
     public List<BookReviewDto> getAllBookReviews(UUID bookId) {
         return bookReviewRepository.findByBookId(bookId).stream()
-                .map(BookReviewMapper::mapToBookReviewDto)
+                .map(bookReviewMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

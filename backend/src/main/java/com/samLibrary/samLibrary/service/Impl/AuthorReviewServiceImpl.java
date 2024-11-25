@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class AuthorReviewServiceImpl implements AuthorReviewService {
     private AuthorReviewRepository authorReviewRepository;
     private AuthorRepository authorRepository;
+    private AuthorReviewMapper authorReviewMapper;
 
     @Override
     public AuthorReviewDto createAuthorReview(AuthorReviewDto AuthorReviewDto, UUID authorId) {
@@ -33,7 +34,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
         authorReview.setRating(AuthorReviewDto.getRating());
         authorReview.setCreateTimestamp(LocalDateTime.now());
         authorReview = authorReviewRepository.save(authorReview);
-        return AuthorReviewMapper.mapToAuthorReviewDto(authorReview);
+        return authorReviewMapper.toDto(authorReview);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
         existingAuthorReview.setRating(authorReviewDto.getRating());
 
         AuthorReview authorReview = authorReviewRepository.save(existingAuthorReview);
-       return AuthorReviewMapper.mapToAuthorReviewDto(authorReview);
+       return authorReviewMapper.toDto(authorReview);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
     @Override
     public List<AuthorReviewDto> getAllAuthorReviews(UUID AuthorId) {
         return authorReviewRepository.findByAuthorId(AuthorId).stream()
-                .map(AuthorReviewMapper::mapToAuthorReviewDto)
+                .map(authorReviewMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

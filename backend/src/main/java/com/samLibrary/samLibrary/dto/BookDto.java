@@ -16,24 +16,22 @@ import java.util.UUID;
 public class BookDto {
     private UUID id;
 
-    @NotBlank(message = "title is required")
     private String title;
+
+    private String category;
 
     private String author;
 
-    @NotNull(message = "publishedYear is required")
-    @Min(value = 0, message = "publishedYear should be greater than 0")
-    @Max(value = 3000, message = "publishedYear should be less than 2022")
-    private int publishedYear;
+    private String publishedDate;
 
-    //@NotBlank(message = "Image name is required")
-    private String imageName;
+    private String image;
 
     private String isbn;
 
     private String bookDescription;
 
-    @NotBlank(message = "CatchPhrase is required")
+    private String publisher;
+
     private String catchPhrase;
 
 }

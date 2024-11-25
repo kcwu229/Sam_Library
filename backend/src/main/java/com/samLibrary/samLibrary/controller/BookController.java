@@ -35,10 +35,11 @@ public class BookController {
         return ResponseEntity.ok(BookDto);
     }
 
+
     @GetMapping
     public ResponseEntity<List<BookDto>> getAllBooks() {
         List<BookDto> books = bookService.getAllBooks();
-        return ResponseEntity.ok(books);
+       return ResponseEntity.ok(books);
 
     }
 

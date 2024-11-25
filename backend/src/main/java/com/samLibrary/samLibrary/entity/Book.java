@@ -1,8 +1,6 @@
 package com.samLibrary.samLibrary.entity;
 
-import com.samLibrary.samLibrary.entity.BookReview;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,43 +14,51 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "book")
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "book_title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "author", nullable = false)
+    @Column(name = "author")
     private String author;
 
-    @Column(name = "published_year", nullable = false)
-    private int publishedYear;
+    @Column(name = "category")
+    private String category;
 
-    @Column(name = "image_name")
-    private String imageName;
+    @Column(name = "published_date")
+    private String publishedDate;
+
+    @Column(name = "publisher")
+    private String publisher;
+
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "isbn", nullable = false)
     private String isbn;
 
-    @Column(name = "book_description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     private String bookDescription;
 
-    @Column(name = "catch_phrase", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "catch_phrase", columnDefinition = "MEDIUMTEXT", nullable = true)
     private String catchPhrase;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookReview> reviews;
 
-    public Book(UUID id, String title, String author, int publishedYear, String imageName, String isbn, String bookDescription, String catchPhrase) {
+    public Book(UUID id, String title, String category, String author, String publishedDate, String image, String publisher, String isbn, String bookDescription, String catchPhrase) {
         this.id = id;
         this.title = title;
+        this.category = category;
         this.author = author;
-        this.publishedYear = publishedYear;
-        this.imageName = imageName;
+        this.publishedDate = publishedDate;
+        this.image = image;
         this.isbn = isbn;
+        this.publisher = publisher;
         this.bookDescription = bookDescription;
         this.catchPhrase = catchPhrase;
     }

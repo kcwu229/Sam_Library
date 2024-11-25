@@ -46,10 +46,5 @@ Features:
 ### 4. Detail Page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/15d376fc-bc6b-446f-9997-28ff5cf843b4">
 
-
-### 5. Oauth2 login  (Working on it)
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/c39063e5-d360-4e6e-81f7-3fcd5079d35b">
-
-
-
+# Come and join us !!
 

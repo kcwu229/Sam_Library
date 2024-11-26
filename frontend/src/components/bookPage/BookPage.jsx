@@ -50,10 +50,6 @@ function BookPage() {
     fetchBooks(currentPage, pageSize);
   }, [currentPage]);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   async function fetchBooks(page, pageSize) {
     const response = await listBooks(page, pageSize);
     setBooks(response.data);
@@ -114,7 +110,7 @@ function BookPage() {
   }
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen ">
       <SearchBar
         buttonText="Book"
         onClickAction={createBook}
@@ -151,7 +147,8 @@ function BookPage() {
             </div>
           </div>
           <br />
-          <div className="w-full mt-4 flex flex-wrap gap-10 mx-4">
+          <div className="w-full mt-4 flex flex-wrap gap-10 mx-4 justify-center">
+            {loading && <LoadingSpinner />}
             {paginatedBooks.map((book) => {
               return (
                 <BookCard

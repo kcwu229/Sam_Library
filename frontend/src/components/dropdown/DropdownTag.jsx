@@ -1,17 +1,14 @@
 import React from "react";
 
-function DropdownTag({ href, value, text }) {
+function DropdownTag({ value, text }) {
   return (
-    <li>
-      <a
-        href={href}
-        value={value}
-        class="block px-4 py-2 hover:bg-gray-100
+    <a
+      value={value}
+      class="block px-4 py-2 hover:bg-gray-100
                 "
-      >
-        {text}
-      </a>
-    </li>
+    >
+      {text}
+    </a>
   );
 }
 

@@ -9,11 +9,7 @@ import BookCard from "./BookCard"; // Import the new BookCard component
 import Filters from "./bookFilter/FilterList";
 import LoadingSpinner from "../LoadingSpinner";
 
-import {
-  categories as categoryData,
-  languages as languageData,
-  exampleBooks as exampleBooksData,
-} from "../bookPage/bookFilter/BookFilterData";
+import categories from "../bookPage/bookFilter/BookFilterData";
 
 import SortFilter from "../bookPage/bookFilter/SortFilter";
 import FilterButtons from "./bookFilter/FilterButton";
@@ -24,11 +20,11 @@ function BookPage() {
   const [categoryExpand, setCategoryExpand] = useState(false);
   const [languageExpand, setLanguageExpand] = useState(false);
   const [showButton, setShowButton] = useState(true);
-  const categories = categoryData;
   const [loading, setLoading] = useState(true);
-  const languages = languageData;
-  const exampleBooks = exampleBooksData;
   const [userRole, setUserRole] = useState(null);
+  const [searchText, setSearchText] = useState("");
+  const [searchField, setSearchField] = useState("");
+  const [sortCriteria, setSortCriteria] = useState(""); // Add sorting state
 
   // pagination
   const pageSize = 20; // Set your desired page size
@@ -38,12 +34,19 @@ function BookPage() {
   const totalPages = Math.ceil(books.length / pageSize);
   const navigate = useNavigate();
 
+  //search result
+  const handleSearchResults = (data, searchField, searchText) => {
+    setBooks(data);
+    setSearchField(searchField);
+    setSearchText(searchText);
+    setLoading(false);
+  };
+
   useEffect(() => {
     const storedRole = localStorage.getItem("userRole");
     if (storedRole) {
       setUserRole(storedRole);
     }
-
     fetchBooks(currentPage, pageSize);
   }, [currentPage]);
 
@@ -63,6 +66,28 @@ function BookPage() {
 
   const toggleLanguageExpand = () => {
     setLanguageExpand(!languageExpand);
+  };
+
+  // sorting
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);
+    sortBooks(criteria);
+  };
+
+  const sortBooks = (criteria) => {
+    const sortedBooks = [...books].sort((a, b) => {
+      if (criteria === "title") {
+        return a.title.localeCompare(b.title);
+      } else if (criteria === "author") {
+        return a.author.localeCompare(b.author);
+      } else if (criteria === "date") {
+        return a.publishedDate.localeCompare(b.publishedDate);
+      } else if (criteria === "rating") {
+        return a.rating - b.rating;
+      }
+      return 0;
+    });
+    setBooks(sortedBooks);
   };
 
   function deleteAction(id) {
@@ -95,33 +120,38 @@ function BookPage() {
         onClickAction={createBook}
         logo={<IoLibrarySharp className="text-4xl" />}
         logoText={"BookList"}
+        onSearchResults={handleSearchResults}
+        setLoading={setLoading}
       />
       <div className="pt-10"></div>
-      <h2 className="text-3xl font-bold text-center">Result for {result}</h2>
+      {searchField != "" && searchText != "" && (
+        <h2 className="text-3xl font-bold text-center">
+          Result for {searchField} field : {searchText}
+        </h2>
+      )}
+
       <div className="flex flex-col md:flex-row mt-1">
         <Filters
           categories={categories}
           categoryExpand={categoryExpand}
           toggleCategoryExpand={toggleCategoryExpand}
-          languages={languages}
-          languageExpand={languageExpand}
-          toggleLanguageExpand={toggleLanguageExpand}
         />
         <div className="w-full md:w-9/12 flex flex-col space-y-4">
-          <div id="resultList" className="">
-            <div className="flex justify-between">
-              {books.length} products
-              <SortFilter className="right-0" />
+          <div id="resultList">
+            <div className="flex justify-between text-xl tracking-wider mt-4">
+              {books.length > 0
+                ? books.length.toLocaleString() + " results found "
+                : "No results found"}
+
+              <SortFilter
+                onSortChange={handleSortChange}
+                currentSort={sortCriteria}
+                className="right-0"
+              />
             </div>
           </div>
-          <div className="w-full">
-            <FilterButtons />
-            <br />
-          </div>
           <br />
-          <hr />
-          <br />
-          <div className="w-full mt-4 flex flex-wrap gap-5 mx-4">
+          <div className="w-full mt-4 flex flex-wrap gap-10 mx-4">
             {paginatedBooks.map((book) => {
               return (
                 <BookCard

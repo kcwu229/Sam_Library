@@ -12,4 +12,6 @@ public interface BookService {
     BookDto updateBook(BookDto bookToBeUpdated, UUID bookId, MultipartFile file);
     void deleteBook(UUID bookId);
     List<BookDto> getAllBooks();
+    List<String> getAllCategories();
+    List<BookDto> searchBooks(String searchField, String searchText);
 }

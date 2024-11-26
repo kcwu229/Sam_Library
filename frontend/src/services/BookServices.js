@@ -24,3 +24,14 @@ export const createBook = (formData) =>
 
 export const updateBook = (bookId, formData) =>
   axiosFileInstance.put(REST_BOOK_API_URL + "/" + bookId, formData);
+
+export const listCategories = (categories) =>
+  axiosInstance.get(REST_BOOK_API_URL + "/categories");
+
+export const listSearchResult = (searchField, searchText) =>
+  axiosInstance.get(REST_BOOK_API_URL + "/search", {
+    params: {
+      searchField: searchField,
+      searchText: searchText,
+    },
+  });

@@ -14,6 +14,8 @@ function SortFilter() {
     }, 200); // Adjust the delay as needed
   };
 
+  const handleSorting = (value) => {};
+
   return (
     <div className="relative group flex ml-4">
       <button
@@ -38,10 +40,10 @@ function SortFilter() {
           className="py-2 text-sm text-gray-700"
           aria-labelledby="dropdownBtn"
         >
-          <DropdownTag href="" text="Title" value="title" />
-          <DropdownTag href="" text="Author" value="author" />
-          <DropdownTag href="" text="Date" value="date" />
-          <DropdownTag href="" text="Rating" value="rating" />
+          <DropdownTag href="" text="Title" value="title" onClick="" />
+          <DropdownTag href="" text="Author" value="author" onClick="" />
+          <DropdownTag href="" text="Date" value="date" onClick="" />
+          <DropdownTag href="" text="Rating" value="rating" onClick="" />
         </ul>
       </div>
     </div>

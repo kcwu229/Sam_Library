@@ -125,7 +125,7 @@ function BookDetailPage() {
                     <b className="text-xl block">Author</b>
                   </p>
                   <p className="block mt-4 font-light tracking-widest leading-loose text-gray-500">
-                    {book && book.author}
+                    {book && book.author ? book.author : "Unknown"}
                   </p>
                 </div>
 

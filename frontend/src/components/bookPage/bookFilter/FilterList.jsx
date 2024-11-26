@@ -1,12 +1,11 @@
 import React from "react";
 import RatingFilter from "./RatingFilter"; // Import RatingFilter if it's a separate component
+import { listCategories } from "../../../services/BookServices";
 
 const Filters = ({
   categories,
   categoryExpand,
   toggleCategoryExpand,
-  languages,
-  languageExpand,
   toggleLanguageExpand,
 }) => {
   return (
@@ -34,25 +33,6 @@ const Filters = ({
         </a>
       </div>
       <br />
-      <div id="languageFilter">
-        <h2 className="font-semibold mb-3">Language</h2>
-        {languages.map((language, index) => {
-          if (!languageExpand && index >= 3) return null;
-          return (
-            <div key={language.id}>
-              <input id={language.id} type="checkbox" className="mb-2 mx-2" />
-              <label htmlFor={language.id}>{language.label}</label>
-            </div>
-          );
-        })}
-        <a
-          href="#"
-          className="mb-2 mx-2 font-medium"
-          onClick={toggleLanguageExpand}
-        >
-          {languageExpand ? "Close" : "See More"}
-        </a>
-      </div>
       <br />
       <div id="ratingFilter">
         <h2 className="font-semibold mb-3">Rating</h2>

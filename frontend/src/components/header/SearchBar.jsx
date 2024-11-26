@@ -3,10 +3,21 @@ import { IoMdSearch } from "react-icons/io";
 import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
 import { useNavigate } from "react-router-dom";
+import { listSearchResult } from "../../services/BookServices";
 
-function SearchBar({ buttonText, onClickAction, logo, logoText }) {
-  const [bookName, setBookName] = useState("");
+function SearchBar({
+  buttonText,
+  onClickAction,
+  logo,
+  logoText,
+  onSearchResults,
+  setLoading,
+}) {
+  const [searchText, setSearchText] = useState("");
+  const [searchField, setSearchField] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("All");
+  const [searchBy, setSearchBy] = useState("all");
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
 
@@ -18,6 +29,23 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
     setTimeout(() => {
       setDropdownOpen(false);
     }, 200); // Adjust the delay as needed
+  };
+
+  const handleTagSelect = (text, value) => {
+    setSelectedTag(text);
+    setSearchBy(value);
+    closeDropdown();
+  };
+
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const response = await listSearchResult(searchBy, searchText);
+      // pass the search results to the parent component
+      onSearchResults(response.data, searchBy, searchText);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
   };
 
   useEffect(() => {
@@ -45,7 +73,7 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
               rounded-l-lg px-4 py-2 text-center items-center 
              "
             >
-              Category <MdExpandMore className="w-5 h-5 ml-2" />
+              {selectedTag} <MdExpandMore className="w-5 h-5 ml-2" />
             </button>
 
             <div
@@ -59,12 +87,21 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
                 className="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownBtn"
               >
-                <DropdownTag href="" text="All" value="all" />
-                <DropdownTag href="" text="Title" value="title" />
-                <DropdownTag href="" text="Author" value="author" />
-                <DropdownTag href="" text="ISBN" value="isbn" />
-                <DropdownTag href="" text="Publisher" value="publisher" />
-                <DropdownTag href="" text="AdvanceSearch" value="advance" />
+                <li onClick={() => handleTagSelect("All", "all")}>
+                  <DropdownTag text="All" value="all" />
+                </li>
+                <li onClick={() => handleTagSelect("Title", "title")}>
+                  <DropdownTag text="Title" value="title" />
+                </li>
+                <li onClick={() => handleTagSelect("Author", "author")}>
+                  <DropdownTag text="Author" value="author" />
+                </li>
+                <li onClick={() => handleTagSelect("ISBN", "isbn")}>
+                  <DropdownTag text="ISBN" value="isbn" />
+                </li>
+                <li onClick={() => handleTagSelect("Publisher", "publisher")}>
+                  <DropdownTag text="Publisher" value="publisher" />
+                </li>
               </ul>
             </div>
           </div>
@@ -74,11 +111,12 @@ function SearchBar({ buttonText, onClickAction, logo, logoText }) {
             id="searchField"
             type="text"
             placeholder="Enter book name"
-            value={bookName}
-            onChange={(e) => setBookName(e.target.value)}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
           <button
             id="searchButton"
+            onClick={handleSearch}
             className="bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2 px-4 rounded-r-lg text-white flex items-center justify-center"
           >
             <IoMdSearch className="w-5 h-5" />

@@ -9,11 +9,7 @@ import { deleteAuthor } from "../../services/AuthorServices";
 import { useUser } from "../Context/UserContext";
 import { FaStar } from "react-icons/fa";
 
-import {
-  categories as categoryData,
-  languages as languageData,
-  exampleBooks as exampleBooksData,
-} from "../bookPage/bookFilter/BookFilterData";
+import categories from "../bookPage/bookFilter/BookFilterData";
 
 import SortFilter from "../authorPage/authorFilter/SortFilter";
 
@@ -25,11 +21,7 @@ function AuthorPage() {
   const [languageExpand, setLanguageExpand] = useState(false);
   const [resultCount, setResultCount] = useState(0);
   const [showButton, setShowButton] = useState(true);
-  const categories = categoryData;
-  const languages = languageData;
   const [userRole, setUserRole] = useState(null);
-  const examplesBooks = exampleBooksData;
-
   const navigate = useNavigate();
 
   const removeFilter = () => {
@@ -126,29 +118,6 @@ function AuthorPage() {
             </a>
           </div>
           <br />
-          <div id="languageFilter">
-            <h2 className="font-semibold mb-3">Language</h2>
-            {languages.map((language, index) => {
-              if (!languageExpand && index >= 3) return null;
-              return (
-                <div key={language.id}>
-                  <input
-                    id={language.id}
-                    type="checkbox"
-                    className="mb-2 mx-2"
-                  />
-                  <label htmlFor={language.id}>{language.label}</label>
-                </div>
-              );
-            })}
-            <a
-              href="#"
-              className="mb-2 mx-2 font-medium"
-              onClick={toggleLanguageExpand}
-            >
-              {languageExpand ? "Close" : "See More"}
-            </a>
-          </div>
           <br />
           <div id="ratingFilter">
             <h2 className="font-semibold mb-3">Rating</h2>

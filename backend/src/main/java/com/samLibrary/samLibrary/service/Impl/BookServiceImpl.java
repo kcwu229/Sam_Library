@@ -6,6 +6,9 @@ import com.samLibrary.samLibrary.mapper.BookMapper;
 import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.service.BookService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
@@ -150,6 +153,28 @@ public class BookServiceImpl implements BookService {
 
                     return bookDto;
                 })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+        return bookRepository.findAllCategories();
+    }
+
+    @Override
+    public List<BookDto> searchBooks(String searchField, String searchText) {
+
+        List<Book> searchedBooks;
+
+        if ("all".equals(searchField)) {
+            searchedBooks = bookRepository.searchBooksByAllFields(searchText);
+        }
+        else{
+            searchedBooks = bookRepository.searchBooksByField(searchField,searchText);
+            //
+        }
+        return searchedBooks.stream()
+                .map(BookMapper::toDto)
                 .collect(Collectors.toList());
     }
 

@@ -2,7 +2,7 @@ import { MdExpandMore } from "react-icons/md";
 import { useState } from "react";
 import DropdownTag from "../../dropdown/DropdownTag";
 
-function SortFilter() {
+function SortFilter({ onSortChange, currentSort }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -14,17 +14,22 @@ function SortFilter() {
     }, 200); // Adjust the delay as needed
   };
 
+  const handleSortSelect = (value) => {
+    onSortChange(value);
+    closeDropdown();
+  };
+
   return (
     <div className="relative group flex ml-4">
       <button
         id="dropdownButton"
         onClick={toggleDropdown}
         className="text-white bg-gray-700 hover:bg-gray-800 
-          focus:ring-4 focus:outline-none focus:ring-blue-300 
-          rounded-l-lg px-4 py-1 text-center items-center 
+          focus:ring-4 focus:outline-none focus:ring-blue-300  text-sm font-light
+          rounded-l-lg px-4 py-2 text-center items-center 
          inline-flex"
       >
-        Sort By <MdExpandMore className="w-5 h-5 ml-2" />
+        Sort By {currentSort} <MdExpandMore className="w-5 h-5 ml-2" />
       </button>
 
       <div
@@ -38,10 +43,18 @@ function SortFilter() {
           className="py-2 text-sm text-gray-700"
           aria-labelledby="dropdownBtn"
         >
-          <DropdownTag href="" text="Title" value="title" />
-          <DropdownTag href="" text="Author" value="author" />
-          <DropdownTag href="" text="Date" value="date" />
-          <DropdownTag href="" text="Rating" value="rating" />
+          <li onClick={() => handleSortSelect("title")}>
+            <DropdownTag text="Title" value="title" />
+          </li>
+          <li onClick={() => handleSortSelect("author")}>
+            <DropdownTag text="Author" value="author" />
+          </li>
+          <li onClick={() => handleSortSelect("date")}>
+            <DropdownTag text="Date" value="date" />
+          </li>
+          <li onClick={() => handleSortSelect("rating")}>
+            <DropdownTag text="Rating" value="rating" />
+          </li>
         </ul>
       </div>
     </div>

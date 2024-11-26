@@ -28,7 +28,10 @@ const BookCard = ({
               {book.title}
             </h5>
             <p className="text-gray-900 font-light mt-2 tracking-wide">
-              {book.author ? book.author : "Unknown"}
+              {book.author ? book.author : "Unknown Author"}
+            </p>
+            <p className="text-gray-900 font-light mt-2 tracking-wide">
+              {book.publishedDate ? book.publishedDate : "Unknown Date"}
             </p>
           </a>
           <div className="flex items-center mt-2.5 mb-5">
@@ -37,9 +40,6 @@ const BookCard = ({
             </div>
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
               5
-            </span>
-            <span className="absolute text-black text-right right-3 p-3 font-l">
-              4 item left
             </span>
           </div>
           <div className="flex items-center justify-between">

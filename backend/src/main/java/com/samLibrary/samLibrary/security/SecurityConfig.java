@@ -69,8 +69,10 @@ public class SecurityConfig {
                                 .requestMatchers(StaticResources).permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/login").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/books").permitAll()
+
+                        .requestMatchers(HttpMethod.GET,"/api/books/categories").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/books").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/books/search").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/books/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/books-reviews/all/{bookId}").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/authors").permitAll()

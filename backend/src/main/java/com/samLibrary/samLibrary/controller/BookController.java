@@ -39,7 +39,30 @@ public class BookController {
     @GetMapping
     public ResponseEntity<List<BookDto>> getAllBooks() {
         List<BookDto> books = bookService.getAllBooks();
+        List<String> categories = bookService.getAllCategories();
        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getAllCategories() {
+        List<String> categories = bookService.getAllCategories();
+        return ResponseEntity.ok(categories);
+    }
+
+    // for seach function
+    @GetMapping("/search")
+    public ResponseEntity<?> searchBooks(
+            @RequestParam String searchField,
+            @RequestParam String searchText
+    ) {
+        searchText = searchText.toLowerCase();
+        try {
+            List<BookDto> books = bookService.searchBooks(searchField, searchText);
+            return ResponseEntity.ok(books);
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 

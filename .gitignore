@@ -109,3 +109,4 @@ backend/images/authors/fae427cc-e19a-4b09-ad2b-57a26c059c44.png
 frontend/.env
 backend/src/main/resources/application.properties
 backend/target/classes/application.properties
+backend/src/main/resources/application.properties

@@ -32,25 +32,19 @@
 
 
 ### 3. Book Page
+We are sparing no pains on providing book resources to the public
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/e52ac7f2-71f6-47ec-a0c7-036983472f8e">
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/560a8086-643f-46db-9d4d-6e0567eb4ca4">
+
 Features: 
 #### Vistors: preview only, no access right on borrowing books and edit / deleting
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/de5ddad1-14e2-4846-9fd6-3842dd86bbda">
-
 #### Admin: has access right on creating and edit / deleting and leave comment
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/b7df541d-7ecf-4fe8-8e06-4d63d4397cdc">
-
 #### member: has access right on borrowing books and  leave comment
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/04af3a36-550b-4ad4-9fb2-d1dbe1b80062">
 
-### 4. Author Page -> follows the features of book page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/ccd11a75-6d51-4ea1-a656-af800109e340">
+### 4. Detail Page
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/15d376fc-bc6b-446f-9997-28ff5cf843b4">
 
-### 5. Detail Page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/6cdf505e-9ce9-41b2-9ec6-36c66b51fe8e">
-
-### 6. Oauth2 login  (Working on it)
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/c39063e5-d360-4e6e-81f7-3fcd5079d35b">
-
-
-
+# Come and join us !!
 

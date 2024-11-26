@@ -83,7 +83,11 @@ function BookDetailPage() {
                     loading="lazy"
                     className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
                     // to-do add handling for missing image && if image is on server or local
-                    src={book.image}
+                    src={
+                      book.image.startsWith("http")
+                        ? book.image
+                        : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
+                    }
                     //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"
                   />

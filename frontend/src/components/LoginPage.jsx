@@ -81,7 +81,6 @@ function LoginPage() {
         if (response.status === 200 || response.status === 201) {
           login();
           console.log("response", response.data);
-          // setUserId(response.data.id);
           const userId = response.data.id;
           localStorage.setItem("userId", userId);
           // Set the user role in the context

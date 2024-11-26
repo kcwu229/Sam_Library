@@ -68,8 +68,7 @@ public class SecurityConfig {
                         // Allowing public access to login, signup, forget-password, and register pages
                                 .requestMatchers(StaticResources).permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/users/login").permitAll()
-
+                                .requestMatchers("/api/auth/**", "/oauth2/**", "/login/**", "/error").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/books/categories").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/books").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/books/search").permitAll()
@@ -87,6 +86,8 @@ public class SecurityConfig {
                          //Requiring authentication for all other requests
                         .anyRequest().authenticated()
                         )
+
+
 
                         // Configuring the login page with oauth2Login and httpBasic
                         .oauth2Login(oauth2 -> oauth2

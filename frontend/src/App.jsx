@@ -10,7 +10,6 @@ import CreateOrUpdateAuthorPage from "./components/authorPage/CreateOrUpdateAuth
 import AuthorDetailPage from "./components/authorPage/AuthorDetailPage";
 import BookDetailPage from "./components/bookPage/BookDetailPage";
 import { AuthProvider } from "./components/Context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/header/Navbar";
 import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
@@ -83,9 +82,7 @@ function App() {
           path="/books/update-book/:id"
           element={
             <div className="flex items-center justify-center min-h-screen">
-              <ProtectedRoute>
-                <CreateOrUpdateBookPage />
-              </ProtectedRoute>
+              <CreateOrUpdateBookPage />
             </div>
           }
         />

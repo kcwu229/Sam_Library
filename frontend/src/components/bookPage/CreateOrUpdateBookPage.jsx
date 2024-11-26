@@ -16,17 +16,17 @@ const CreateOrUpdateBookPage = () => {
   const [book, setBook] = useState({
     title: "",
     author: "",
-    publishedYear: "",
+    publishedDate: "",
     isbn: "",
     catchPhrase: "",
     bookDescription: "",
-    imageName: "", // This will store the image name
+    image: "", // This will store the image name
   });
 
   const [errors, setErrors] = useState({
     title: "",
     author: "",
-    publishedYear: "",
+    publishedDate: "",
     catchPhrase: "",
     bookDescription: "",
     file: "",
@@ -41,10 +41,17 @@ const CreateOrUpdateBookPage = () => {
       getBook(id)
         .then((response) => {
           setBook(response.data);
-          if (response.data.imageName) {
-            const imageUrl = `${process.env.REACT_APP_BASE_URL}/books/${response.data.imageName}.png`;
-            setImagePreviewUrl(imageUrl);
-            fetch(imageUrl, {
+          if (response.data.image) {
+            let image;
+            if (!response.data.image.startsWith("http")) {
+              //console.log("Book is not start with http", response.data);
+              image = `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`;
+            } else {
+              image = response.data.image;
+            }
+            //const image = `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`;
+            setImagePreviewUrl(image);
+            fetch(image, {
               headers: {
                 Authorization: `Bearer ${Cookies.get("token")}`, // Include the token in the request headers
               },
@@ -57,7 +64,7 @@ const CreateOrUpdateBookPage = () => {
               })
               .then((blob) => {
                 if (blob.size > 0) {
-                  const file = new File([blob], response.data.imageName, {
+                  const file = new File([blob], response.data.image, {
                     type: blob.type,
                   });
                   setFile(file);
@@ -118,7 +125,7 @@ const CreateOrUpdateBookPage = () => {
         return;
       }
       setFile(file);
-      setBook({ ...book, imageName: file.name }); // Update imageName with the image name
+      setBook({ ...book, image: file.name }); // Update image with the image name
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -147,32 +154,6 @@ const CreateOrUpdateBookPage = () => {
     } else {
       valid = false;
       errorsCopy.author = "Author is required";
-    }
-
-    if (book.publishedYear && book.publishedYear.toString().trim()) {
-      const publishedYear = Number(book.publishedYear);
-      if (!Number.isInteger(publishedYear)) {
-        valid = false;
-        errorsCopy.publishedYear = "Published Year must be an integer";
-      } else if (
-        publishedYear < 0 ||
-        publishedYear > new Date().getFullYear()
-      ) {
-        valid = false;
-        errorsCopy.publishedYear = `Publication Year should be between 0 and ${new Date().getFullYear()}`;
-      } else {
-        errorsCopy.publishedYear = "";
-      }
-    } else {
-      valid = false;
-      errorsCopy.publishedYear = "Publication Year is required!";
-    }
-
-    if (book.catchPhrase.trim()) {
-      errorsCopy.catchPhrase = "";
-    } else {
-      valid = false;
-      errorsCopy.catchPhrase = "CatchPhrase is required";
     }
 
     if (book.bookDescription.trim()) {
@@ -262,20 +243,44 @@ const CreateOrUpdateBookPage = () => {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
-          <LabelsTag for="publishedYear" text="Publication Year" required="*" />
+          <LabelsTag for="publishedDate" text="Publication Year" required="*" />
           <InputTag
-            id="publishedYear"
-            name="publishedYear"
-            value={book.publishedYear}
+            id="publishedDate"
+            name="publishedDate"
+            value={book.publishedDate}
             onChange={handleInputChange}
-            error={errors.publishedYear}
-            text="Publication Year"
+            error={errors.publishedDate}
+            text="Publication Date"
           />
-          {errors.publishedYear && (
-            <CreateFormErrorTag error={errors.publishedYear} />
+          {errors.publishedDate && (
+            <CreateFormErrorTag error={errors.publishedDate} />
           )}
         </div>
-        <div className="w-full md:w-1/2 px-3 relative">
+        <div className="w-full md:w-1/2 px-3">
+          <LabelsTag for="publisher" text="Publisher" required="*" />
+          <InputTag
+            id="publisher"
+            name="publisher"
+            value={book.publisher}
+            onChange={handleInputChange}
+            text="Author"
+            error={errors.publisher}
+          />
+          {errors.publisher && <CreateFormErrorTag error={errors.publisher} />}
+        </div>
+        <div className="w-full md:w-1/2 px-3 mt-4">
+          <LabelsTag for="category" text="Category" required="*" />
+          <InputTag
+            id="category"
+            name="category"
+            value={book.category}
+            onChange={handleInputChange}
+            text="Category"
+            error={errors.category}
+          />
+          {errors.category && <CreateFormErrorTag error={errors.category} />}
+        </div>
+        <div className="w-full md:w-1/2 px-3 mt-4 relative">
           <LabelsTag for="isbn" text="isbn" />
           <InputTag
             id="isbn"
@@ -333,7 +338,7 @@ const CreateOrUpdateBookPage = () => {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <LabelsTag for="imageName" text="Cover Image" required="*" />
+          <LabelsTag for="image" text="Cover Image" required="*" />
           <FileInput
             value={file ? [file] : []}
             onChange={handleFileChange}

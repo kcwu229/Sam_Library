@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import SearchBar from "../header/SearchBar";
 import { useNavigate } from "react-router-dom";
 import { IoLibrarySharp } from "react-icons/io5";
-import { useUser } from "../Context/UserContext";
+import { MdOutlineFilterAlt } from "react-icons/md";
 import Pagination from "../Pagination";
 import BookCard from "./BookCard"; // Import the new BookCard component
-import Filters from "./bookFilter/FilterList";
+import Filters from "./bookFilter/Filters";
 import LoadingSpinner from "../LoadingSpinner";
 
 import categories from "../bookPage/bookFilter/BookFilterData";
@@ -16,15 +16,18 @@ import FilterButtons from "./bookFilter/FilterButton";
 
 function BookPage() {
   const [books, setBooks] = useState([]);
-  const [result, setResult] = useState("Fiction");
+  const [showFilter, setShowFilter] = useState(false);
+  const [originalBooks, setOriginalBooks] = useState([]);
   const [categoryExpand, setCategoryExpand] = useState(false);
   const [languageExpand, setLanguageExpand] = useState(false);
-  const [showButton, setShowButton] = useState(true);
+
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchField, setSearchField] = useState("");
   const [sortCriteria, setSortCriteria] = useState(""); // Add sorting state
+  const [categoryGroup, setCategoryGroup] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   // pagination
   const pageSize = 20; // Set your desired page size
@@ -53,6 +56,7 @@ function BookPage() {
   async function fetchBooks(page, pageSize) {
     const response = await listBooks(page, pageSize);
     setBooks(response.data);
+    setOriginalBooks(response.data);
     setLoading(false);
   }
 
@@ -68,6 +72,10 @@ function BookPage() {
   const handleSortChange = (criteria) => {
     setSortCriteria(criteria);
     sortBooks(criteria);
+  };
+
+  const handlingFilter = () => {
+    setShowFilter(!showFilter);
   };
 
   const sortBooks = (criteria) => {
@@ -110,7 +118,7 @@ function BookPage() {
   }
 
   return (
-    <div className="w-full min-h-screen ">
+    <div className="w-full min-h-screen relative">
       <SearchBar
         buttonText="Book"
         onClickAction={createBook}
@@ -119,20 +127,51 @@ function BookPage() {
         onSearchResults={handleSearchResults}
         setLoading={setLoading}
       />
-      <div className="pt-10"></div>
-      {searchField != "" && searchText != "" && (
-        <h2 className="text-3xl font-bold text-center">
-          Result for {searchField} field : {searchText}
-        </h2>
-      )}
 
-      <div className="flex flex-col md:flex-row mt-1">
-        <Filters
-          categories={categories}
-          categoryExpand={categoryExpand}
-          toggleCategoryExpand={toggleCategoryExpand}
+      <div className="flex items-center justify-center mt-14">
+        <FilterButtons
+          className="flex justify-center"
+          filterButtons={categoryGroup}
+          removeFilter={""}
+          removeAllFilter={""}
         />
-        <div className="w-full md:w-9/12 flex flex-col space-y-4">
+        {searchField != "" && searchText != "" && (
+          <h2 className="text-3xl font-bold text-center mt-14">
+            Result for {searchField} field : {searchText}
+          </h2>
+        )}
+      </div>
+
+      <div className="flex flex-col md:flex-row">
+        {/* The filter section */}
+        <div>
+          <button>
+            <div className="bg-slate-800 p-2 mt-20 rounded">
+              <MdOutlineFilterAlt
+                className="w-8 h-8 text-white"
+                onClick={handlingFilter}
+              />
+              <p className="text-white">Filter</p>
+            </div>
+          </button>
+
+          {showFilter && (
+            <div className="py-4 px-2">
+              <Filters
+                categories={categories}
+                categoryExpand={categoryExpand}
+                toggleCategoryExpand={toggleCategoryExpand}
+                setBooks={setBooks}
+                originalBooks={originalBooks}
+                setCategoryGroup={setCategoryGroup}
+                categoryGroup={categoryGroup}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories} //
+              />
+            </div>
+          )}
+        </div>
+        <div className="w-full md:w-9/12 flex flex-col space-y-4 items-center justify-center">
           <div id="resultList">
             <div className="flex justify-between text-xl tracking-wider mt-4">
               {books.length > 0
@@ -147,7 +186,7 @@ function BookPage() {
             </div>
           </div>
           <br />
-          <div className="w-full mt-4 flex flex-wrap gap-10 mx-4 justify-center">
+          <div className="flex flex-wrap justify-center items-center gap-5 mt-4">
             {loading && <LoadingSpinner />}
             {paginatedBooks.map((book) => {
               return (

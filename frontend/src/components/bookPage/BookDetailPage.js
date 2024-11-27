@@ -34,15 +34,9 @@ function BookDetailPage() {
         .then((response) => {
           setBook(response.data);
           if (response.data.image && response.data.image.startsWith("http")) {
-            fetch(response.data.image, { mode: "no-cors" })
-              .then((res) => res.blob())
-              .then((blob) => {
-                const url = URL.createObjectURL(blob);
-                setImageUrl(url);
-              })
-              .catch((error) => {
-                console.error("Error fetching image:", error);
-              });
+            setImageUrl(
+              `/proxy?url=${encodeURIComponent(response.data.image)}`
+            );
           } else {
             setImageUrl(
               `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`
@@ -51,6 +45,15 @@ function BookDetailPage() {
         })
         .catch((error) => {
           console.error("Error fetching book:", error);
+        });
+
+      // get book reviews
+      listAllBookReviews(id, currentPage, pageSize)
+        .then((response) => {
+          setReviews(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching reviews:", error);
         });
 
       const storedRole = localStorage.getItem("userRole");

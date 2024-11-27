@@ -219,7 +219,7 @@ function HomePage() {
 
         <br />
         <div className="flex items-center justify-center">
-          <p classNames="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
+          <p className="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
             All content available on Sam's Library, including text, images, and
             multimedia, is protected by copyright and intellectual property
             laws. Users are granted a limited, non-exclusive license to access

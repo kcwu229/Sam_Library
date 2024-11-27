@@ -64,6 +64,7 @@ function BookPage() {
   async function fetchBooks(page, pageSize) {
     const response = await listBooks(page, pageSize);
     setBooks(response.data);
+    console.log(response.data);
     setOriginalBooks(response.data);
     setLoading(false);
   }

@@ -67,6 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Allowing public access to login, signup, forget-password, and register pages
                                 .requestMatchers(StaticResources).permitAll()
+                                .requestMatchers("/api/cache/clear").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/auth/**", "/oauth2/**", "/login/**", "/error").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/books/categories").permitAll()

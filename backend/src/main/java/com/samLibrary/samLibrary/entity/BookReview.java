@@ -21,17 +21,18 @@ import java.util.UUID;
 public class BookReview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     @NotBlank(message = "Title is required")
+    @Column(name = "title", columnDefinition = "LONGTEXT")
     private String title;
 
     @NotBlank(message = "Review is required")
-    @Column(name = "book_review",columnDefinition = "MEDIUMTEXT")
+    @Column(name = "book_review", columnDefinition = "LONGTEXT")
     private String review;
 
     @NotNull(message = "Rating is required")
@@ -45,6 +46,9 @@ public class BookReview {
         createTimestamp = LocalDateTime.now();
         editTimestamp = LocalDateTime.now();
     }
+
+    @Column(name = "user_id")
+    private String userId;
 
     @PreUpdate
     protected void onUpdate() {

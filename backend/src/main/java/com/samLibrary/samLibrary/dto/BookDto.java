@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookDto {
-    private UUID id;
+    private String id;
 
     private String title;
 

@@ -19,7 +19,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String id;
 
     @Column(name = "name")
     private String name;
@@ -45,7 +45,7 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AuthorReview> reviews;
 
-    public Author(UUID id, String name, String country, int birthYear,
+    public Author(String id, String name, String country, int birthYear,
                   int deathYear,String imageName, String description, String catchPhrase) {
         this.id = id;
         this.name = name;

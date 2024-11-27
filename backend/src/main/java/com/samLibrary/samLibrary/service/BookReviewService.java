@@ -5,12 +5,11 @@ import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface BookReviewService {
-    BookReviewDto createBookReview(BookReviewDto bookReviewDto, UUID bookId);
-    BookReviewDto getBookReviewById(UUID bookReviewId);
-    BookReviewDto updateBookReview(BookReviewDto bookReviewDto, UUID bookReviewId);
-    void deleteBookReview(UUID bookReviewId);
-    List<BookReviewDto> getAllBookReviews(UUID bookId);
+    BookReviewDto createBookReview(BookReviewDto bookReviewDto, String bookId);
+    BookReviewDto getBookReviewById(String bookReviewId);
+    BookReviewDto updateBookReview(BookReviewDto bookReviewDto, String bookReviewId);
+    void deleteBookReview(String bookReviewId);
+    List<BookReviewDto> getAllBookReviews(String bookId);
 }

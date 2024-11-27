@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +26,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     @Override
-    public BookReviewDto createBookReview(BookReviewDto bookReviewDto, UUID bookId) {
+    public BookReviewDto createBookReview(BookReviewDto bookReviewDto, String bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found with id " + bookReviewDto.getBookId()));
 
@@ -46,7 +45,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public BookReviewDto getBookReviewById(UUID bookReviewId) {
+    public BookReviewDto getBookReviewById(String bookReviewId) {
         BookReview bookReview = bookReviewRepository.findById(bookReviewId).orElseThrow(
                 () -> new RuntimeException("Book Review not found")
         );
@@ -54,7 +53,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public BookReviewDto updateBookReview(BookReviewDto bookReviewDto, UUID bookReviewId) {
+    public BookReviewDto updateBookReview(BookReviewDto bookReviewDto, String bookReviewId) {
         BookReview existingBookReview = bookReviewRepository.findById(bookReviewId)
                 .orElseThrow(() -> new RuntimeException("Book not found with id " + bookReviewId));
 
@@ -70,7 +69,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public void deleteBookReview(UUID bookReviewId) {
+    public void deleteBookReview(String bookReviewId) {
         BookReview bookReview = bookReviewRepository.findById(bookReviewId)
                 .orElseThrow(() -> new RuntimeException("Book Review not found with id " + bookReviewId));
         bookReviewRepository.deleteById(bookReviewId);
@@ -78,7 +77,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public List<BookReviewDto> getAllBookReviews(UUID bookId) {
+    public List<BookReviewDto> getAllBookReviews(String bookId) {
         return bookReviewRepository.findByBookId(bookId).stream()
                 .map(bookReviewMapper::toDto)
                 .collect(Collectors.toList());

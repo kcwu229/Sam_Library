@@ -33,7 +33,7 @@ public class BookServiceImpl implements BookService {
 
     public BookDto createBook(BookDto bookDto, MultipartFile file) {
         // Handle image upload
-        UUID bookId = UUID.randomUUID();
+        String bookId = UUID.randomUUID().toString();
         String fileName = bookId.toString();
 
         logger.info("bookId is :" + bookId);
@@ -61,7 +61,7 @@ public class BookServiceImpl implements BookService {
         }
 
         Book book = new Book();
-        book.setId(bookId); // Ensure the UUID is set here
+        book.setId(bookId); // Ensure the String is set here
         book.setTitle(bookDto.getTitle());
         book.setAuthor(bookDto.getAuthor());
         book.setPublishedDate(bookDto.getPublishedDate());
@@ -79,7 +79,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookById(UUID bookId) {
+    public BookDto getBookById(String bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
@@ -88,7 +88,7 @@ public class BookServiceImpl implements BookService {
 
 
 
-    public BookDto updateBook(BookDto bookToBeUpdated, UUID bookId, MultipartFile file) {
+    public BookDto updateBook(BookDto bookToBeUpdated, String bookId, MultipartFile file) {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
@@ -179,7 +179,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(UUID bookId) {
+    public void deleteBook(String bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );

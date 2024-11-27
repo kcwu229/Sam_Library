@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-26T04:42:32+0800",
-    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.40.0.z20241023-1306, environment: Java 17.0.13 (Eclipse Adoptium)"
+    date = "2024-11-27T15:21:02+0800",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
 public class AuthorReviewMapperImpl implements AuthorReviewMapper {
@@ -21,13 +21,6 @@ public class AuthorReviewMapperImpl implements AuthorReviewMapper {
 
         AuthorReview authorReview = new AuthorReview();
 
-        authorReview.setCreateTimestamp( authorReviewDto.getCreateTimestamp() );
-        authorReview.setEditTimestamp( authorReviewDto.getEditTimestamp() );
-        authorReview.setId( authorReviewDto.getId() );
-        authorReview.setRating( authorReviewDto.getRating() );
-        authorReview.setReview( authorReviewDto.getReview() );
-        authorReview.setTitle( authorReviewDto.getTitle() );
-
         return authorReview;
     }
 
@@ -38,13 +31,6 @@ public class AuthorReviewMapperImpl implements AuthorReviewMapper {
         }
 
         AuthorReviewDto authorReviewDto = new AuthorReviewDto();
-
-        authorReviewDto.setCreateTimestamp( authorReview.getCreateTimestamp() );
-        authorReviewDto.setEditTimestamp( authorReview.getEditTimestamp() );
-        authorReviewDto.setId( authorReview.getId() );
-        authorReviewDto.setRating( authorReview.getRating() );
-        authorReviewDto.setReview( authorReview.getReview() );
-        authorReviewDto.setTitle( authorReview.getTitle() );
 
         return authorReviewDto;
     }

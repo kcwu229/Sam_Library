@@ -6,15 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
 public class AuthorDto {
 
-    private UUID id;
+    private String id;
 
     @NotBlank(message = "name is required")
     private String name;

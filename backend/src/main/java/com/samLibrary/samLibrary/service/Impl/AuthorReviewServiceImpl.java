@@ -23,7 +23,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
     private AuthorReviewMapper authorReviewMapper;
 
     @Override
-    public AuthorReviewDto createAuthorReview(AuthorReviewDto AuthorReviewDto, UUID authorId) {
+    public AuthorReviewDto createAuthorReview(AuthorReviewDto AuthorReviewDto, String authorId) {
         Author Author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("Author not found with id " + AuthorReviewDto.getAuthorId()));
 
@@ -38,7 +38,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
     }
 
     @Override
-    public AuthorReviewDto getAuthorReviewById(UUID AuthorReviewId) {
+    public AuthorReviewDto getAuthorReviewById(String AuthorReviewId) {
         AuthorReview AuthorReview = authorReviewRepository.findById(AuthorReviewId).orElseThrow(
                 () -> new RuntimeException("Author Review not found")
         );
@@ -46,7 +46,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
     }
 
     @Override
-    public AuthorReviewDto updateAuthorReview(AuthorReviewDto authorReviewDto, UUID authorId) {
+    public AuthorReviewDto updateAuthorReview(AuthorReviewDto authorReviewDto, String authorId) {
         AuthorReview existingAuthorReview = authorReviewRepository.findById(authorReviewDto.getAuthorId())
                 .orElseThrow(() -> new RuntimeException("Author not found with id " + authorReviewDto.getAuthorId()));
 
@@ -64,7 +64,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
     }
 
     @Override
-    public void deleteAuthorReview(UUID authorReviewId) {
+    public void deleteAuthorReview(String authorReviewId) {
         AuthorReview AuthorReview = authorReviewRepository.findById(authorReviewId)
                 .orElseThrow(() -> new RuntimeException("Author Review not found with id " + authorReviewId));
         authorReviewRepository.deleteById(authorReviewId);
@@ -72,7 +72,7 @@ public class AuthorReviewServiceImpl implements AuthorReviewService {
     }
 
     @Override
-    public List<AuthorReviewDto> getAllAuthorReviews(UUID AuthorId) {
+    public List<AuthorReviewDto> getAllAuthorReviews(String AuthorId) {
         return authorReviewRepository.findByAuthorId(AuthorId).stream()
                 .map(authorReviewMapper::toDto)
                 .collect(Collectors.toList());

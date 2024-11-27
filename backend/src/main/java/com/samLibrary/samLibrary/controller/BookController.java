@@ -30,7 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable("id") UUID bookId) {
+    public ResponseEntity<BookDto> getBookById(@PathVariable("id") String bookId) {
         BookDto BookDto = bookService.getBookById(bookId);
         return ResponseEntity.ok(BookDto);
     }
@@ -69,14 +69,14 @@ public class BookController {
     @PutMapping("{id}")
     public ResponseEntity<BookDto> updateBook(
             @RequestPart("book") BookDto updatedBook,
-            @PathVariable("id") UUID bookId,
+            @PathVariable("id") String bookId,
             @RequestPart("file") @Valid MultipartFile file) {
         BookDto bookDto = bookService.updateBook(updatedBook, bookId, file);
         return ResponseEntity.ok(bookDto);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable("id") UUID bookId) {
+    public ResponseEntity<String> deleteBook(@PathVariable("id") String bookId) {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok("User deleted successfully");
     }

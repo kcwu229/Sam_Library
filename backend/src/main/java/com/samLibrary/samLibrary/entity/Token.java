@@ -18,7 +18,7 @@ public class Token {
 
     @Id
     @GeneratedValue
-    public UUID id;
+    public String id;
 
     @Column(unique = true)
     public String token;

@@ -10,25 +10,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Setter
 @NoArgsConstructor
 @Getter
 public class BookReviewDto {
-    private UUID id;
+    private String id;
 
-    @NotNull(message = "Book ID is required")
-    private UUID bookId;
+    private String bookId;
 
-    @NotBlank(message = "Title is required")
     private String title;
 
-    @NotBlank(message = "Review is required")
     private String review;
 
-    @NotNull(message = "Rating is required")
+    private String userId;
+
     private int rating;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

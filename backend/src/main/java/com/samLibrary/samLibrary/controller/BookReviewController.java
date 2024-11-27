@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin("*")
 @RestController
@@ -23,7 +22,7 @@ public class BookReviewController {
     @PostMapping("/{id}")
     public ResponseEntity<BookReviewDto> createBookReview(
             @Valid @RequestBody BookReviewDto bookReviewDto,
-            @PathVariable("id") UUID bookId) {
+            @PathVariable("id") String bookId) {
         if (bookReviewDto.getTitle() == null || bookReviewDto.getTitle().isBlank()) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -32,26 +31,26 @@ public class BookReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookReviewDto> getAuthorById(@PathVariable("id") UUID bookReviewId) {
+    public ResponseEntity<BookReviewDto> getAuthorById(@PathVariable("id") String bookReviewId) {
         BookReviewDto bookReviewDto = bookReviewService.getBookReviewById(bookReviewId);
         return ResponseEntity.ok(bookReviewDto);
     }
 
     @GetMapping("/all/{bookId}")
-    public ResponseEntity<List<BookReviewDto>> getAllBookReview(@PathVariable UUID bookId) {
+    public ResponseEntity<List<BookReviewDto>> getAllBookReview(@PathVariable String bookId) {
         List<BookReviewDto> bookReviewDto = bookReviewService.getAllBookReviews(bookId);
         return ResponseEntity.ok(bookReviewDto);
 
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookReviewDto> updateUser(@RequestBody BookReviewDto updatedBookReview, @PathVariable("id") UUID bookReviewId) {
+    public ResponseEntity<BookReviewDto> updateUser(@RequestBody BookReviewDto updatedBookReview, @PathVariable("id") String bookReviewId) {
         BookReviewDto bookReviewDto = bookReviewService.updateBookReview(updatedBookReview, bookReviewId);
         return ResponseEntity.ok(bookReviewDto);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID bookReviewId) {
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String bookReviewId) {
         bookReviewService.deleteBookReview(bookReviewId);
         return ResponseEntity.ok("User deleted successfully");
     }

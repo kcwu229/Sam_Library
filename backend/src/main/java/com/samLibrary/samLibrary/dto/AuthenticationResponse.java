@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
 
 @Data
 @Builder
@@ -19,7 +18,7 @@ public class AuthenticationResponse {
     private String accessToken;
 
     @JsonProperty("userId")
-    private UUID id;
+    private String id;
 
     @JsonProperty("role")
     private Role role;

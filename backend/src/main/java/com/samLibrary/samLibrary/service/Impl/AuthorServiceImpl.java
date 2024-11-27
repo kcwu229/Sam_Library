@@ -32,8 +32,8 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorDto createAuthor(AuthorDto authorDto, MultipartFile file) {
 
-        UUID authorId = UUID.randomUUID();
-        String fileName = authorId.toString();
+        String authorId = UUID.randomUUID().toString();
+        String fileName = authorId;
 
         logger.info("authorId is :" + authorId);
         logger.info("filename is :" + fileName);
@@ -66,7 +66,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto getAuthorById(UUID authorId) {
+    public AuthorDto getAuthorById(String authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(
                 () -> new RuntimeException("Authors not found")
         );
@@ -74,7 +74,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto updateAuthor(AuthorDto authorToUpdate, UUID authorId, MultipartFile file) {
+    public AuthorDto updateAuthor(AuthorDto authorToUpdate, String authorId, MultipartFile file) {
         Author author = authorRepository.findById(authorId).orElseThrow(
                 () -> new RuntimeException("Authors not found")
         );
@@ -126,7 +126,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteAuthor(UUID authorId) {
+    public void deleteAuthor(String authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(
                 () -> new RuntimeException("Authors not found")
         );

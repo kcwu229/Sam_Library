@@ -8,15 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-import java.util.UUID;
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 public class UserDto {
-    private UUID id;
+    private String id;
 
     @NotBlank(message = "username is required")
     private String username;

@@ -17,9 +17,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 public class AuthorReviewDto {
-    private UUID id;
+    private String id;
 
-    private UUID authorId;
+    private String authorId;
 
     private String title;
 

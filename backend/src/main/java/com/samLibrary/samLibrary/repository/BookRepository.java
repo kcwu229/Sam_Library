@@ -8,9 +8,8 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
-public interface BookRepository extends JpaRepository<Book, UUID>, BookRepositoryCustom {
+public interface BookRepository extends JpaRepository<Book,String>, BookRepositoryCustom {
 
     @Query("SELECT DISTINCT b.category FROM Book b")
     List<String> findAllCategories();

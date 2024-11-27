@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin("*")
 @RestController
@@ -29,7 +28,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable("id") UUID id) {
+    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable("id") String id) {
         AuthorDto authorDto = authorService.getAuthorById(id);
         return ResponseEntity.ok(authorDto);
     }
@@ -44,14 +43,14 @@ public class AuthorController {
     @PutMapping("{id}")
     public ResponseEntity<AuthorDto> updateAuthor(
             @RequestPart("author") AuthorDto updatedAuthor,
-            @PathVariable("id") UUID authorId,
+            @PathVariable("id") String authorId,
             @RequestPart("file") @Valid MultipartFile file) {
         AuthorDto authorDto = authorService.updateAuthor(updatedAuthor, authorId, file);
         return ResponseEntity.ok(authorDto);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteAuthor(@PathVariable("id") UUID authorId) {
+    public ResponseEntity<String> deleteAuthor(@PathVariable("id") String authorId) {
         authorService.deleteAuthor(authorId);
         return ResponseEntity.ok("Author deleted successfully");
     }

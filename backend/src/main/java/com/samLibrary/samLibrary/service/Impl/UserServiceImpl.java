@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto getUserById(UUID userId) {
+    public UserDto getUserById(String userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto userToBeUpdate, UUID userId) {
+    public UserDto updateUser(UserDto userToBeUpdate, String userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID userId) {
+    public void deleteUser(String userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );

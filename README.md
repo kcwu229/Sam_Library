@@ -23,6 +23,15 @@
 
 ## Current works: 
 
+Data Migrate to MySQL
+
+Book Table : 750,000 records
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/9f579951-e8e2-415f-abe7-6b09d805206b">
+
+Book_review Table : 151,019 records
+<img width="823" alt="image" src="https://github.com/user-attachments/assets/e1fa5fd1-d6b7-4705-b7bf-e8c25b48f943">
+
+
 ### 1. Home page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/e45c0c38-eb3f-47e8-97c5-d8a5322d781c">
 

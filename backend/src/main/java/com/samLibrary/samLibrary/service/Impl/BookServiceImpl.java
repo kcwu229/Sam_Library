@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
-    private BookMapper BookMapper;
+    private BookMapper bookMapper;
 
 
     public BookDto createBook(BookDto bookDto, MultipartFile file) {
@@ -74,7 +74,7 @@ public class BookServiceImpl implements BookService {
 
         Book savedBook = bookRepository.save(book);
         // Convert the saved Book entity back to a BookDto
-        return BookMapper.toDto(savedBook);
+        return bookMapper.toDto(savedBook);
 
     }
 
@@ -83,9 +83,8 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
-        return BookMapper.toDto(book);
+        return bookMapper.toDto(book);
     }
-
 
 
     public BookDto updateBook(BookDto bookToBeUpdated, String bookId, MultipartFile file) {
@@ -140,19 +139,14 @@ public class BookServiceImpl implements BookService {
 
         Book savedBook = bookRepository.save(book);
         // Convert the saved Book entity back to a BookDto
-        return BookMapper.toDto(savedBook);
+        return bookMapper.toDto(savedBook);
     }
 
     @Override
     public List<BookDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
         return books.stream()
-                .map(book -> {
-                    BookDto bookDto = BookMapper.toDto(book);
-                    Path path = Paths.get("backend/" + book.getImage() + ".png");
-
-                    return bookDto;
-                })
+                .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -174,7 +168,7 @@ public class BookServiceImpl implements BookService {
             //
         }
         return searchedBooks.stream()
-                .map(BookMapper::toDto)
+                .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
 

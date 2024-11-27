@@ -44,6 +44,9 @@ public class User implements UserDetails {
     @Column(name="role")
     private Role role;
 
+    @Column(name="image", columnDefinition = "LONGTEXT")
+    private String image;
+
     @Override
     // method to get authorities granted to the user
     public Collection<? extends GrantedAuthority> getAuthorities() {

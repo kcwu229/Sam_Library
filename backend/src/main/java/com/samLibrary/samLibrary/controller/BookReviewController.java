@@ -2,9 +2,16 @@ package com.samLibrary.samLibrary.controller;
 
 import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
+import com.samLibrary.samLibrary.dto.BookReviewResponse;
+import com.samLibrary.samLibrary.dto.UserDto;
+import com.samLibrary.samLibrary.entity.User;
 import com.samLibrary.samLibrary.service.BookReviewService;
+import com.samLibrary.samLibrary.service.Impl.BookServiceImpl;
+import com.samLibrary.samLibrary.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +24,9 @@ import java.util.List;
 @RequestMapping("/api/books-reviews")
 public class BookReviewController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
     private BookReviewService bookReviewService;
+    private UserService userService;
 
     @PostMapping("/{id}")
     public ResponseEntity<BookReviewDto> createBookReview(
@@ -37,9 +46,11 @@ public class BookReviewController {
     }
 
     @GetMapping("/all/{bookId}")
-    public ResponseEntity<List<BookReviewDto>> getAllBookReview(@PathVariable String bookId) {
-        List<BookReviewDto> bookReviewDto = bookReviewService.getAllBookReviews(bookId);
-        return ResponseEntity.ok(bookReviewDto);
+    public ResponseEntity<List<BookReviewResponse>> getAllBookReview(@PathVariable String bookId) {
+        logger.info("THE BOOK ID IS : {}", bookId);
+        List<BookReviewResponse> bookReviewResponses= bookReviewService.findBookReviewResponseByBookId(bookId);
+        logger.info("ttttest : {}", bookReviewResponses);
+        return ResponseEntity.ok(bookReviewResponses);
 
     }
 

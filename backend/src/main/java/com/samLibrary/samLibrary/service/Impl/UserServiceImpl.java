@@ -26,9 +26,7 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
-
     private UserRepository userRepository;
-
     private UserMapper userMapper;
 
     AuthenticationManager authManager;
@@ -83,5 +81,10 @@ public class UserServiceImpl implements UserService {
         User user = optionalUser.get();
 
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public UserDto getUserByBookReviewUserId(String UserId) {
+        return null;
     }
 }

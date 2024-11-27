@@ -161,12 +161,8 @@ function BookDetailPage() {
                   sortedReviews.map((review, i) => (
                     <Comments
                       key={i}
-                      date={review.createTimestamp}
                       logoImage={LogoImage}
-                      user="gggg"
-                      review={review.review}
-                      rating={review.rating}
-                      title={review.title}
+                      review={review.bookReviewDto}
                     />
                   ))
                 ) : (

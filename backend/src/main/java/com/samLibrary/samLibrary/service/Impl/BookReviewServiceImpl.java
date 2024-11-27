@@ -1,12 +1,15 @@
 package com.samLibrary.samLibrary.service.Impl;
 
 import com.samLibrary.samLibrary.dto.BookReviewDto;
+import com.samLibrary.samLibrary.dto.BookReviewResponse;
 import com.samLibrary.samLibrary.entity.Book;
 import com.samLibrary.samLibrary.entity.BookReview;
+import com.samLibrary.samLibrary.entity.User;
 import com.samLibrary.samLibrary.mapper.BookMapper;
 import com.samLibrary.samLibrary.mapper.BookReviewMapper;
 import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.repository.BookReviewRepository;
+import com.samLibrary.samLibrary.repository.UserRepository;
 import com.samLibrary.samLibrary.service.BookReviewService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -20,8 +23,10 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class BookReviewServiceImpl implements BookReviewService {
+
     private BookReviewRepository bookReviewRepository;
     private BookRepository bookRepository;
+    private UserRepository userRepository;
     private BookReviewMapper bookReviewMapper;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
@@ -77,9 +82,27 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public List<BookReviewDto> getAllBookReviews(String bookId) {
-        return bookReviewRepository.findByBookId(bookId).stream()
-                .map(bookReviewMapper::toDto)
-                .collect(Collectors.toList());
+    public List<BookReviewDto> getUserCommentByBookId(String bookId) {
+        return List.of();
     }
+
+
+    @Override
+    public List<BookReviewResponse> findBookReviewResponseByBookId(String bookId) {
+        List<BookReview> bookReviews = bookReviewRepository.findByBookId(bookId);
+        return bookReviews.stream().map(bookReview -> {
+            BookReviewDto bookReviewDto = bookReviewMapper.toDto(bookReview);
+            String userId = bookReview.getUserId();
+            User user = userRepository.findById(userId).orElseThrow(
+                    () -> new RuntimeException("User not found")
+            );
+            String username = user.getUsername();
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+            return new BookReviewResponse(bookReviewDto, username, userId, firstName, lastName);
+        }).collect(Collectors.toList());
+    }
+
+
+
 }

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-27T15:21:02+0800",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
+    date = "2024-11-27T22:54:00+0800",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.40.0.z20241023-1306, environment: Java 17.0.13 (Eclipse Adoptium)"
 )
 @Component
 public class AuthorMapperImpl implements AuthorMapper {
@@ -19,16 +19,16 @@ public class AuthorMapperImpl implements AuthorMapper {
             return null;
         }
 
-        String id = null;
-        String name = null;
-        String country = null;
-        int birthYear = 0;
-        int deathYear = 0;
-        String imageName = null;
-        String description = null;
-        String catchPhrase = null;
+        Author author = new Author();
 
-        Author author = new Author( id, name, country, birthYear, deathYear, imageName, description, catchPhrase );
+        author.setBirthYear( authorDto.getBirthYear() );
+        author.setCatchPhrase( authorDto.getCatchPhrase() );
+        author.setCountry( authorDto.getCountry() );
+        author.setDeathYear( authorDto.getDeathYear() );
+        author.setDescription( authorDto.getDescription() );
+        author.setId( authorDto.getId() );
+        author.setImageName( authorDto.getImageName() );
+        author.setName( authorDto.getName() );
 
         return author;
     }
@@ -40,6 +40,15 @@ public class AuthorMapperImpl implements AuthorMapper {
         }
 
         AuthorDto authorDto = new AuthorDto();
+
+        authorDto.setBirthYear( author.getBirthYear() );
+        authorDto.setCatchPhrase( author.getCatchPhrase() );
+        authorDto.setCountry( author.getCountry() );
+        authorDto.setDeathYear( author.getDeathYear() );
+        authorDto.setDescription( author.getDescription() );
+        authorDto.setId( author.getId() );
+        authorDto.setImageName( author.getImageName() );
+        authorDto.setName( author.getName() );
 
         return authorDto;
     }

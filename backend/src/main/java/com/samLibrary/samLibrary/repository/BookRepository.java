@@ -1,5 +1,6 @@
 package com.samLibrary.samLibrary.repository;
 
+import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +25,5 @@ public interface BookRepository extends JpaRepository<Book,String>, BookReposito
                     "LOWER(b.publisher) LIKE LOWER(CONCAT('%', :searchText, '%')) OR " +
                     "CAST(b.publishedDate AS string) LIKE LOWER(CONCAT('%', :searchText, '%'))")
     List<Book> searchBooksByAllFields(String searchText);
-
+    
 }

@@ -2,8 +2,11 @@ package com.samLibrary.samLibrary.controller;
 
 import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.service.BookService;
+import com.samLibrary.samLibrary.service.Impl.BookServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,8 @@ import java.util.UUID;
 public class BookController {
 
     private BookService bookService;
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
+
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<BookDto> createBook(
@@ -38,6 +43,8 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<BookDto>> getAllBooks() {
+        logger.info("Getting all books");
+
         List<BookDto> books = bookService.getAllBooks();
         List<String> categories = bookService.getAllCategories();
        return ResponseEntity.ok(books);
@@ -49,7 +56,7 @@ public class BookController {
         return ResponseEntity.ok(categories);
     }
 
-    // for seach function
+    // for search function
     @GetMapping("/search")
     public ResponseEntity<?> searchBooks(
             @RequestParam String searchField,

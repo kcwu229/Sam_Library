@@ -1,14 +1,15 @@
 package com.samLibrary.samLibrary.mapper;
 
 import com.samLibrary.samLibrary.dto.BookReviewDto;
+import com.samLibrary.samLibrary.entity.Book;
 import com.samLibrary.samLibrary.entity.BookReview;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-27T22:53:59+0800",
-    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.40.0.z20241023-1306, environment: Java 17.0.13 (Eclipse Adoptium)"
+    date = "2024-11-28T00:26:52+0800",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
 public class BookReviewMapperImpl implements BookReviewMapper {
@@ -19,15 +20,14 @@ public class BookReviewMapperImpl implements BookReviewMapper {
             return null;
         }
 
-        BookReview bookReview = new BookReview();
+        String id = null;
+        Book book = null;
+        String title = null;
+        String review = null;
+        int rating = 0;
+        String userId = null;
 
-        bookReview.setCreateTimestamp( bookReviewDto.getCreateTimestamp() );
-        bookReview.setEditTimestamp( bookReviewDto.getEditTimestamp() );
-        bookReview.setId( bookReviewDto.getId() );
-        bookReview.setRating( bookReviewDto.getRating() );
-        bookReview.setReview( bookReviewDto.getReview() );
-        bookReview.setTitle( bookReviewDto.getTitle() );
-        bookReview.setUserId( bookReviewDto.getUserId() );
+        BookReview bookReview = new BookReview( id, book, title, review, rating, userId );
 
         return bookReview;
     }
@@ -39,14 +39,6 @@ public class BookReviewMapperImpl implements BookReviewMapper {
         }
 
         BookReviewDto bookReviewDto = new BookReviewDto();
-
-        bookReviewDto.setCreateTimestamp( bookReview.getCreateTimestamp() );
-        bookReviewDto.setEditTimestamp( bookReview.getEditTimestamp() );
-        bookReviewDto.setId( bookReview.getId() );
-        bookReviewDto.setRating( bookReview.getRating() );
-        bookReviewDto.setReview( bookReview.getReview() );
-        bookReviewDto.setTitle( bookReview.getTitle() );
-        bookReviewDto.setUserId( bookReview.getUserId() );
 
         return bookReviewDto;
     }

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-27T22:53:59+0800",
-    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.40.0.z20241023-1306, environment: Java 17.0.13 (Eclipse Adoptium)"
+    date = "2024-11-28T00:26:52+0800",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
 public class BookMapperImpl implements BookMapper {
@@ -19,18 +19,18 @@ public class BookMapperImpl implements BookMapper {
             return null;
         }
 
-        Book book = new Book();
+        String id = null;
+        String title = null;
+        String category = null;
+        String author = null;
+        String publishedDate = null;
+        String image = null;
+        String publisher = null;
+        String isbn = null;
+        String bookDescription = null;
+        String catchPhrase = null;
 
-        book.setAuthor( bookDto.getAuthor() );
-        book.setBookDescription( bookDto.getBookDescription() );
-        book.setCatchPhrase( bookDto.getCatchPhrase() );
-        book.setCategory( bookDto.getCategory() );
-        book.setId( bookDto.getId() );
-        book.setImage( bookDto.getImage() );
-        book.setIsbn( bookDto.getIsbn() );
-        book.setPublishedDate( bookDto.getPublishedDate() );
-        book.setPublisher( bookDto.getPublisher() );
-        book.setTitle( bookDto.getTitle() );
+        Book book = new Book( id, title, category, author, publishedDate, image, publisher, isbn, bookDescription, catchPhrase );
 
         return book;
     }
@@ -42,17 +42,6 @@ public class BookMapperImpl implements BookMapper {
         }
 
         BookDto bookDto = new BookDto();
-
-        bookDto.setAuthor( book.getAuthor() );
-        bookDto.setBookDescription( book.getBookDescription() );
-        bookDto.setCatchPhrase( book.getCatchPhrase() );
-        bookDto.setCategory( book.getCategory() );
-        bookDto.setId( book.getId() );
-        bookDto.setImage( book.getImage() );
-        bookDto.setIsbn( book.getIsbn() );
-        bookDto.setPublishedDate( book.getPublishedDate() );
-        bookDto.setPublisher( book.getPublisher() );
-        bookDto.setTitle( book.getTitle() );
 
         return bookDto;
     }

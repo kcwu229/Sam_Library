@@ -17,7 +17,7 @@ function SortFilter() {
   const handleSorting = (value) => {};
 
   return (
-    <div className="relative group flex ml-4">
+    <div className="relative group flex ml-4 mt-10">
       <button
         id="dropdownButton"
         onClick={toggleDropdown}

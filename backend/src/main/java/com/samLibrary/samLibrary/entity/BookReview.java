@@ -20,7 +20,6 @@ import java.util.UUID;
 @Table(name = "book_review")
 public class BookReview {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @ManyToOne
@@ -53,5 +52,14 @@ public class BookReview {
     @PreUpdate
     protected void onUpdate() {
         editTimestamp = LocalDateTime.now();
+    }
+
+    public BookReview(String id, Book book, String title, String review, int rating, String userId) {
+        this.id = id;
+        this.book = book;
+        this.title = title;
+        this.review = review;
+        this.rating = rating;
+        this.userId = userId;
     }
 }

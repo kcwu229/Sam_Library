@@ -15,29 +15,34 @@ function Comments({ logoImage, review }) {
         />
       </div>
       <div className="text-center mt-8">
-        <h2 className="font-bold text-xl text-black">{review.firstName}</h2>
+        <h2 className="font-bold text-xl text-black">
+          {review.firstName} {review.lastName}
+        </h2>
+
         <div className="text-center mt-4 text-sm text-slate-400">
-          {review.createTimestamp}
+          {review.bookReviewDto.createTimestamp}
         </div>
         <p className="text-lg mt-4 text-gray-600 break-words whitespace-pre-wrap">
-          {review.title}
+          {review.bookReviewDto.title}
         </p>
       </div>
 
       <div className="mt-4 text-center text-base text-slate-400 px-4 break-words whitespace-pre-wrap">
-        {review.review}
+        {review.bookReviewDto.review}
       </div>
       <div className="py-4 mt-4 text-gray-700 flex items-center justify-center">
         {[...Array(5)].map((_, index) => (
           <FaStar
             key={index}
             className={`${
-              index < review.rating ? "text-yellow-500" : "text-gray-300"
+              index < review.bookReviewDto.rating
+                ? "text-yellow-500"
+                : "text-gray-300"
             } w-4 h-4`}
           />
         ))}
         <p className="text-xs ml-4 text-center text-gray-600 font-light break-words whitespace-pre-wrap">
-          {review.rating} out of 5
+          {review.bookReviewDto.rating} out of 5
         </p>
       </div>
     </div>

@@ -31,11 +31,13 @@ public class BookReviewController {
     @PostMapping("/{id}")
     public ResponseEntity<BookReviewDto> createBookReview(
             @Valid @RequestBody BookReviewDto bookReviewDto,
-            @PathVariable("id") String bookId) {
+            @PathVariable("id") String bookId,
+            @RequestParam("username") String username)
+    {
         if (bookReviewDto.getTitle() == null || bookReviewDto.getTitle().isBlank()) {
             return ResponseEntity.badRequest().body(null);
         }
-        BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto, bookId);
+        BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto, bookId, username);
         return new ResponseEntity<>(savedBookReview, HttpStatus.CREATED);
     }
 

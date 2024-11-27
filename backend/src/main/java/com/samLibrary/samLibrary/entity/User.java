@@ -1,10 +1,13 @@
 package com.samLibrary.samLibrary.entity;
 
+import com.samLibrary.samLibrary.validation.ValidUUID;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +24,6 @@ import java.util.UUID;
 @Table(name="user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column(name="user_name", unique = true)

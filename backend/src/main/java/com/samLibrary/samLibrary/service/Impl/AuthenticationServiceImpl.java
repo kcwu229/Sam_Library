@@ -23,7 +23,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -57,6 +56,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         User user = new User();
+        String id = java.util.UUID.randomUUID().toString();
+        user.setId(id);
         user.setUsername(request.getUsername());
         user.setPassword(
                 encoder.encode(request.getPassword())
@@ -101,6 +102,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(token)
                 .role(user.getRole())
+                .username(user.getUsername())
                 .id(user.getId())
                 .build();
     }

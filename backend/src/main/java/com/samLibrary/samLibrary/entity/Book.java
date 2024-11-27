@@ -16,7 +16,6 @@ import java.util.List;
 @Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
     private String id;
 
     @Column(name = "title", nullable = false)

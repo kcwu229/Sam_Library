@@ -24,7 +24,7 @@ const BookCard = ({
     setShowConfirmDialog(false);
   };
   return (
-    <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+    <div className="md:w-1/2 lg:w-1/3 xl:w-1/4 sm:justify-center">
       {showConfirmDialog && (
         <ConfirmDialog
           message="Are you sure you want to delete this book?"
@@ -48,10 +48,16 @@ const BookCard = ({
           <div className="px-5 pb-5 text-left">
             <a href="#">
               <h5 className="font-bold text-gray-900 tracking-wider">
-                {book.title}
+                {book.title.length >= 25
+                  ? book.title.slice(0, 25) + "..."
+                  : book.title}
               </h5>
               <p className="text-gray-900 font-light mt-2 tracking-wide">
-                {book.author ? book.author : "Unknown Author"}
+                {book.author
+                  ? book.author.length > 10
+                    ? book.author.slice(0, 10) + "..."
+                    : book.author
+                  : "Unknown Author"}
               </p>
               <p className="text-gray-900 font-light mt-2 tracking-wide">
                 {book.publishedDate ? book.publishedDate : "Unknown Date"}

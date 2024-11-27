@@ -5,6 +5,8 @@ import { FaChevronRight } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote"; // Import the BlockQuote component
 import RatingSection from "../RatingSection";
 import Comments from "../Comments";
+import Pagination from "../Pagination";
+import { useNavigate } from "react-router-dom";
 import LeaveComment from "../LeaveComment";
 import { listAllBookReviews } from "../../services/BookReviewServices";
 import LogoImage from "../../assets/images/article2.png";
@@ -15,6 +17,14 @@ function BookDetailPage() {
   const [reviews, setReviews] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const ratingType = "book";
+
+  // pagination
+  const pageSize = 5; // Set your desired page size
+  const [currentPage, setCurrentPage] = useState(1);
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedReviews = reviews.slice(startIndex, startIndex + pageSize);
+  const totalPages = Math.ceil(reviews.length / pageSize);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -27,32 +37,25 @@ function BookDetailPage() {
         .catch((error) => console.error(error));
 
       // get all comments on this book
-      listAllBookReviews(id)
+      listAllBookReviews(id, currentPage, pageSize)
         .then((response) => {
           setReviews(response.data);
         })
         .catch((error) => {
           console.error(error);
         });
-    }
-  }, [id]);
 
-  useEffect(() => {
-    const storedRole = localStorage.getItem("userRole");
-    if (storedRole) {
-      setUserRole(storedRole);
+      const storedRole = localStorage.getItem("userRole");
+      if (storedRole) {
+        setUserRole(storedRole);
+      }
+      console.log(reviews);
     }
-    console.log(reviews);
-  }, [reviews]);
+  }, [id, currentPage]);
 
   const handleReviewAdded = (updatedReviews) => {
     setReviews(updatedReviews);
   };
-
-  // Sort the comments by createdTimestamp
-  const sortedReviews = [...reviews].sort(
-    (a, b) => new Date(b.createTimestamp) - new Date(a.createTimestamp)
-  );
 
   return (
     <div className="container mx-auto px-4">
@@ -157,13 +160,9 @@ function BookDetailPage() {
             <div className="w-full flex flex-col items-center mt-20">
               <RatingSection />
               <div className="w-full flex flex-wrap justify-center gap-8 mt-20">
-                {sortedReviews.length > 0 ? (
-                  sortedReviews.map((review, i) => (
-                    <Comments
-                      key={i}
-                      logoImage={LogoImage}
-                      review={review.bookReviewDto}
-                    />
+                {paginatedReviews.length > 0 ? (
+                  paginatedReviews.map((review, i) => (
+                    <Comments key={i} logoImage={LogoImage} review={review} />
                   ))
                 ) : (
                   <p>No reviews yet</p>
@@ -171,6 +170,12 @@ function BookDetailPage() {
               </div>
             </div>
             <div className="w-full md:w-8/12 lg:w-6/12 mx-auto mt-20">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+              <br />
               {userRole && (
                 <LeaveComment
                   ratingType={ratingType}

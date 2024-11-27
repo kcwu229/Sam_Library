@@ -86,6 +86,8 @@ function LoginPage() {
           // Set the user role in the context
           const userRole = response.data.role;
           localStorage.setItem("userRole", userRole);
+          const username = response.data.username;
+          localStorage.setItem("username", username);
           const jwtToken = response.data.access_token;
           Cookies.set("token", jwtToken, { expires: 7 });
           //setCookie("jwtToken", jwtToken, { path: "/" });

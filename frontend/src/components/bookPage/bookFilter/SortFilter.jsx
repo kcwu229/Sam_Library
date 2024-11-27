@@ -36,7 +36,7 @@ function SortFilter({ onSortChange, currentSort }) {
         id="dropdownDelay"
         className={`z-10 absolute mt-14 ${
           dropdownOpen ? "block" : "hidden"
-        } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+        } bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}
         onMouseLeave={closeDropdown}
       >
         <ul

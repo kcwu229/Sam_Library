@@ -25,6 +25,7 @@ function BookDetailPage() {
   const paginatedReviews = reviews.slice(startIndex, startIndex + pageSize);
   const totalPages = Math.ceil(reviews.length / pageSize);
   const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -32,17 +33,24 @@ function BookDetailPage() {
       getBook(id)
         .then((response) => {
           setBook(response.data);
-          console.log("Book detail obj", response.data);
-        })
-        .catch((error) => console.error(error));
-
-      // get all comments on this book
-      listAllBookReviews(id, currentPage, pageSize)
-        .then((response) => {
-          setReviews(response.data);
+          if (response.data.image && response.data.image.startsWith("http")) {
+            fetch(response.data.image, { mode: "no-cors" })
+              .then((res) => res.blob())
+              .then((blob) => {
+                const url = URL.createObjectURL(blob);
+                setImageUrl(url);
+              })
+              .catch((error) => {
+                console.error("Error fetching image:", error);
+              });
+          } else {
+            setImageUrl(
+              `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`
+            );
+          }
         })
         .catch((error) => {
-          console.error(error);
+          console.error("Error fetching book:", error);
         });
 
       const storedRole = localStorage.getItem("userRole");
@@ -86,11 +94,7 @@ function BookDetailPage() {
                     loading="lazy"
                     className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
                     // to-do add handling for missing image && if image is on server or local
-                    src={
-                      book.image.startsWith("http")
-                        ? book.image
-                        : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
-                    }
+                    src={imageUrl}
                     //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"
                   />

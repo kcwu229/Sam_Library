@@ -32,7 +32,7 @@ const BookCard = ({
           onCancel={handleCancelDelete}
         />
       )}
-      <button key={book.id} onClick={() => viewOrEditBook(book.id)}>
+      <div key={book.id} onClick={() => viewOrEditBook(book.id)}>
         <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
           <img
             loading="lazy"
@@ -73,7 +73,7 @@ const BookCard = ({
             </div>
             <div className="flex items-center justify-between">
               {userRole === "USER" && (
-                <button
+                <div
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
                 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   onClick={(e) => {
@@ -82,10 +82,10 @@ const BookCard = ({
                   }}
                 >
                   Borrow Now
-                </button>
+                </div>
               )}
               {userRole === "ADMIN" && (
-                <button
+                <div
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
                 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   onClick={(e) => {
@@ -94,22 +94,22 @@ const BookCard = ({
                   }}
                 >
                   Edit
-                </button>
+                </div>
               )}
               {userRole === "ADMIN" && (
-                <button
-                  className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 
-                focus:outline-none focus:ring-blue-300 
-                font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                <div
+                  className="text-white bg-red-600 hover:bg-red-700 focus:ring-4
+                  focus:outline-none focus:ring-blue-300 font-medium rounded-lg
+                  text-sm px-5 py-2.5 text-center"
                   onClick={handleDeleteClick}
                 >
                   Delete
-                </button>
+                </div>
               )}
             </div>
           </div>
         </div>
-      </button>
+      </div>
     </div>
   );
 };

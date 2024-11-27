@@ -74,14 +74,14 @@ function HomePage() {
         </div>
       </div>
       <div className="w-full bg-sam-gray">
-        <h1 class="flex items-center justify-center text-left">
+        <h1 className="flex items-center justify-center text-left">
           <b className="w-7/12 items-center text-4xl mt-10 text-sam-light-brown pt-20">
             Welcome
           </b>
         </h1>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center mt-10 text-gray-600 font-light">
+          <p className="w-7/12 items-center mt-10 text-gray-600 font-light">
             Dive into Sam's Library, your go-to online haven for book lovers!
             Here, every book opens the door to new adventures and endless
             possibilities. Our diverse collection, from timeless classics to the
@@ -92,7 +92,7 @@ function HomePage() {
         </div>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center mb-10 text-gray-600 font-light">
+          <p className="w-7/12 items-center mb-10 text-gray-600 font-light">
             With just a click, explore thousands of titles and connect with a
             vibrant community of fellow readers. Discover your next great read
             today and transform your reading experience into an extraordinary
@@ -102,7 +102,7 @@ function HomePage() {
       </div>
       <br />
       <div className="w-full bg-white">
-        <h1 class="flex items-center justify-center text-right pt-20">
+        <h1 className="flex items-center justify-center text-right pt-20">
           <b
             className="w-7/12 items-center text-4xl mt-20 text-gray-600"
             id="about"
@@ -112,7 +112,7 @@ function HomePage() {
         </h1>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center mt-10 pb-20 text-gray-600 font-light">
+          <p className="w-7/12 items-center mt-10 pb-20 text-gray-600 font-light">
             At Sam's Library, we celebrate the transformative power of stories.
             Our mission is to create a welcoming haven for readers, where every
             book serves as a portal to new adventures. With a carefully curated
@@ -126,14 +126,14 @@ function HomePage() {
       </div>
 
       <div className="w-full bg-sam-gray pb-20">
-        <h1 class="flex items-center justify-center text-sam-light-brown pt-20">
+        <h1 className="flex items-center justify-center text-sam-light-brown pt-20">
           <b className="w-7/12 items-center text-4xl mt-20" id="news">
             News and Articles
           </b>
         </h1>
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
+          <p className="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
             Find the latest buzz in the literary world—new releases, author
             spotlights, and thought-provoking articles.
           </p>
@@ -175,7 +175,7 @@ function HomePage() {
         </div>
       </div>
       <div className="w-full bg-white">
-        <h1 class="flex items-center justify-center text-right pt-20">
+        <h1 className="flex items-center justify-center text-right pt-20">
           <b
             className="w-7/12 items-center text-4xl mt-20 text-gray-600"
             id="policy"
@@ -190,14 +190,14 @@ function HomePage() {
 
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-1 text-gray-600 font-light">
+          <p className="w-7/12 items-center text-lg mt-10 pb-1 text-gray-600 font-light">
             At Sam's Library, your privacy is our priority. This Privacy Policy
             outlines how we collect, use, and protect your personal information
             when you visit our website and interact with our services.
           </p>
         </div>
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg pb-20 text-gray-600 font-light">
+          <p className="w-7/12 items-center text-lg pb-20 text-gray-600 font-light">
             We may update this Privacy Policy periodically. Any changes will be
             posted on this page, and we encourage you to review it regularly.
             Thank you for trusting Sam's Library with your information. We are
@@ -207,7 +207,7 @@ function HomePage() {
         </div>
       </div>
       <div className="w-full bg-sam-gray">
-        <h1 class="flex items-center justify-center text-left pt-20">
+        <h1 className="flex items-center justify-center text-left pt-20">
           <b
             className="w-7/12 items-center text-4xl mt-20 text-sam-light-brown"
             id="license"
@@ -219,7 +219,7 @@ function HomePage() {
 
         <br />
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
+          <p classNames="w-7/12 items-center text-lg mt-10 pb-10 text-gray-600 font-light">
             All content available on Sam's Library, including text, images, and
             multimedia, is protected by copyright and intellectual property
             laws. Users are granted a limited, non-exclusive license to access
@@ -227,7 +227,7 @@ function HomePage() {
           </p>
         </div>
         <div className="flex items-center justify-center">
-          <p class="w-7/12 items-center text-lg pb-20 text-gray-600 font-light">
+          <p className="w-7/12 items-center text-lg pb-20 text-gray-600 font-light">
             If you contribute articles, reviews, or other content to Sam's
             Library, you grant us a non-exclusive, royalty-free license to use,
             reproduce, and distribute your contributions on our platform and

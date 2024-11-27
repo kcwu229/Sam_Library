@@ -45,6 +45,14 @@ function BookPage() {
     setLoading(false);
   };
 
+  const removeFilter = (filter) => {
+    // Implement the logic to remove a single filter
+  };
+
+  const removeAllFilter = () => {
+    // Implement the logic to remove all filters
+  };
+
   useEffect(() => {
     const storedRole = localStorage.getItem("userRole");
     if (storedRole) {
@@ -132,8 +140,8 @@ function BookPage() {
         <FilterButtons
           className="flex justify-center"
           filterButtons={categoryGroup}
-          removeFilter={""}
-          removeAllFilter={""}
+          removeFilter={removeFilter}
+          removeAllFilter={removeAllFilter}
         />
         {searchField != "" && searchText != "" && (
           <h2 className="text-3xl font-bold text-center mt-14">

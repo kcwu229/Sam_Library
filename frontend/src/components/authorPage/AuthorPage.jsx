@@ -178,7 +178,7 @@ function AuthorPage() {
               </button>
             )}
             <a
-              href="javascript:void(0);"
+              href="#;"
               className="inline-block pl-8 hover:text-blue-500"
               onClick={removeAllFilter}
             >
@@ -197,28 +197,28 @@ function AuthorPage() {
                   className="w-full md:w-2/3 lg:w-2/3 xl:w-3/4"
                   onClick={() => viewOrEditAuthor(author.id)}
                 >
-                  <div class="w-full md:w-5/12 max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
+                  <div className="w-full md:w-5/12 max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
                     <img
                       loading="lazy"
-                      class="p-10 rounded-t-lg h-80"
+                      className="p-10 rounded-t-lg h-80"
                       src={`${process.env.REACT_APP_BASE_URL}/authors/${author.imageName}.png`}
                       alt="author image"
                     />
-                    <div class="px-5 pb-5">
+                    <div className="px-5 pb-5">
                       <a href="#">
-                        <h5 class="font-bold text-left text-gray-900 tracking-widest">
+                        <h5 className="font-bold text-left text-gray-900 tracking-widest">
                           {author.name}
                         </h5>
-                        <p class="text-gray-900 mt-2 text-left tracking-wider">
+                        <p className="text-gray-900 mt-2 text-left tracking-wider">
                           {author.birthYear ? author.birthYear : "Unknown"}
                         </p>
                       </a>
-                      <div class="flex items-center mt-2.5 mb-5">
-                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                      <div className="flex items-center mt-2.5 mb-5">
+                        <div className="flex items-center space-x-1 rtl:space-x-reverse">
                           <FaStar className="w-4 h-4 text-yellow-400" />
                         </div>
                         <span
-                          class="bg-green-100 text-green-800 text-xs 
+                          className="bg-green-100 text-green-800 text-xs 
           font-semibold px-2.5 py-0.5 rounded text-right ms-3"
                         >
                           5
@@ -227,7 +227,7 @@ function AuthorPage() {
                       <div className="flex justify-between">
                         {userRole === "ADMIN" && (
                           <button
-                            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 
+                            className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 
             focus:outline-none focus:ring-blue-300 
             font-medium rounded-lg text-sm px-5 py-2.5 
             text-center"
@@ -242,7 +242,7 @@ function AuthorPage() {
 
                         {userRole === "ADMIN" && (
                           <button
-                            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 
+                            className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 
             focus:outline-none focus:ring-blue-300 
             font-medium rounded-lg text-sm px-5 py-2.5 
             text-center"
@@ -255,7 +255,7 @@ function AuthorPage() {
                           </button>
                         )}
                       </div>
-                      <div class="flex items-center justify-between"></div>
+                      <div className="flex items-center justify-between"></div>
                     </div>
                   </div>
                 </button>

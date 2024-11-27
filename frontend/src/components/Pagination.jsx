@@ -18,16 +18,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex pagination-controls gap-10 justify-center">
-      <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-        <FaAngleLeft w-12 h-12 />
-      </button>
+    <div className="flex pagination-controls gap-10 justify-center items-center">
+      <div onClick={handlePreviousPage} disabled={currentPage === 1}>
+        <FaAngleLeft className="w-8 h-8" />
+      </div>
       <span>
         Page {currentPage} of {totalPages}
       </span>
-      <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-        <FaAngleRight w-12 h-12 />
-      </button>
+      <div onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <FaAngleRight className="w-8 h-8" />
+      </div>
     </div>
   );
 };

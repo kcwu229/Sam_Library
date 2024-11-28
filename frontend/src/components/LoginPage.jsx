@@ -90,7 +90,10 @@ function LoginPage() {
           const jwtToken = response.data.access_token;
           Cookies.set("token", jwtToken, { expires: 7 });
           //setCookie("jwtToken", jwtToken, { path: "/" });
-          showToast("Successfully login !", "success");
+          showToast(
+            `User '${response.data.username}', welcome back !`,
+            "success"
+          );
           navigate("/books");
         }
       } catch (error) {

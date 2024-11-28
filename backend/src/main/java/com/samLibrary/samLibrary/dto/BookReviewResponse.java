@@ -15,5 +15,6 @@ public class BookReviewResponse {
     private String userId;
     private String firstName;
     private String lastName;
+    private String userImage;
     private LocalDateTime createTimestamp;
 }

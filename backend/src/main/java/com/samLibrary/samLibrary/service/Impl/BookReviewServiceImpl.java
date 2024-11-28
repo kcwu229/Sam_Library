@@ -107,7 +107,9 @@ public class BookReviewServiceImpl implements BookReviewService {
             String username = user.getUsername();
             String firstName = user.getFirstName();
             String lastName = user.getLastName();
-            return new BookReviewResponse(bookReviewDto, username, userId, firstName, lastName, bookReview.getCreateTimestamp());
+            String userImage = user.getImage();
+            return new BookReviewResponse(bookReviewDto, username, userId, firstName,
+                    lastName, userImage, bookReview.getCreateTimestamp());
         }).collect(Collectors.toList());
 
         bookReviewResponses.sort(Comparator.comparing(BookReviewResponse::getCreateTimestamp).reversed());

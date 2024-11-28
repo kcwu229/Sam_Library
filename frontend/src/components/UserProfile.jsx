@@ -146,7 +146,6 @@ const UserProfile = () => {
             {[userIcon1, userIcon2, userIcon3, userIcon4].map(
               (iconSrc, index) => (
                 <label key={index}>
-                  <p>{iconSrc}</p>
                   <input
                     type="radio"
                     name="image"
@@ -160,7 +159,7 @@ const UserProfile = () => {
                   <img
                     src={iconSrc}
                     className={`rounded-full cursor-pointer ${
-                      icon === index
+                      iconSrc === user.image
                         ? "border-4 border-red-400 md:w-48 w-32"
                         : "w-24 md:w-40"
                     }`}

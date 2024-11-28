@@ -7,15 +7,22 @@ function Comments({ logoImage, review }) {
   console.log(review);
 
   return (
-    <div className="w-full md:w-10/12 lg:w-4/12 xl:w-3/12 bg-white shadow-xl rounded-lg text-gray-900 p-6 relative gap-8 mt-8">
-      <div className="mx-auto w-28 h-28 relative -mt-16 border-4 border-white rounded-full overflow-hidden z-10">
+    <div
+      className="w-full md:w-10/12 lg:w-4/12 xl:w-3/12 
+    bg-white shadow-xl rounded-lg text-gray-900 p-6 relative gap-10 mt-8 
+    border-2 border-gray-200 hover:border-amber-500 hover:shadow-2xl"
+    >
+      <div
+        className="mx-auto w-28 h-28 relative -mt-16 border-gray-700 rounded-full 
+      overflow-hidden z-10 gap-10"
+      >
         <img
           className="object-cover object-center h-full w-full"
-          src={logoImage}
+          src={review.userImage}
           alt="User"
         />
       </div>
-      <div className="text-center mt-8">
+      <div className="text-center mt-8 ">
         {review.firstName && review.lastName && (
           <h2 className="font-bold text-xl text-black">
             {review.firstName} {review.lastName}

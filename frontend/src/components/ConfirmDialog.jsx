@@ -24,7 +24,7 @@ function ConfirmDialog({ onConfirm, onCancel }) {
           <LiaExclamationCircleSolid className="w-16 h-16 text-red-500" />
 
           <h3 className="text-lg font-normal text-gray-500 mt-5 mb-6">
-            Are you sure you want to delete this book?
+            Are you sure you want to delete it?
           </h3>
 
           <div className="flex flex-row gap-6">

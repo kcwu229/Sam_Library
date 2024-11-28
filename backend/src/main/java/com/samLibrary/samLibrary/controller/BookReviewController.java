@@ -1,10 +1,7 @@
 package com.samLibrary.samLibrary.controller;
 
-import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.dto.BookReviewResponse;
-import com.samLibrary.samLibrary.dto.UserDto;
-import com.samLibrary.samLibrary.entity.User;
 import com.samLibrary.samLibrary.service.BookReviewService;
 import com.samLibrary.samLibrary.service.Impl.BookServiceImpl;
 import com.samLibrary.samLibrary.service.UserService;
@@ -57,13 +54,15 @@ public class BookReviewController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookReviewDto> updateUser(@RequestBody BookReviewDto updatedBookReview, @PathVariable("id") String bookReviewId) {
+    public ResponseEntity<BookReviewDto> updateReview(@RequestBody BookReviewDto updatedBookReview, @PathVariable("id") String bookReviewId) {
         BookReviewDto bookReviewDto = bookReviewService.updateBookReview(updatedBookReview, bookReviewId);
         return ResponseEntity.ok(bookReviewDto);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") String bookReviewId) {
+    public ResponseEntity<String> deleteReview(
+            @Valid @RequestBody String bookReviewId,
+            @PathVariable("id") String bookId) {
         bookReviewService.deleteBookReview(bookReviewId);
         return ResponseEntity.ok("User deleted successfully");
     }

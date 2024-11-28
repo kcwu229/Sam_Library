@@ -17,3 +17,10 @@ export const listAllBookReviews = (bookId, page, pageSize) =>
       pageSize,
     },
   });
+
+export const deleteBookReview = (bookId, bookReviewId) => {
+  return axiosInstance.delete(
+    REST_BOOKREVIEW_API_URL + "/" + bookId,
+    bookReviewId
+  );
+};

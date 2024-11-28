@@ -4,6 +4,8 @@ import LabelsTag from "./form/LabelsTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
 import TextAreaTag from "./form/TextAreaTag";
 import { FaStar } from "react-icons/fa";
+import { useToast } from "./Context/ToastMessageContext";
+
 import {
   createAuthorReview,
   listAllAuthorReviews,
@@ -22,6 +24,8 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
     review: "",
     rating: "",
   });
+
+  const { showToast } = useToast();
 
   function validateForm() {
     let valid = true;
@@ -56,11 +60,16 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
             title,
             review,
             rating,
-            bookId: id,
           };
 
           // call api to create book reviews
-          const response = await createBookReview(id, reviewData);
+          const username = localStorage.getItem("username");
+          const response = await createBookReview(id, reviewData, username);
+          if (response.status === 200 || response.status === 201) {
+            showToast("Review added successfully!", "success");
+          } else {
+            showToast("Review not added!", "error");
+          }
           console.log("Book review created:", response.data);
           const updatedReviews = await listAllBookReviews(id);
           onReviewAdded(updatedReviews.data);
@@ -69,7 +78,6 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
             title,
             review,
             rating,
-            authorId: id,
           };
 
           // call api to create author reviews
@@ -150,7 +158,8 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
           </div>
 
           <button
-            className="bg-amber-400 hover:bg-amber-500 text-white font-bold py-3 px-4 rounded focus:outline-none mt-4 focus:shadow-outline w-full"
+            className="bg-amber-400 hover:bg-amber-500 text-white font-bold py-3 px-4 
+            rounded focus:outline-none mt-4 focus:shadow-outline w-full"
             type="submit"
           >
             Leave Comment

@@ -2,14 +2,13 @@ package com.samLibrary.samLibrary.mapper;
 
 import com.samLibrary.samLibrary.dto.AuthorReviewDto;
 import com.samLibrary.samLibrary.entity.AuthorReview;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-28T03:26:12+0800",
-    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.40.0.z20241023-1306, environment: Java 17.0.13 (Eclipse Adoptium)"
+    date = "2024-11-29T06:00:00+0800",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
 public class AuthorReviewMapperImpl implements AuthorReviewMapper {
@@ -22,15 +21,6 @@ public class AuthorReviewMapperImpl implements AuthorReviewMapper {
 
         AuthorReview authorReview = new AuthorReview();
 
-        authorReview.setCreateTimestamp( authorReviewDto.getCreateTimestamp() );
-        authorReview.setEditTimestamp( authorReviewDto.getEditTimestamp() );
-        if ( authorReviewDto.getId() != null ) {
-            authorReview.setId( UUID.fromString( authorReviewDto.getId() ) );
-        }
-        authorReview.setRating( authorReviewDto.getRating() );
-        authorReview.setReview( authorReviewDto.getReview() );
-        authorReview.setTitle( authorReviewDto.getTitle() );
-
         return authorReview;
     }
 
@@ -41,15 +31,6 @@ public class AuthorReviewMapperImpl implements AuthorReviewMapper {
         }
 
         AuthorReviewDto authorReviewDto = new AuthorReviewDto();
-
-        authorReviewDto.setCreateTimestamp( authorReview.getCreateTimestamp() );
-        authorReviewDto.setEditTimestamp( authorReview.getEditTimestamp() );
-        if ( authorReview.getId() != null ) {
-            authorReviewDto.setId( authorReview.getId().toString() );
-        }
-        authorReviewDto.setRating( authorReview.getRating() );
-        authorReviewDto.setReview( authorReview.getReview() );
-        authorReviewDto.setTitle( authorReview.getTitle() );
 
         return authorReviewDto;
     }

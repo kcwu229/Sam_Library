@@ -7,8 +7,12 @@ import RatingSection from "../RatingSection";
 import Comments from "../Comments";
 import Pagination from "../Pagination";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../Context/ToastMessageContext";
 import LeaveComment from "../LeaveComment";
-import { listAllBookReviews } from "../../services/BookReviewServices";
+import {
+  deleteBookReview,
+  listAllBookReviews,
+} from "../../services/BookReviewServices";
 import LogoImage from "../../assets/images/article2.png";
 
 function BookDetailPage() {
@@ -25,6 +29,8 @@ function BookDetailPage() {
   const paginatedReviews = reviews.slice(startIndex, startIndex + pageSize);
   const totalPages = Math.ceil(reviews.length / pageSize);
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (id) {
@@ -32,7 +38,7 @@ function BookDetailPage() {
       getBook(id)
         .then((response) => {
           setBook(response.data);
-          console.log("Book detail obj", response.data);
+          //console.log("Book detail obj", response.data);
         })
         .catch((error) => console.error(error));
 
@@ -49,13 +55,33 @@ function BookDetailPage() {
       if (storedRole) {
         setUserRole(storedRole);
       }
-      console.log(reviews);
+      //console.log(reviews);
     }
   }, [id, currentPage]);
 
   const handleReviewAdded = (updatedReviews) => {
     setReviews(updatedReviews);
   };
+
+  const [bookReviewId, setBookReviewId] = useState(null);
+  const handleBookReviewId = (reviewId) => {
+    setBookReviewId(reviewId);
+  };
+
+  function handleDeleteAction() {
+    deleteBookReview(id, bookReviewId)
+      .then((response) => {
+        console.log("dddd", response);
+        if (response.status === 200) {
+          console.log("Comment deleted");
+          showToast("Comment deleted", "success");
+          listAllBookReviews(id, currentPage, pageSize);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <div className="container mx-auto w-screen">
@@ -165,7 +191,13 @@ function BookDetailPage() {
               <div className="w-full flex flex-wrap justify-center gap-8 mt-20">
                 {paginatedReviews.length > 0 ? (
                   paginatedReviews.map((review, i) => (
-                    <Comments key={i} logoImage={LogoImage} review={review} />
+                    <Comments
+                      key={i}
+                      logoImage={LogoImage}
+                      review={review}
+                      deleteAction={handleDeleteAction}
+                      setBookReviewId={handleBookReviewId}
+                    />
                   ))
                 ) : (
                   <p>No reviews yet</p>

@@ -12,7 +12,7 @@ const InputTag = ({ id, name, value, onChange, text, error, type }) => {
       value={value}
       onChange={onChange}
       placeholder={text}
-      maxLength={20}
+      maxLength={50}
     />
   );
 };

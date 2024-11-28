@@ -83,10 +83,15 @@ public class BookReviewServiceImpl implements BookReviewService {
 
     @Override
     public void deleteBookReview(String bookReviewId) {
-        BookReview bookReview = bookReviewRepository.findById(bookReviewId)
-                .orElseThrow(() -> new RuntimeException("Book Review not found with id " + bookReviewId));
-        bookReviewRepository.deleteById(bookReviewId);
+        Optional<BookReview> bookReview = bookReviewRepository.findById(bookReviewId);
+        BookReview bookReviewObj = bookReview.get();
 
+        logger.info("the provided book review id is : {}", bookReview);
+
+        if (bookReview.isPresent()) {
+            bookReviewRepository.deleteById(bookReviewId);
+
+        }
     }
 
     @Override

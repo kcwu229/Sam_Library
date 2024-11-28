@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 public class BookReviewDto {
+
+    @NotBlank(message = "id is required")
     private String id;
 
     private String bookId;
@@ -24,6 +26,7 @@ public class BookReviewDto {
 
     private String review;
 
+    @NotBlank(message = "userId is required")
     private String userId;
 
     private int rating;

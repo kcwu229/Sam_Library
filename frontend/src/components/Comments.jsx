@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 
 function Comments({ logoImage, review }) {
   //const formattedDate = new Date(date).toLocaleDateString();
+  console.log(review);
 
   return (
     <div className="w-full md:w-10/12 lg:w-4/12 xl:w-3/12 bg-white shadow-xl rounded-lg text-gray-900 p-6 relative gap-8 mt-8">
@@ -15,9 +16,11 @@ function Comments({ logoImage, review }) {
         />
       </div>
       <div className="text-center mt-8">
-        <h2 className="font-bold text-xl text-black">
-          {review.firstName} {review.lastName}
-        </h2>
+        {review.firstName && review.lastName && (
+          <h2 className="font-bold text-xl text-black">
+            {review.firstName} {review.lastName}
+          </h2>
+        )}
 
         <div className="text-center mt-4 text-sm text-slate-400">
           {review.bookReviewDto.createTimestamp}

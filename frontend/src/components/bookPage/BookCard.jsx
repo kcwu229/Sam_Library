@@ -2,6 +2,7 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 import ConfirmDialog from "../ConfirmDialog";
 import { useState } from "react";
+import { useToast } from "../Context/ToastMessageContext";
 
 const BookCard = ({
   book,
@@ -10,10 +11,12 @@ const BookCard = ({
   editAction,
   deleteAction,
 }) => {
+  const { showToast } = useToast();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     setShowConfirmDialog(true);
+    showToast("The book is deleted", "success");
   };
 
   const handleCancelDelete = () => {
@@ -87,7 +90,7 @@ const BookCard = ({
               {userRole === "ADMIN" && (
                 <div
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
-                font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     editAction(book.id);
@@ -100,7 +103,7 @@ const BookCard = ({
                 <div
                   className="text-white bg-red-600 hover:bg-red-700 focus:ring-4
                   focus:outline-none focus:ring-blue-300 font-medium rounded-lg
-                  text-sm px-5 py-2.5 text-center"
+                  text-sm px-5 py-2.5 text-center cursor-pointer"
                   onClick={handleDeleteClick}
                 >
                   Delete

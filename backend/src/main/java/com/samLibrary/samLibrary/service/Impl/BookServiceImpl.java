@@ -97,46 +97,36 @@ public class BookServiceImpl implements BookService {
         logger.info("bookId is :" + bookId);
         logger.info("filename is :" + fileName);
 
+        // new handling for image that not from external api
         try {
-            // Get the original file size
-            long originalFileSize = file.getSize();
-            logger.info("Original file size: " + originalFileSize + " bytes");
-
-            // Copy the file directly
+            if (!fileName.startsWith("http")) {
             Path destinationPath = Paths.get("backend/images/books/" + fileName + ".png");
             Files.copy(file.getInputStream(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            logger.info("File uploaded successfully");
-
-            // Verify the copied file size
-            long copiedFileSize = Files.size(destinationPath);
-            logger.info("Copied file size: " + copiedFileSize + " bytes");
-
-            if (originalFileSize != copiedFileSize) {
-                logger.warn("File size mismatch: original (" + originalFileSize + " bytes) vs copied (" + copiedFileSize + " bytes)");
+            }
+            else {
+                fileName = bookToBeUpdated.getImage();
+                Path destinationPath = Paths.get("backend/images/books/" + fileName + ".png");
+                Files.copy(file.getInputStream(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             logger.error("Error uploading and copying file", e);
         }
 
-
         book.setTitle(bookToBeUpdated.getTitle());
-
         book.setAuthor(bookToBeUpdated.getAuthor());
-
         book.setPublishedDate(bookToBeUpdated.getPublishedDate());
-
         book.setPublisher(bookToBeUpdated.getPublisher());
 
-        book.setImage(fileName);
-
+        if (!fileName.startsWith("http")) {
+            book.setImage(fileName);
+        }
+        else {
+            book.setImage(bookToBeUpdated.getImage());
+        }
         book.setCategory(bookToBeUpdated.getCategory());
-
         book.setIsbn(bookToBeUpdated.getIsbn());
-
         book.setCatchPhrase(bookToBeUpdated.getCatchPhrase());
-
         book.setBookDescription(bookToBeUpdated.getBookDescription());
-
         Book savedBook = bookRepository.save(book);
         // Convert the saved Book entity back to a BookDto
         return bookMapper.toDto(savedBook);

@@ -64,7 +64,7 @@ function BookPage() {
   async function fetchBooks(page, pageSize) {
     const response = await listBooks(page, pageSize);
     setBooks(response.data);
-    console.log(response.data);
+    //console.log(response.data);
     setOriginalBooks(response.data);
     setLoading(false);
   }
@@ -129,6 +129,7 @@ function BookPage() {
   return (
     <div className="w-full min-h-screen relative">
       <SearchBar
+        id="searchBar"
         buttonText="Book"
         onClickAction={createBook}
         logo={<IoLibrarySharp className="text-4xl" />}
@@ -137,15 +138,15 @@ function BookPage() {
         setLoading={setLoading}
       />
 
-      <div className="flex items-center justify-center mt-14">
+      <div className="flex flex-col items-center justify-center mt-14">
         <FilterButtons
-          className="flex justify-center"
+          className="md:flex md:justify-center hidden"
           filterButtons={categoryGroup}
           removeFilter={removeFilter}
           removeAllFilter={removeAllFilter}
         />
         {searchField != "" && searchText != "" && (
-          <h2 className="text-3xl font-bold text-center mt-14">
+          <h2 className="text-4xl font-bold text-center mt-14">
             Result for {searchField} field : {searchText}
           </h2>
         )}
@@ -180,22 +181,25 @@ function BookPage() {
             </div>
           )}
         </div>
-        <div className="w-full md:w-9/12 flex flex-col space-y-4 items-center justify-center">
+        <div className="w-full md:w-9/12 flex flex-col space-y-4">
           <div id="resultList">
             <div className="flex justify-between text-xl tracking-wider mt-4">
-              {books.length > 0
-                ? books.length.toLocaleString() + " results found "
-                : "No results found"}
-
+              <div className="flex justify-start"></div>
+              <h3 className="flex justify-center text-2xl font-semibold tracking-wide">
+                {books.length > 0
+                  ? books.length.toLocaleString() + " results found "
+                  : "No results found"}
+              </h3>
               <SortFilter
                 onSortChange={handleSortChange}
                 currentSort={sortCriteria}
-                className="right-0"
+                className="right-0 flex justify-end"
               />
+              <></>
             </div>
           </div>
           <br />
-          <div className="flex flex-wrap justify-center items-center gap-5 mt-4">
+          <div className="flex flex-wrap justify-center items-center gap-5 mt-4 w-full">
             {loading && <LoadingSpinner />}
             {paginatedBooks.map((book) => {
               return (

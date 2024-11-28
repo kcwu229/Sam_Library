@@ -7,16 +7,19 @@ import CreateFormErrorTag from "../form/CreateFormErrorTag";
 import { useNavigate, useParams } from "react-router-dom";
 import { getBook } from "../../services/BookServices";
 import FileInput from "../form/FileInput";
-import Cookies from "js-cookie";
+import { useToast } from "../Context/ToastMessageContext";
 import { createBook, updateBook } from "../../services/BookServices";
 
 const CreateOrUpdateBookPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [book, setBook] = useState({
     title: "",
     author: "",
     publishedDate: "",
+    publisher: "",
+    category: "",
     isbn: "",
     catchPhrase: "",
     bookDescription: "",
@@ -31,58 +34,55 @@ const CreateOrUpdateBookPage = () => {
     bookDescription: "",
     file: "",
   });
-
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
+  // Fetch image from external API
+  async function fetchImage(url, bookId) {
+    const response = await fetch(
+      `http://localhost:8080/proxy?url=${encodeURIComponent(url)}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    //console.log("Response: ", response);
+    // turn the response into a blob (binary data)
+    const blob = await response.blob();
+    const file = new File([blob], bookId + ".jpg", { type: blob.type });
+    console.log(`it return ${file.name}`);
+    return file;
+  }
+
   useEffect(() => {
-    console.log("token: ", Cookies.get("token"));
+    // console.log("token: ", Cookies.get("token"));
     if (id) {
       getBook(id)
-        .then((response) => {
+        .then(async (response) => {
           setBook(response.data);
           if (response.data.image) {
-            let image;
+            let imageUrl;
             if (!response.data.image.startsWith("http")) {
-              //console.log("Book is not start with http", response.data);
-              image = `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`;
+              imageUrl = `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`;
             } else {
-              image = response.data.image;
+              imageUrl = response.data.image;
             }
-            //const image = `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`;
-            setImagePreviewUrl(image);
-            fetch(image, {
-              headers: {
-                Authorization: `Bearer ${Cookies.get("token")}`, // Include the token in the request headers
-              },
-            })
-              .then((res) => {
-                if (!res.ok) {
-                  throw new Error(`HTTP error! status: ${res.status}`);
-                }
-                return res.blob();
-              })
-              .then((blob) => {
-                if (blob.size > 0) {
-                  const file = new File([blob], response.data.image, {
-                    type: blob.type,
-                  });
-                  setFile(file);
-                  console.log("File: ", file);
-                } else {
-                  console.error(
-                    "Failed to fetch the image blob. Blob size is 0."
-                  );
-                }
-              })
-              .catch((error) =>
-                console.error("Error fetching the image blob:", error)
-              );
+            try {
+              const imageFile = await fetchImage(imageUrl, id);
+              //console.log("Image file:", imageFile);
+              setFile(imageFile);
+              setImagePreviewUrl(URL.createObjectURL(imageFile));
+            } catch (error) {
+              console.error("Error fetching image:", error);
+            }
           }
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error("Error fetching book data:", error));
     }
   }, [id]);
+
+  useEffect(() => {
+    console.log("Updated Book: ", book);
+  }, [book]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -113,25 +113,38 @@ const CreateOrUpdateBookPage = () => {
       }
     }
 
-    setBook({ ...book, [name]: value });
+    setBook((prevBook) => ({
+      ...prevBook,
+      [name]: value,
+    }));
   };
 
   const handleFileChange = (fileList) => {
-    const file = fileList[0];
-    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
-      if (file.size > 1048576) {
+    const selectedFile = fileList[0];
+    console.log("It return the file: ", selectedFile);
+    if (
+      selectedFile &&
+      (selectedFile.type === "image/jpeg" || selectedFile.type === "image/png")
+    ) {
+      console.log("step 1");
+      if (selectedFile.size > 1048576) {
         // 1 MB = 1048576 bytes
         alert("File size cannot be greater than 1 MB.");
         return;
       }
-      setFile(file);
-      setBook({ ...book, image: file.name }); // Update image with the image name
-
+      setFile(selectedFile);
+      console.log("step 2");
+      setBook((prevBook) => ({
+        ...prevBook,
+        image: selectedFile.name,
+      })); // Update image with the image name// Update image with the image name
+      console.log("step 3 : new book ", selectedFile.name);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreviewUrl(reader.result);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
+      console.log("step 4");
     } else {
       alert("Please upload a JPG or PNG file.");
     }
@@ -139,7 +152,6 @@ const CreateOrUpdateBookPage = () => {
 
   function validateForm() {
     let valid = true;
-
     const errorsCopy = { ...errors };
 
     if (book.title.trim()) {
@@ -176,8 +188,7 @@ const CreateOrUpdateBookPage = () => {
 
   const saveOrUpdateBook = async (e) => {
     e.preventDefault();
-
-    console.log("Book object:", book);
+    console.log("Book object: yoyoyo", book);
 
     if (validateForm()) {
       // Create a new FormData object
@@ -191,29 +202,63 @@ const CreateOrUpdateBookPage = () => {
         console.log("File: before submit ??", file);
       }
 
-      // Debugging: Log the book object to verify the fields
-      console.log("Book object:", book);
+      // Debugging: Log the formData contents
+      for (let pair of formData.entries()) {
+        if (pair[1] instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            console.log(`${pair[0]}: ${reader.result}`);
+            if (pair[0] === "file") {
+              setImagePreviewUrl(reader.result); // Set the image preview URL
+            }
+          };
+          reader.readAsDataURL(pair[1]); // Read as Data URL to verify the file contents
+        } else {
+          console.log(`${pair[0]}: ${pair[1]}`);
+        }
+      }
 
       try {
         if (id) {
           // Update existing book
-          console.log("File: after submit ??", file);
+          console.log("i want to check", formData);
           const response = await updateBook(id, formData);
           console.log("Book updated successfully:", response.data);
+          showToast("Successfully update on book!", "success");
         } else {
           // Create a new book
           const response = await createBook(formData);
           console.log("Book created successfully:", response.data);
+          showToast("Successfully create a book !", "success");
         }
-        navigate("/books");
+        navigate("/books#searchBar");
       } catch (error) {
         console.error("Error saving book:", error);
+        showToast("Fail to create / update book", "error");
       }
     }
   };
 
   return (
-    <form className="w-full max-w-lg pt-40" onSubmit={saveOrUpdateBook}>
+    <form className="w-10/12 md:w-7/12 pt-40" onSubmit={saveOrUpdateBook}>
+      <div className="flex flex-row mx-3 mb-6 items-center">
+        <div className="w-full px-3">
+          <LabelsTag for="image" text="Cover Image" required="*" />
+          <FileInput
+            value={file ? [file] : []}
+            onChange={(e) => handleFileChange(e)}
+            error={errors.file}
+          />
+          {errors.file && <CreateFormErrorTag error={errors.file} />}
+          {imagePreviewUrl && (
+            <div className="mt-4">
+              <img src={imagePreviewUrl} alt="Image Preview" />
+              <p className="text-gray-600 text-xs italic">Current Image</p>
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
           <LabelsTag for="title" text="Title" required="*" />
@@ -333,28 +378,6 @@ const CreateOrUpdateBookPage = () => {
           <p className="text-gray-600 text-xs italic">
             Not more than 2000 characters
           </p>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <LabelsTag for="image" text="Cover Image" required="*" />
-          <FileInput
-            value={file ? [file] : []}
-            onChange={handleFileChange}
-            error={errors.file}
-          />
-          {errors.file && <CreateFormErrorTag error={errors.file} />}
-          {imagePreviewUrl && (
-            <div className="mt-4">
-              <img
-                src={imagePreviewUrl}
-                alt="Image Preview"
-                className="w-1/3 mb-4"
-              />
-              <p className="text-gray-600 text-xs italic">Current Image</p>
-            </div>
-          )}
         </div>
       </div>
 

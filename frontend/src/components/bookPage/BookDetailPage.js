@@ -25,7 +25,6 @@ function BookDetailPage() {
   const paginatedReviews = reviews.slice(startIndex, startIndex + pageSize);
   const totalPages = Math.ceil(reviews.length / pageSize);
   const navigate = useNavigate();
-  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -33,27 +32,17 @@ function BookDetailPage() {
       getBook(id)
         .then((response) => {
           setBook(response.data);
-          if (response.data.image && response.data.image.startsWith("http")) {
-            setImageUrl(
-              `/proxy?url=${encodeURIComponent(response.data.image)}`
-            );
-          } else {
-            setImageUrl(
-              `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`
-            );
-          }
+          console.log("Book detail obj", response.data);
         })
-        .catch((error) => {
-          console.error("Error fetching book:", error);
-        });
+        .catch((error) => console.error(error));
 
-      // get book reviews
+      // get all comments on this book
       listAllBookReviews(id, currentPage, pageSize)
         .then((response) => {
           setReviews(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching reviews:", error);
+          console.error(error);
         });
 
       const storedRole = localStorage.getItem("userRole");
@@ -69,7 +58,7 @@ function BookDetailPage() {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto w-screen">
       <div className="flex flex-col min-h-screen">
         <div className="flex-grow container mx-auto px-4 py-8 w-full md:w-11/12 lg:w-10/12">
           <div className="w-full md:pt-10">
@@ -97,7 +86,11 @@ function BookDetailPage() {
                     loading="lazy"
                     className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
                     // to-do add handling for missing image && if image is on server or local
-                    src={imageUrl}
+                    src={
+                      book.image.startsWith("http")
+                        ? book.image
+                        : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
+                    }
                     //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"
                   />
@@ -129,7 +122,10 @@ function BookDetailPage() {
                 {/* BlockQuote */}
                 {book && book.catchPhrase && (
                   <div className="mt-10 md:mt-0">
-                    <BlockQuote text={book && book.catchPhrase} />
+                    <BlockQuote
+                      text={book && book.catchPhrase}
+                      className="flex"
+                    />
                   </div>
                 )}
 

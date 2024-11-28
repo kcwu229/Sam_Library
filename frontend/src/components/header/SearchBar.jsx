@@ -31,6 +31,13 @@ function SearchBar({
     }, 200); // Adjust the delay as needed
   };
 
+  const handleKeyPress = (e, callback) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
   const handleTagSelect = (text, value) => {
     setSelectedTag(text);
     setSearchBy(value);
@@ -113,6 +120,9 @@ function SearchBar({
             placeholder="Enter book name"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onKeyUp={(e) => {
+              handleKeyPress(e, handleSearch);
+            }}
           />
           <button
             id="searchButton"

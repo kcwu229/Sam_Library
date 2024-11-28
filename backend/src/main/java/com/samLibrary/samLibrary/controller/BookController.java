@@ -77,7 +77,7 @@ public class BookController {
     public ResponseEntity<BookDto> updateBook(
             @RequestPart("book") BookDto updatedBook,
             @PathVariable("id") String bookId,
-            @RequestPart("file") @Valid MultipartFile file) {
+            @RequestPart("file") MultipartFile file) {
         BookDto bookDto = bookService.updateBook(updatedBook, bookId, file);
         return ResponseEntity.ok(bookDto);
     }

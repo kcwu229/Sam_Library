@@ -1,370 +1,293 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
-import TextAreaTag from "./form/TextAreaTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUser } from "../services/UserSevices";
-import FileInput from "./form/FileInput";
-import { useUser } from "./Context/UserContext";
+import { getUser, updateUser } from "../services/UserSevices";
+import { useToast } from "./Context/ToastMessageContext";
+import userIcon1 from "../assets/images/userIcon1.jpg";
+import userIcon2 from "../assets/images/userIcon2.jpg";
+import userIcon3 from "../assets/images/userIcon3.jpg";
+import userIcon4 from "../assets/images/userIcon4.jpg";
 
 const UserProfile = () => {
-  const { id } = useParams();
-  const { user } = useUser();
-  const userId = user;
+  const params = useParams();
+  const userId = params.id;
   const navigate = useNavigate();
-  const [book, setBook] = useState({
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [icon, setIcon] = useState(0);
+  const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     password: "",
-    imageName: "", // This will store the image name
+    username: "",
+    image: "",
+    email: "", // This will store the image name
   });
 
   const [errors, setErrors] = useState({
     firstName: "",
     lastName: "",
+    username: "",
     password: "",
+    confirmPassword: "",
     file: "",
+    email: "",
   });
 
   const [file, setFile] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (userId) {
-      console.log(userId);
+      console.log(`Fetching user with id: ${userId}`);
       getUser(userId)
         .then((response) => {
-          console.log(response.data);
-          //setBook(response.data);
-          if (response.data.imageName) {
-            const imageUrl = `${process.env.REACT_APP_BASE_URL}/books/${response.data.imageName}.png`;
-            setImagePreviewUrl(imageUrl);
-            fetch(imageUrl, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
-              },
-            })
-              .then((res) => {
-                if (!res.ok) {
-                  throw new Error(`HTTP error! status: ${res.status}`);
-                }
-                return res.blob();
-              })
-              .then((blob) => {
-                if (blob.size > 0) {
-                  const file = new File([blob], response.data.imageName, {
-                    type: blob.type,
-                  });
-                  setFile(file);
-                  console.log("File: ", file);
-                } else {
-                  console.error(
-                    "Failed to fetch the image blob. Blob size is 0."
-                  );
-                }
-              })
-              .catch((error) =>
-                console.error("Error fetching the image blob:", error)
-              );
-          }
+          console.log("User details fetched successfully", response.data);
+          setUser(response.data);
+          setIcon(parseInt(response.data.image));
+          setUser({ ...response.data, password: "" });
+          setConfirmPassword("");
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.log("Error while fetching user details", error);
+        });
     }
-  }, [user]);
+  }, [userId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "bookDescription") {
-      const wordCount = value.trim().split(/\s+/).length;
-      if (wordCount > 2000) {
-        setErrors({
-          ...errors,
-          bookDescription: "bookDescription cannot exceed 2000 characters",
-        });
-        return;
-      } else {
-        setErrors({ ...errors, bookDescription: "" });
-      }
+    if (name === "confirmPassword") {
+      setConfirmPassword(value);
     }
-
-    if (name === "catchPhrase") {
-      const wordCount = value.trim().split(/\s+/).length;
-      if (wordCount > 2000) {
-        setErrors({
-          ...errors,
-          catchPhrase: "CatchPhrase cannot exceed 2000 characters",
-        });
-        return;
-      } else {
-        setErrors({ ...errors, catchPhrase: "" });
-      }
-    }
-
-    setBook({ ...book, [name]: value });
-  };
-
-  const handleFileChange = (fileList) => {
-    const file = fileList[0];
-    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
-      if (file.size > 1048576) {
-        // 1 MB = 1048576 bytes
-        alert("File size cannot be greater than 1 MB.");
-        return;
-      }
-      setFile(file);
-      setBook({ ...book, imageName: file.name }); // Update imageName with the image name
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Please upload a JPG or PNG file.");
-    }
+    setUser({ ...user, [name]: value });
   };
 
   function validateForm() {
     let valid = true;
-
     const errorsCopy = { ...errors };
 
-    if (book.title.trim()) {
-      errorsCopy.title = "";
+    if (user.username.trim()) {
+      errorsCopy.username = "";
     } else {
       valid = false;
-      errorsCopy.title = "Title is required";
+      errorsCopy.username = "username is required";
     }
 
-    if (book.author.trim()) {
-      errorsCopy.author = "";
+    if (user.firstName.trim()) {
+      errorsCopy.firstName = "";
     } else {
       valid = false;
-      errorsCopy.author = "Author is required";
+      errorsCopy.firstName = "firstname is required";
     }
 
-    if (book.publishedYear && book.publishedYear.toString().trim()) {
-      const publishedYear = Number(book.publishedYear);
-      if (!Number.isInteger(publishedYear)) {
+    if (user.lastName.trim()) {
+      errorsCopy.lastName = "";
+    } else {
+      valid = false;
+      errorsCopy.lastName = "lastname is required";
+    }
+
+    if (user.email.trim()) {
+      errorsCopy.eamil = "";
+    } else {
+      valid = false;
+      errorsCopy.email = "email is required";
+    }
+
+    if (user.password.trim() && !confirmPassword.trim()) {
+      valid = false;
+      errorsCopy.confirmPassword = "Confirm password is required";
+    } else if (!user.password.trim() && confirmPassword.trim()) {
+      valid = false;
+      errorsCopy.password = "Password is required";
+    } else if (user.password.trim() && confirmPassword.trim()) {
+      if (user.password !== user.confirmPassword) {
         valid = false;
-        errorsCopy.publishedYear = "Published Year must be an integer";
-      } else if (
-        publishedYear < 0 ||
-        publishedYear > new Date().getFullYear()
-      ) {
-        valid = false;
-        errorsCopy.publishedYear = `Publication Year should be between 0 and ${new Date().getFullYear()}`;
+        errorsCopy.password = "Passwords do not match";
+        errorsCopy.confirmPassword = "Passwords do not match";
       } else {
-        errorsCopy.publishedYear = "";
+        errorsCopy.password = "";
+        errorsCopy.confirmPassword = "";
       }
-    } else {
-      valid = false;
-      errorsCopy.publishedYear = "Publication Year is required!";
-    }
-
-    if (book.catchPhrase.trim()) {
-      errorsCopy.catchPhrase = "";
-    } else {
-      valid = false;
-      errorsCopy.catchPhrase = "CatchPhrase is required";
-    }
-
-    if (book.bookDescription.trim()) {
-      errorsCopy.bookDescription = "";
-    } else {
-      valid = false;
-      errorsCopy.bookDescription = "bookDescription is required";
-    }
-
-    if (!id && !file) {
-      valid = false;
-      errorsCopy.file = "Cover image is required";
-    } else {
-      errorsCopy.file = "";
     }
 
     setErrors(errorsCopy);
     return valid;
   }
 
-  const saveOrUpdateBook = async (e) => {
+  const saveOrUpdateuser = async (e) => {
     e.preventDefault();
 
-    console.log("Book object:", book);
+    console.log("user object:", user);
 
     if (validateForm()) {
-      // Create a new FormData object
       const formData = new FormData();
-      formData.append(
-        "book",
-        new Blob([JSON.stringify(book)], { type: "application/json" })
-      );
-      if (file) {
-        formData.append("file", file);
-        console.log("File: before submit ??", file);
-      }
+      console.log("user object:", user);
 
-      // Debugging: Log the book object to verify the fields
-      console.log("Book object:", book);
-
-      try {
-        const headers = {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the request headers
-        };
-
-        if (id) {
-          // Update existing book
-          console.log("File: after submit ??", file);
-          const response = await axios.put(`/books/${id}`, formData, {
-            headers,
-          });
-          console.log("Book updated successfully:", response.data);
-        } else {
-          // Create a new book
-          const response = await axios.post("/books", formData, {
-            headers,
-          });
-          console.log("Book created successfully:", response.data);
-        }
-        navigate("/books");
-      } catch (error) {
-        console.error("Error saving book:", error);
+      // Debugging: Log the user object to verify the fields
+      console.log("user object:", user);
+      const response = await updateUser(userId, user);
+      console.log("responseddd", response);
+      if (response.status === 200 || response.status === 201) {
+        console.log("User created successfully", response.data);
+        showToast("Successfully update user profile !", "success");
+        navigate("/");
       }
     }
   };
 
   return (
-    <form className="w-full max-w-lg pt-40" onSubmit={saveOrUpdateBook}>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
-          <LabelsTag for="title" text="Title" required="*" />
-          <InputTag
-            id="title"
-            name="title"
-            value={book.title}
-            onChange={handleInputChange}
-            text="Title"
-            error={errors.title}
-          />
-          {errors.title && <CreateFormErrorTag error={errors.title} />}
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <LabelsTag for="author" text="Author" required="*" />
-          <InputTag
-            id="author"
-            name="author"
-            value={book.author}
-            onChange={handleInputChange}
-            text="Author"
-            error={errors.author}
-          />
-          {errors.author && <CreateFormErrorTag error={errors.author} />}
-        </div>
-      </div>
-
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
-          <LabelsTag for="publishedYear" text="Publication Year" required="*" />
-          <InputTag
-            id="publishedYear"
-            name="publishedYear"
-            value={book.publishedYear}
-            onChange={handleInputChange}
-            error={errors.publishedYear}
-            text="Publication Year"
-          />
-          {errors.publishedYear && (
-            <CreateFormErrorTag error={errors.publishedYear} />
-          )}
-        </div>
-        <div className="w-full md:w-1/2 px-3 relative">
-          <LabelsTag for="isbn" text="isbn" />
-          <InputTag
-            id="isbn"
-            name="isbn"
-            value={book.isbn}
-            onChange={handleInputChange}
-            text="isbn"
-          />
-        </div>
-      </div>
-
+    <form className="w-6/12" onSubmit={saveOrUpdateuser}>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3 relative">
-          <LabelsTag for="catchPhrase" text="CatchPhrase" required="*" />
-          <TextAreaTag
-            id="catchPhrase"
-            name="catchPhrase"
-            text="CatchPhrase"
-            onChange={handleInputChange}
-            value={book.catchPhrase}
-            error={errors.catchPhrase}
-          />
-          {errors.catchPhrase && (
-            <CreateFormErrorTag error={errors.catchPhrase} />
-          )}
-          <p className="mt-4 text-gray-600 text-xs italic">
-            Not more than 2000 characters
+          <LabelsTag for="userIcon" text="userIcon" />
+          <div className="flex items-center gap-6 flex-col md:flex-row">
+            {[userIcon1, userIcon2, userIcon3, userIcon4].map(
+              (iconSrc, index) => (
+                <label key={index}>
+                  <p>{iconSrc}</p>
+                  <input
+                    type="radio"
+                    name="image"
+                    onClick={() => {
+                      setIcon(index);
+                      setUser({ ...user, image: iconSrc });
+                    }}
+                    value={index}
+                    className="hidden"
+                  />
+                  <img
+                    src={iconSrc}
+                    className={`rounded-full cursor-pointer ${
+                      icon === index
+                        ? "border-4 border-red-400 md:w-48 w-32"
+                        : "w-24 md:w-40"
+                    }`}
+                    alt="star"
+                  />
+                </label>
+              )
+            )}
+          </div>
+          <br />
+          <p className="font-light text-sm">
+            Choose one of the icon as your user icon
           </p>
+          {errors.userIcon && <CreateFormErrorTag error={errors.userIcon} />}
         </div>
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3 relative">
-          <LabelsTag
-            for="bookDescription"
-            text="bookDescription"
-            required="*"
-          />
-          <TextAreaTag
-            id="bookDescription"
-            name="bookDescription"
-            text="bookDescription"
-            onChange={handleInputChange}
-            value={book.bookDescription}
-            error={errors.bookDescription}
-          />
-          {errors.bookDescription && (
-            <CreateFormErrorTag error={errors.bookDescription} />
-          )}
-          <p className="text-gray-600 text-xs italic">
-            Not more than 2000 characters
-          </p>
-        </div>
+        {user && (
+          <div className="w-full px-3 relative">
+            <LabelsTag for="username" text="Username" required="*" />
+            <InputTag
+              id="username"
+              name="username"
+              text="username"
+              onChange={handleInputChange}
+              value={user.username}
+              error={errors.username}
+            />
+            {errors.username && <CreateFormErrorTag error={errors.username} />}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <LabelsTag for="imageName" text="Cover Image" required="*" />
-          <FileInput
-            value={file ? [file] : []}
-            onChange={handleFileChange}
-            error={errors.file}
-          />
-          {errors.file && <CreateFormErrorTag error={errors.file} />}
-          {imagePreviewUrl && (
-            <div className="mt-4">
-              <img
-                src={imagePreviewUrl}
-                alt="Image Preview"
-                className="w-1/3 mb-4"
-              />
-              <p className="text-gray-600 text-xs italic">Current Image</p>
-            </div>
-          )}
-        </div>
+        {user && (
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
+            <LabelsTag for="firstName" text="First Name" required="*" />
+            <InputTag
+              id="firstName"
+              name="firstName"
+              value={user.firstName}
+              onChange={handleInputChange}
+              text="firstName"
+              error={errors.firstName}
+            />
+            {errors.firstName && (
+              <CreateFormErrorTag error={errors.firstName} />
+            )}
+          </div>
+        )}
+        {user && (
+          <div className="w-full md:w-1/2 px-3 md:mb-0 relative">
+            <LabelsTag for="lastName" text="Last name" required="*" />
+            <InputTag
+              id="lastName"
+              name="lastName"
+              text="Last name"
+              onChange={handleInputChange}
+              value={user.lastName}
+              error={errors.lastName}
+            />
+            {errors.lastName && <CreateFormErrorTag error={errors.lastName} />}
+          </div>
+        )}
       </div>
+
+      {user && (
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3 relative">
+            <LabelsTag for="email" text="email" />
+            <InputTag
+              id="email"
+              name="email"
+              text="email"
+              onChange={handleInputChange}
+              value={user.email}
+              error={errors.email}
+            />
+            {errors.email && <CreateFormErrorTag error={errors.email} />}
+          </div>
+        </div>
+      )}
+
+      {user && (
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3 relative">
+            <LabelsTag for="password" text="Change password" />
+            <InputTag
+              id="password"
+              name="password"
+              text="Enter the new password"
+              onChange={handleInputChange}
+              error={errors.password}
+              type="password"
+            />
+            {errors.password && <CreateFormErrorTag error={errors.password} />}
+          </div>
+        </div>
+      )}
+
+      {user && (
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3 relative">
+            <LabelsTag for="confirmPassword" text="Confirm password" />
+            <InputTag
+              id="confirmPassword"
+              name="confirmPassword"
+              text="Re-enter the new password"
+              type="password"
+              onChange={handleInputChange}
+              value={confirmPassword}
+              error={errors.confirmPassword}
+            />
+            {errors.confirmPassword && (
+              <CreateFormErrorTag error={errors.confirmPassword} />
+            )}
+          </div>
+        </div>
+      )}
 
       <button
         className="mb-20 bg-rose-500 rounded-xl px-8 py-2 text-center text-white 
               hover:border-rose-600 hover:border items-center mr-4 relative"
         type="submit"
       >
-        {id ? "Update" : "Create"}
+        {userId ? "Update" : "Create"}
       </button>
     </form>
   );

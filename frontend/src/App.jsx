@@ -46,7 +46,7 @@ function App() {
           }
         />
         <Route
-          path="/user-profile"
+          path="/user-profile/:id"
           element={
             <div className="flex items-center justify-center min-h-screen">
               <UserProfile />

@@ -31,14 +31,12 @@ public class UserServiceImpl implements UserService {
 
     AuthenticationManager authManager;
 
-
-
     @Override
     public UserDto getUserById(String userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
-        return userMapper.toDto(user);
+        return  userMapper.toDto(user);
     }
 
     @Override
@@ -46,11 +44,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
+
         user.setUsername(userToBeUpdate.getUsername());
         user.setEmail(userToBeUpdate.getEmail());
-        user.setPassword(userToBeUpdate.getPassword());
+        String newPassword = userToBeUpdate.getPassword();
+        if (!newPassword.isEmpty()) {
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        }
         user.setFirstName(userToBeUpdate.getFirstName());
         user.setLastName(userToBeUpdate.getLastName());
+        user.setImage(userToBeUpdate.getImage());
         User savedUpdated = userRepository.save(user);
         return userMapper.toDto(savedUpdated);
     }

@@ -29,6 +29,7 @@ public class BookController {
     public ResponseEntity<BookDto> createBook(
             @RequestPart("book") @Valid BookDto bookDto,
             @RequestPart("file") @Valid MultipartFile file
+
     ) {
         BookDto savedBook = bookService.createBook(bookDto, file);
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);

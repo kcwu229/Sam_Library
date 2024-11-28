@@ -1,4 +1,4 @@
-import DefaultImage from "../../assets/images/user.png";
+import DefaultImage from "../../assets/images/userIcon1.jpg";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,6 +7,8 @@ import Cookies from "js-cookie";
 function UserSection({ userLoggedIn }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+  const username = localStorage.getItem("username");
 
   const notifyLogout = () =>
     toast.success("Success logout !", {
@@ -14,7 +16,6 @@ function UserSection({ userLoggedIn }) {
     });
 
   function handleLogout() {
-    //
     logout();
     Cookies.remove("token");
     localStorage.removeItem("userId");
@@ -24,17 +25,21 @@ function UserSection({ userLoggedIn }) {
   }
 
   function userProfile() {
-    navigate("/user-profile");
+    navigate("/user-profile/" + userId);
   }
 
   return userLoggedIn ? (
-    <div className="flex items-center">
-      <button>
-        <img src={DefaultImage} className="w-8 h-8" onClick={userProfile} />
+    <div className="flex items-center gap-4">
+      <p className="text-white">{username}</p>
+      <button onClick={userProfile}>
+        <img
+          src="/static/media/userIcon2.46533d1556a8bc0d24ec.jpg"
+          className="w-10 h-10 rounded-full"
+        />
       </button>
 
       <button
-        className="text-sam-gray px-4 py-2 rounded-2xl ml-4
+        className="text-sam-gray px-4 py-2 rounded-2xl
          bg-sam-orange"
         onClick={handleLogout}
       >

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
-import { ToastContainer, toast } from "react-toastify";
 import { authenticateUser } from "../services/AuthenticationService";
 import { useAuth } from "./Context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
@@ -81,7 +80,7 @@ function LoginPage() {
         if (response.status === 200 || response.status === 201) {
           login();
           console.log("response", response.data);
-          const userId = response.data.id;
+          const userId = response.data.userId;
           localStorage.setItem("userId", userId);
           // Set the user role in the context
           const userRole = response.data.role;

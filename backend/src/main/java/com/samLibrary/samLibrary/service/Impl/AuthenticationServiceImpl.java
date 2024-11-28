@@ -73,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(token)
                 .role(user.getRole())
-                .id(user.getId())
+                .userId(user.getId())
                 .build();
     }
 
@@ -103,7 +103,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .accessToken(token)
                 .role(user.getRole())
                 .username(user.getUsername())
-                .id(user.getId())
+                .userId(user.getId())
                 .build();
     }
 

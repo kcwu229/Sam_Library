@@ -1,7 +1,7 @@
 import axios from "axios";
 import { axiosInstance } from "../axioConfig";
 
-const REST_BOOKREVIEW_API_URL = "http://localhost:8080/api/books-reviews";
+const REST_BOOKREVIEW_API_URL = "/books-reviews";
 
 export const createBookReview = (bookId, bookReviewData, userId) => {
   return axiosInstance.post(

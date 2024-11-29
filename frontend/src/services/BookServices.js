@@ -2,7 +2,7 @@ import axios from "axios";
 import { axiosInstance, axiosFileInstance } from "../axioConfig";
 
 // api route for book Object
-const REST_BOOK_API_URL = "http://localhost:8080/api/books";
+const REST_BOOK_API_URL = "/books";
 
 // common list book function, no need auth
 export const listBooks = (page, pageSize) =>

@@ -116,7 +116,7 @@ function BookDetailPage() {
                     src={
                       book.image.startsWith("http")
                         ? book.image
-                        : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
+                        : `${process.env.REACT_APP_PROD_BACKEND_URL}/books/${book.image}.png`
                     }
                     //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"

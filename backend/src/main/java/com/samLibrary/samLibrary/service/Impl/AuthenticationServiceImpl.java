@@ -23,27 +23,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder encoder;
-
-    @Autowired
-    private TokenRepository tokenRepository;
-
-    @Autowired
-    private JWTService jwtService;
-
-    @Autowired
-    private AuthenticationManager authManager;
-
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
+    private final TokenRepository tokenRepository;
+    private final JWTService jwtService;
+    private final AuthenticationManager authManager;
 
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 

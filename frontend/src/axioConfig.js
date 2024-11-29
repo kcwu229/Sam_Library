@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 // Create an axios instance for JSON requests
 const axiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_PROD_BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,6 +11,7 @@ const axiosInstance = axios.create({
 
 // Create an axios instance for file uploads
 const axiosFileInstance = axios.create({
+  baseURL: process.env.REACT_APP_PROD_BACKEND_URL,
   headers: {
     "Content-Type": "multipart/form-data",
   },
@@ -19,10 +21,9 @@ const axiosFileInstance = axios.create({
 const refreshAccessToken = async () => {
   try {
     const refreshToken = Cookies.get("refreshToken"); // Assuming you store the refresh token as well
-    const response = await axios.post(
-      "http://localhost:8080/api/auth/refresh-token",
-      { refreshToken }
-    );
+    const response = await axios.post("/auth/refresh-token", {
+      refreshToken,
+    });
     const newAccessToken = response.data.accessToken;
 
     // Store the new access token in cookies

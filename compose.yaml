@@ -1,10 +1,20 @@
 services:
-  mysql:
-    image: 'mysql:latest'
-    environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+  backend:
+    container_name: samLibrary-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - '3306'
+      - "8080:8080"
+
+  frontend:
+    container_name: samLibrary-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      - ALLOWED_ORIGIN = http://your-deployment-url
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

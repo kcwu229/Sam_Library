@@ -1,7 +1,7 @@
 import axios from "axios";
 import { axiosInstance } from "../axioConfig";
 
-const REST_USER_API_URL = "http://localhost:8080/api/users";
+const REST_USER_API_URL = "/users";
 
 export const getUser = (userId) => {
   return axiosInstance.get(REST_USER_API_URL + "/" + userId);

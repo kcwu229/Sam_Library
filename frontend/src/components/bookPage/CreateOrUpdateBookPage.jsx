@@ -40,7 +40,9 @@ const CreateOrUpdateBookPage = () => {
   // Fetch image from external API
   async function fetchImage(url, bookId) {
     const response = await fetch(
-      `http://localhost:8080/proxy?url=${encodeURIComponent(url)}`
+      `${process.env.REACT_APP_PROD_BACKEND_URL}/proxy?url=${encodeURIComponent(
+        url
+      )}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -62,7 +64,7 @@ const CreateOrUpdateBookPage = () => {
           if (response.data.image) {
             let imageUrl;
             if (!response.data.image.startsWith("http")) {
-              imageUrl = `${process.env.REACT_APP_BASE_URL}/books/${response.data.image}.png`;
+              imageUrl = `${process.env.REACT_APP_PROD_BACKEND_URL}/books/${response.data.image}.png`;
             } else {
               imageUrl = response.data.image;
             }

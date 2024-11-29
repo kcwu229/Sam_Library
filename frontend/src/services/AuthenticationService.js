@@ -1,9 +1,10 @@
 import axios from "axios";
+import { axiosInstance } from "../axioConfig";
 
-const REST_AUTH_API_URL = "http://localhost:8080/api/auth";
+const REST_AUTH_API_URL = "/auth";
 
 export const registrateUser = (registerData) =>
-  axios.post(`${REST_AUTH_API_URL}/register`, registerData);
+  axiosInstance.post(`${REST_AUTH_API_URL}/register`, registerData);
 
 export const authenticateUser = (loginData) =>
-  axios.post(`${REST_AUTH_API_URL}/login`, loginData);
+  axiosInstance.post(`${REST_AUTH_API_URL}/login`, loginData);

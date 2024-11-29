@@ -3,6 +3,7 @@ package com.samLibrary.samLibrary.security;
 import com.samLibrary.samLibrary.config.JwtFilter;
 import com.samLibrary.samLibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,6 +29,9 @@ import java.util.List;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    @Value("${app.allowed.origin}")
+    private String allowedOrigin;
 
     // Bean to encode passwords using BCrypt hashing algorithm
     @Bean
@@ -119,7 +123,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of(allowedOrigin));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");

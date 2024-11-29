@@ -148,12 +148,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
-                var authResponse = AuthenticationResponse.builder()
+                AuthenticationResponse authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+            } else {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid refresh token");
             }
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Username not found");
         }
     }
 }

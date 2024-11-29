@@ -63,7 +63,7 @@ public class JWTServiceImpl implements JWTService {
                 .claims(claims)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
                 .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }
@@ -76,13 +76,14 @@ public class JWTServiceImpl implements JWTService {
 
     @Override
     public boolean isTokenExpired(String token) {
-        return extractExipration(token).before(new Date());
+        return extractExpiration(token).before(new Date());
     }
 
     @Override
-    public Date extractExipration(String token) {
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+
 
     @Override
     public boolean validateToken(String jwtToken, Object userDetails) {

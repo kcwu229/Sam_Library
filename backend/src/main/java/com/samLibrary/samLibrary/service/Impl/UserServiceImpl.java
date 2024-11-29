@@ -10,6 +10,7 @@ import com.samLibrary.samLibrary.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,7 +37,20 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
-        return  userMapper.toDto(user);
+
+        logger.info(user.getUsername());
+        logger.info(user.getFirstName());
+        logger.info(user.getLastName());
+        logger.info(user.getEmail());
+        logger.info(user.getImage());
+        UserDto userDto = userMapper.toDto(user);
+        logger.info(userDto.getUsername());
+        logger.info(userDto.getFirstName());
+        logger.info(userDto.getLastName());
+        logger.info(userDto.getEmail());
+        logger.info(userDto.getImage());
+
+        return userMapper.toDto(user);
     }
 
     @Override
@@ -72,7 +86,6 @@ public class UserServiceImpl implements UserService {
 
         userRepository.deleteById(userId);
     }
-
 
 
     @Override

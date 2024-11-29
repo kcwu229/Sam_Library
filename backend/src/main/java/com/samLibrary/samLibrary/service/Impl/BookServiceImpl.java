@@ -6,6 +6,7 @@ import com.samLibrary.samLibrary.mapper.BookMapper;
 import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.service.BookService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -133,8 +134,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Cacheable(value = "books")
     public List<BookDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
+        if (books == null) {
+            logger.warn("No books found");
+        } else {
+            logger.info("Found {} books", books.size());
+        }
         return books.stream()
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());

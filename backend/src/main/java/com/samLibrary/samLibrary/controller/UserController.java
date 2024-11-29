@@ -37,7 +37,6 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
-
     }
 
     @PutMapping("{id}")

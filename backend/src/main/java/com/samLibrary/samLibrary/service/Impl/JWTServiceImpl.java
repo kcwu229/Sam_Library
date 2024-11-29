@@ -2,11 +2,14 @@ package com.samLibrary.samLibrary.service.Impl;
 
 import com.samLibrary.samLibrary.service.JWTService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +22,22 @@ import java.util.function.Function;
 @Service
 @AllArgsConstructor
 public class JWTServiceImpl implements JWTService {
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private static final String SECRET_KEY = "6b0814af929f59a82fee78a16479f3323312d6b5273d55f764100cd0250a4a26";
 
     private Claims extractAllClaims(String jwtToken) {
-        return Jwts
-                .parser()
-                .verifyWith(getSignInKey())
-                .build()
-                .parseSignedClaims(jwtToken)
-                .getPayload();
+        try {
+            return Jwts.parser().verifyWith(getSignInKey()).build()
+                    .parseSignedClaims(jwtToken)
+                    .getPayload();
+        } catch (ExpiredJwtException e) {
+            logger.error("JWT token is expired", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error extracting claims from JWT token", e);
+            throw e;
+        }
     }
 
     private SecretKey getSignInKey() {
@@ -63,7 +72,7 @@ public class JWTServiceImpl implements JWTService {
                 .claims(claims)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }

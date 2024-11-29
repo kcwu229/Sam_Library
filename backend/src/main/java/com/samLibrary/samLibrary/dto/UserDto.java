@@ -2,16 +2,14 @@ package com.samLibrary.samLibrary.dto;
 
 import com.samLibrary.samLibrary.entity.Role;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@Data
 public class UserDto {
     private String id;
 

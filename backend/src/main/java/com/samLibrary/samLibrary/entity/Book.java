@@ -48,17 +48,4 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookReview> reviews;
 
-    public Book(String id, String title, String category, String author, String publishedDate, String image, String publisher, String isbn, String bookDescription, String catchPhrase) {
-        this.id = id;
-        this.title = title;
-        this.category = category;
-        this.author = author;
-        this.publishedDate = publishedDate;
-        this.image = image;
-        this.isbn = isbn;
-        this.publisher = publisher;
-        this.bookDescription = bookDescription;
-        this.catchPhrase = catchPhrase;
-    }
-
 }

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-29T14:04:39+0800",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
+    date = "2024-11-29T17:44:26+0800",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.40.0.z20241112-1021, environment: Java 17.0.13 (Eclipse Adoptium)"
 )
 @Component
 public class BookReviewMapperImpl implements BookReviewMapper {
@@ -20,14 +20,16 @@ public class BookReviewMapperImpl implements BookReviewMapper {
             return null;
         }
 
-        String id = null;
-        Book book = null;
-        String title = null;
-        String review = null;
-        int rating = 0;
-        String userId = null;
+        BookReview bookReview = new BookReview();
 
-        BookReview bookReview = new BookReview( id, book, title, review, rating, userId );
+        bookReview.setBook( bookReviewDtoToBook( bookReviewDto ) );
+        bookReview.setCreateTimestamp( bookReviewDto.getCreateTimestamp() );
+        bookReview.setEditTimestamp( bookReviewDto.getEditTimestamp() );
+        bookReview.setId( bookReviewDto.getId() );
+        bookReview.setRating( bookReviewDto.getRating() );
+        bookReview.setReview( bookReviewDto.getReview() );
+        bookReview.setTitle( bookReviewDto.getTitle() );
+        bookReview.setUserId( bookReviewDto.getUserId() );
 
         return bookReview;
     }
@@ -40,6 +42,42 @@ public class BookReviewMapperImpl implements BookReviewMapper {
 
         BookReviewDto bookReviewDto = new BookReviewDto();
 
+        bookReviewDto.setBookId( bookReviewBookId( bookReview ) );
+        bookReviewDto.setCreateTimestamp( bookReview.getCreateTimestamp() );
+        bookReviewDto.setEditTimestamp( bookReview.getEditTimestamp() );
+        bookReviewDto.setId( bookReview.getId() );
+        bookReviewDto.setRating( bookReview.getRating() );
+        bookReviewDto.setReview( bookReview.getReview() );
+        bookReviewDto.setTitle( bookReview.getTitle() );
+        bookReviewDto.setUserId( bookReview.getUserId() );
+
         return bookReviewDto;
+    }
+
+    protected Book bookReviewDtoToBook(BookReviewDto bookReviewDto) {
+        if ( bookReviewDto == null ) {
+            return null;
+        }
+
+        Book book = new Book();
+
+        book.setId( bookReviewDto.getBookId() );
+
+        return book;
+    }
+
+    private String bookReviewBookId(BookReview bookReview) {
+        if ( bookReview == null ) {
+            return null;
+        }
+        Book book = bookReview.getBook();
+        if ( book == null ) {
+            return null;
+        }
+        String id = book.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 }

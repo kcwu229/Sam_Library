@@ -29,12 +29,10 @@ public class BookReviewController {
     public ResponseEntity<BookReviewDto> createBookReview(
             @Valid @RequestBody BookReviewDto bookReviewDto,
             @PathVariable("id") String bookId,
-            @RequestParam("username") String username)
+            @RequestParam("userId") String userId)
     {
-        if (bookReviewDto.getTitle() == null || bookReviewDto.getTitle().isBlank()) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto, bookId, username);
+        logger.info("controller Creating book review for bookId: {} and userId: {}", bookId, userId);
+        BookReviewDto savedBookReview = bookReviewService.createBookReview(bookReviewDto, bookId, userId);
         return new ResponseEntity<>(savedBookReview, HttpStatus.CREATED);
     }
 
@@ -61,9 +59,11 @@ public class BookReviewController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteReview(
-            @Valid @RequestBody String bookReviewId,
-            @PathVariable("id") String bookId) {
-        bookReviewService.deleteBookReview(bookReviewId);
+            @RequestParam("bookReviewId") String bookReviewId,
+            @PathVariable("id") String bookId,
+            @RequestParam("userId") String userId
+            ){
+        bookReviewService.deleteBookReview(bookReviewId, bookId, userId);
         return ResponseEntity.ok("User deleted successfully");
     }
 

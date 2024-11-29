@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-29T14:04:39+0800",
+    date = "2024-11-29T15:57:55+0800",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
@@ -19,18 +19,18 @@ public class BookMapperImpl implements BookMapper {
             return null;
         }
 
-        String id = null;
-        String title = null;
-        String category = null;
-        String author = null;
-        String publishedDate = null;
-        String image = null;
-        String publisher = null;
-        String isbn = null;
-        String bookDescription = null;
-        String catchPhrase = null;
+        Book book = new Book();
 
-        Book book = new Book( id, title, category, author, publishedDate, image, publisher, isbn, bookDescription, catchPhrase );
+        book.setId( bookDto.getId() );
+        book.setTitle( bookDto.getTitle() );
+        book.setAuthor( bookDto.getAuthor() );
+        book.setCategory( bookDto.getCategory() );
+        book.setPublishedDate( bookDto.getPublishedDate() );
+        book.setPublisher( bookDto.getPublisher() );
+        book.setImage( bookDto.getImage() );
+        book.setIsbn( bookDto.getIsbn() );
+        book.setBookDescription( bookDto.getBookDescription() );
+        book.setCatchPhrase( bookDto.getCatchPhrase() );
 
         return book;
     }
@@ -42,6 +42,17 @@ public class BookMapperImpl implements BookMapper {
         }
 
         BookDto bookDto = new BookDto();
+
+        bookDto.setId( book.getId() );
+        bookDto.setTitle( book.getTitle() );
+        bookDto.setCategory( book.getCategory() );
+        bookDto.setAuthor( book.getAuthor() );
+        bookDto.setPublishedDate( book.getPublishedDate() );
+        bookDto.setImage( book.getImage() );
+        bookDto.setIsbn( book.getIsbn() );
+        bookDto.setBookDescription( book.getBookDescription() );
+        bookDto.setPublisher( book.getPublisher() );
+        bookDto.setCatchPhrase( book.getCatchPhrase() );
 
         return bookDto;
     }

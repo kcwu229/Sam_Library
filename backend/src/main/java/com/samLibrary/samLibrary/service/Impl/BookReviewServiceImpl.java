@@ -33,28 +33,30 @@ public class BookReviewServiceImpl implements BookReviewService {
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     @Override
-    public BookReviewDto createBookReview(BookReviewDto bookReviewDto, String bookId, String username) {
+    public BookReviewDto createBookReview(BookReviewDto bookReviewDto, String bookId, String userId) {
+        logger.info("Starting to create book review for bookId: {} and userId: {}", bookId, userId);
+
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with id " + bookReviewDto.getBookId()));
+                .orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
 
-        logger.info("THE BOOK OBJ is : {}", book);
-
-        BookReview bookReview = bookReviewMapper.toEntity(bookReviewDto);
+        BookReview bookReview = new BookReview();
         String bookReviewId = UUID.randomUUID().toString();
         bookReview.setId(bookReviewId);
         bookReview.setBook(book);
-        //bookReview.setReview(bookReviewDto.getReview());
-        //bookReview.setRating(bookReviewDto.getRating());
-        //bookReview.setTitle(bookReviewDto.getTitle());
         bookReview.setCreateTimestamp(LocalDateTime.now());
-        Optional<User> user = userRepository.findByUsername(username);
-        String userId = user.get().getId();
-        bookReview.setUserId(userId);
-        bookReview = bookReviewRepository.save(bookReview);
-        logger.info("THE BOOK OBJ is : 5555");
 
-        logger.info("THE BOOK REVIEW OBJ is : {}", bookReview);
-        return bookReviewMapper.toDto(bookReview);
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            logger.error("User not found with id {}", userId);
+            throw new RuntimeException("User not found with id " + userId);
+        }
+        bookReview.setUserId(userId);
+        bookReview.setRating(bookReviewDto.getRating());
+        bookReview.setReview(bookReviewDto.getReview());
+        bookReview.setTitle(bookReviewDto.getTitle());
+        bookReview = bookReviewRepository.save(bookReview);
+        BookReviewDto result = bookReviewMapper.toDto(bookReview);
+        return result;
     }
 
     @Override
@@ -62,7 +64,7 @@ public class BookReviewServiceImpl implements BookReviewService {
         BookReview bookReview = bookReviewRepository.findById(bookReviewId).orElseThrow(
                 () -> new RuntimeException("Book Review not found")
         );
-        return null;
+        return bookReviewMapper.toDto(bookReview);
     }
 
     @Override
@@ -82,16 +84,23 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public void deleteBookReview(String bookReviewId) {
+    public void deleteBookReview(String bookReviewId, String bookId, String userId) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
+
         Optional<BookReview> bookReview = bookReviewRepository.findById(bookReviewId);
         BookReview bookReviewObj = bookReview.get();
 
-        logger.info("the provided book review id is : {}", bookReview);
+        logger.info("User id: {}", userId);
+        logger.info("User id from book: {}", bookReviewObj.getUserId());
 
-        if (bookReview.isPresent()) {
-            bookReviewRepository.deleteById(bookReviewId);
-
+        if (!bookReviewObj.getUserId().equals(userId)) {
+            logger.error("User with id {} is not allowed to delete book review with id {}", userId, bookReviewId);
+            throw new RuntimeException("User with id " + userId + " is not allowed to delete book review with id " + bookReviewId);
         }
+
+        bookReviewRepository.deleteById(bookReviewId);
     }
 
     @Override
@@ -103,6 +112,12 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Override
     public List<BookReviewResponse> findBookReviewResponseByBookId(String bookId) {
         List<BookReview> bookReviews = bookReviewRepository.findByBookId(bookId);
+        if (bookReviews.isEmpty()) {
+            logger.warn("No book reviews found for bookId: {}", bookReviews);
+        } else {
+            logger.info("Found {} book reviews for bookId: {}", bookReviews.size(), bookReviews.get(0).getBook().getId());
+            bookReviews.forEach(review -> logger.info("BookReview: {}", review));
+        }
         List<BookReviewResponse> bookReviewResponses = bookReviews.stream().map(bookReview -> {
             BookReviewDto bookReviewDto = bookReviewMapper.toDto(bookReview);
             String userId = bookReview.getUserId();

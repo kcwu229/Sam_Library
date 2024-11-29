@@ -89,6 +89,21 @@ public class BookServiceImpl implements BookService {
 
 
     public BookDto updateBook(BookDto bookToBeUpdated, String bookId, MultipartFile file) {
+
+        // Handle image upload
+        Path path = Paths.get("backend/images/books/");
+
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+                System.out.println("Directory created: " + path.toString());
+            } catch (IOException e) {
+                System.err.println("Failed to create directory: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Directory already exists: " + path.toString());
+        }
+
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );

@@ -15,15 +15,15 @@ function BlockQuote({ text }) {
       }`}
     >
       <div className="flex justify-start">
-        <FaQuoteLeft className="text-orange-500 w-12 h-10" />
+        <FaQuoteLeft className="text-lime-700 w-12 h-10" />
       </div>
       <blockquote>
-        <p className="mt-6 text-2xl italic font-medium text-orange-400 tracking-wide">
+        <p className="mt-6 text-2xl italic font-medium text-lime-600 tracking-wide">
           <i>{text}</i>
         </p>
       </blockquote>
       <div className="flex justify-end mt-4">
-        <FaQuoteLeft className="text-orange-500 w-12 h-10 rotate-180" />
+        <FaQuoteLeft className="text-lime-700 w-12 h-10 rotate-180" />
       </div>
     </figure>
   );

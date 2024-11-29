@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 import ConfirmDialog from "../ConfirmDialog";
 import { useState } from "react";
 import { useToast } from "../Context/ToastMessageContext";
+import NotFoundImage from "../../assets/images/ImageNotFound.jpg";
 
 const BookCard = ({
   book,
@@ -35,36 +36,63 @@ const BookCard = ({
           onCancel={handleCancelDelete}
         />
       )}
-      <div key={book.id} onClick={() => viewOrEditBook(book.id)}>
-        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relative">
-          <img
-            loading="lazy"
-            className="p-8 rounded-t-lg h-80"
-            // to-do add handling for missing image && if image is on server or local
-            src={
-              book.image.startsWith("http")
-                ? book.image
-                : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
-            }
-            alt="product image"
-          />
+      <div
+        className="flex justify-center items-center"
+        key={book.id}
+        onClick={() => viewOrEditBook(book.id)}
+      >
+        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relativ items-center">
+          {book.image != null && (
+            <img
+              loading="lazy"
+              className="p-8 rounded-t-lg h-80"
+              // to-do add handling for missing image && if image is on server or local
+              src={
+                book.image.startsWith("http")
+                  ? book.image
+                  : book.image.length > 0
+                  ? `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
+                  : NotFoundImage
+              }
+              alt="product image"
+            />
+          )}
+          {book.image == null && (
+            <img
+              loading="lazy"
+              className="p-8 rounded-t-lg h-80"
+              // to-do add handling for missing image && if image is on server or local
+              src={
+                book.image.startsWith("http")
+                  ? book.image
+                  : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
+              }
+              alt="product image"
+            />
+          )}
           <div className="px-5 pb-5 text-left">
             <a href="#">
-              <h5 className="font-bold text-gray-900 tracking-wider">
-                {book.title.length >= 25
-                  ? book.title.slice(0, 25) + "..."
-                  : book.title}
-              </h5>
-              <p className="text-gray-900 font-light mt-2 tracking-wide">
-                {book.author
-                  ? book.author.length > 10
-                    ? book.author.slice(0, 10) + "..."
-                    : book.author
-                  : "Unknown Author"}
-              </p>
-              <p className="text-gray-900 font-light mt-2 tracking-wide">
-                {book.publishedDate ? book.publishedDate : "Unknown Date"}
-              </p>
+              {book.title && (
+                <h5 className="font-bold text-gray-900 tracking-wider">
+                  {book.title.length >= 25
+                    ? book.title.slice(0, 25) + "..."
+                    : book.title}
+                </h5>
+              )}
+              {book.author && (
+                <p className="text-gray-900 font-light mt-2 tracking-wide">
+                  {book.author
+                    ? book.author.length > 10
+                      ? book.author.slice(0, 10) + "..."
+                      : book.author
+                    : "Unknown Author"}
+                </p>
+              )}
+              {book.publishedDate && (
+                <p className="text-gray-900 font-light mt-2 tracking-wide">
+                  {book.publishedDate ? book.publishedDate : "Unknown Date"}
+                </p>
+              )}
             </a>
             <div className="flex items-center mt-2.5 mb-5">
               <div className="flex items-center space-x-1 rtl:space-x-reverse">

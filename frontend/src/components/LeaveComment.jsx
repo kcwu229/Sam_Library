@@ -63,9 +63,10 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
           };
 
           // call api to create book reviews
-          const username = localStorage.getItem("username");
-          const response = await createBookReview(id, reviewData, username);
-          if (response.status === 200 || response.status === 201) {
+          const userId = localStorage.getItem("userId");
+
+          const response = await createBookReview(id, reviewData, userId);
+          if (response.status === 201) {
             showToast("Review added successfully!", "success");
           } else {
             showToast("Review not added!", "error");
@@ -73,6 +74,14 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
           console.log("Book review created:", response.data);
           const updatedReviews = await listAllBookReviews(id);
           onReviewAdded(updatedReviews.data);
+          setTitle("");
+          setReview("");
+          setRating(0);
+
+          document
+            .getElementById("commentSection")
+            .scrollIntoView({ behavior: "smooth" }); // Scroll to comment section
+          //window.scrollTo({ top: 0, behavior: "smooth" });
         } else if (ratingType === "author") {
           const reviewData = {
             title,
@@ -82,7 +91,7 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
 
           // call api to create author reviews
           const response = await createAuthorReview(id, reviewData);
-          console.log("Book review created:", response.data);
+          console.log("author review created:", response.data);
           const updatedReviews = await listAllAuthorReviews(id);
           onReviewAdded(updatedReviews.data);
         }

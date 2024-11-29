@@ -42,10 +42,13 @@ function UserSection({ userLoggedIn }) {
   }
 
   useEffect(() => {
-    const response = getUser(userId);
-    response.then((res) => {
-      setUserIcon(res.data.image);
-    });
+    if (userId != null) {
+      console.log(userId);
+      const response = getUser(userId);
+      response.then((res) => {
+        setUserIcon(res.data.image);
+      });
+    }
   });
 
   return userLoggedIn ? (

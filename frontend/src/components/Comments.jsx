@@ -23,9 +23,10 @@ function Comments({ logoImage, review, deleteAction, setBookReviewId }) {
 
   return (
     <div
-      className="w-full md:w-10/12 lg:w-4/12 xl:w-3/12 
+      className={`w-full md:w-10/12 lg:w-4/12 xl:w-3/12 
     bg-white shadow-xl rounded-lg text-gray-900 p-6 relative gap-10 mt-8 
-    border-2 border-gray-200 hover:border-amber-500 hover:shadow-2xl"
+    border-2 ${userId === review.userId ? "border-blue-500" : "border-gray-200"}
+     hover:border-amber-500 hover:shadow-2xl`}
     >
       {showConfirmDialog && (
         <ConfirmDialog

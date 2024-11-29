@@ -67,35 +67,28 @@ const UserProfile = () => {
     let valid = true;
     const errorsCopy = { ...errors };
 
-    if (user.username.trim()) {
-      errorsCopy.username = "";
-    } else {
-      valid = false;
-      errorsCopy.username = "username is required";
-    }
-
-    if (user.firstName.trim()) {
+    if (user.firstName && user.firstName.trim()) {
       errorsCopy.firstName = "";
     } else {
       valid = false;
-      errorsCopy.firstName = "firstname is required";
+      errorsCopy.firstName = "first name is required";
     }
 
-    if (user.lastName.trim()) {
+    if (user.lastName && user.lastName.trim()) {
       errorsCopy.lastName = "";
     } else {
       valid = false;
-      errorsCopy.lastName = "lastname is required";
+      errorsCopy.lastName = "last name is required";
     }
 
-    if (user.email.trim()) {
-      errorsCopy.eamil = "";
+    if (user.email && user.email.trim()) {
+      errorsCopy.email = "";
     } else {
       valid = false;
       errorsCopy.email = "email is required";
     }
 
-    if (user.password.trim() && !confirmPassword.trim()) {
+    if (user.password && user.password.trim() && !confirmPassword.trim()) {
       valid = false;
       errorsCopy.confirmPassword = "Confirm password is required";
     } else if (!user.password.trim() && confirmPassword.trim()) {
@@ -185,9 +178,8 @@ const UserProfile = () => {
               id="username"
               name="username"
               text="username"
-              onChange={handleInputChange}
               value={user.username}
-              error={errors.username}
+              readOnly={true}
             />
             {errors.username && <CreateFormErrorTag error={errors.username} />}
           </div>

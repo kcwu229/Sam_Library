@@ -46,6 +46,7 @@ function BookDetailPage() {
       listAllBookReviews(id, currentPage, pageSize)
         .then((response) => {
           setReviews(response.data);
+          console.log(response.data);
         })
         .catch((error) => {
           console.error(error);
@@ -57,7 +58,7 @@ function BookDetailPage() {
       }
       //console.log(reviews);
     }
-  }, [id, currentPage]);
+  }, [id, currentPage, reviews]);
 
   const handleReviewAdded = (updatedReviews) => {
     setReviews(updatedReviews);
@@ -69,7 +70,7 @@ function BookDetailPage() {
   };
 
   function handleDeleteAction() {
-    deleteBookReview(id, bookReviewId)
+    deleteBookReview(id, userId, bookReviewId)
       .then((response) => {
         console.log("dddd", response);
         if (response.status === 200) {
@@ -188,7 +189,10 @@ function BookDetailPage() {
             </div>
             <div className="w-full flex flex-col items-center mt-20">
               <RatingSection />
-              <div className="w-full flex flex-wrap justify-center gap-8 mt-20">
+              <div
+                id="commentSection"
+                className="w-full flex flex-wrap justify-center gap-8 mt-20"
+              >
                 {paginatedReviews.length > 0 ? (
                   paginatedReviews.map((review, i) => (
                     <Comments

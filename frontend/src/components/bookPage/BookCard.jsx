@@ -17,7 +17,6 @@ const BookCard = ({
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     setShowConfirmDialog(true);
-    showToast("The book is deleted", "success");
   };
 
   const handleCancelDelete = () => {
@@ -25,6 +24,7 @@ const BookCard = ({
   };
   const handleConfirmDelete = () => {
     deleteAction(book.id);
+    showToast("The book is deleted", "success");
     setShowConfirmDialog(false);
   };
   return (
@@ -51,7 +51,7 @@ const BookCard = ({
                 book.image.startsWith("http")
                   ? book.image
                   : book.image.length > 0
-                  ? `${process.env.REACT_APP_PROD_BACKEND_URL}/books/${book.image}.png`
+                  ? `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${book.image}.jpg`
                   : NotFoundImage
               }
               alt="product image"
@@ -62,11 +62,7 @@ const BookCard = ({
               loading="lazy"
               className="p-8 rounded-t-lg h-80"
               // to-do add handling for missing image && if image is on server or local
-              src={
-                book.image.startsWith("http")
-                  ? book.image
-                  : `${process.env.REACT_APP_BASE_URL}/books/${book.image}.png`
-              }
+              src={NotFoundImage}
               alt="product image"
             />
           )}

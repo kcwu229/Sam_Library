@@ -72,7 +72,6 @@ function BookDetailPage() {
   function handleDeleteAction() {
     deleteBookReview(id, userId, bookReviewId)
       .then((response) => {
-        console.log("dddd", response);
         if (response.status === 200) {
           console.log("Comment deleted");
           showToast("Comment deleted", "success");
@@ -116,7 +115,7 @@ function BookDetailPage() {
                     src={
                       book.image.startsWith("http")
                         ? book.image
-                        : `${process.env.REACT_APP_PROD_BACKEND_URL}/books/${book.image}.png`
+                        : `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${book.image}.jpg`
                     }
                     //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"

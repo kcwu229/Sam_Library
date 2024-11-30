@@ -64,7 +64,7 @@ const CreateOrUpdateBookPage = () => {
           if (response.data.image) {
             let imageUrl;
             if (!response.data.image.startsWith("http")) {
-              imageUrl = `${process.env.REACT_APP_PROD_BACKEND_URL}/books/${response.data.image}.png`;
+              imageUrl = `${process.env.GCP_BUCKET_LOCATION}/${response.data.image}.png`;
             } else {
               imageUrl = response.data.image;
             }

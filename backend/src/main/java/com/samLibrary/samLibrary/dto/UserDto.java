@@ -5,10 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Data
 public class UserDto {
     private String id;
@@ -28,4 +24,16 @@ public class UserDto {
     private String email;
 
     private String image;
+
+    // Getters and Setters for role
+    private Role role; // Add this field
+
+    // Getters and Setters for role
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axiosInstance } from "../axioConfig";
 
 const REST_BOOKREVIEW_API_URL = "/books-reviews";
@@ -16,7 +15,7 @@ export const createBookReview = (bookId, bookReviewData, userId) => {
 };
 
 export const listAllBookReviews = (bookId, page, pageSize) =>
-  axios.get(REST_BOOKREVIEW_API_URL + "/all/" + bookId, {
+  axiosInstance.get(REST_BOOKREVIEW_API_URL + "/all/" + bookId, {
     params: {
       page,
       pageSize,

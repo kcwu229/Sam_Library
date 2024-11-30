@@ -30,7 +30,7 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    @Value("${app.allowed.origin}")
+    @Value("${allowed.origin}")
     private String allowedOrigin;
 
     // Bean to encode passwords using BCrypt hashing algorithm

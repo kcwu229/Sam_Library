@@ -157,9 +157,16 @@ public class BookServiceImpl implements BookService {
         } else {
             logger.info("Found {} books", books.size());
         }
-        return books.stream()
-                .map(bookMapper::toDto)
+
+        List<BookDto> bookDtos = books.stream()
+                .map(book -> {
+                    BookDto bookDto = bookMapper.toDto(book);
+                    logger.info("Mapped Book to BookDto: {}", bookDto);
+                    return bookDto;
+                })
                 .collect(Collectors.toList());
+
+        return bookDtos;
     }
 
     @Override

@@ -4,25 +4,47 @@ package com.samLibrary.samLibrary.mapper;
 import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.entity.Book;
 import org.mapstruct.Mapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Mapper(componentModel = "spring")
-public interface BookMapper {
-    Book toEntity(BookDto bookDto);
-    BookDto toDto(Book book);
+public class BookMapper {
 
-    Logger logger = LoggerFactory.getLogger(BookMapper.class);
+    public Book toEntity(BookDto bookDto) {
+        if (bookDto == null) {
+            return null;
+        }
 
-    default BookDto toDtoWithLogging(Book book) {
-        BookDto bookDto = toDto(book);
-        logger.info("Mapped Book entity to BookDto: {}", bookDto);
-        return bookDto;
+        Book book = new Book();
+        book.setId(bookDto.getId());
+        book.setTitle(bookDto.getTitle());
+        book.setAuthor(bookDto.getAuthor());
+        book.setPublishedDate(bookDto.getPublishedDate());
+        book.setPublisher(bookDto.getPublisher());
+        book.setCategory(bookDto.getCategory());
+        book.setImage(bookDto.getImage());
+        book.setIsbn(bookDto.getIsbn());
+        book.setCatchPhrase(bookDto.getCatchPhrase());
+        book.setBookDescription(bookDto.getBookDescription());
+
+        return book;
     }
 
-    default Book toEntityWithLogging(BookDto bookDto) {
-        Book book = toEntity(bookDto);
-        logger.info("Mapped BookDto to Book entity: {}", book);
-        return book;
+    public BookDto toDto(Book book) {
+        if (book == null) {
+            return null;
+        }
+
+        BookDto bookDto = new BookDto();
+        bookDto.setId(book.getId());
+        bookDto.setTitle(book.getTitle());
+        bookDto.setAuthor(book.getAuthor());
+        bookDto.setPublishedDate(book.getPublishedDate());
+        bookDto.setPublisher(book.getPublisher());
+        bookDto.setCategory(book.getCategory());
+        bookDto.setImage(book.getImage());
+        bookDto.setIsbn(book.getIsbn());
+        bookDto.setCatchPhrase(book.getCatchPhrase());
+        bookDto.setBookDescription(book.getBookDescription());
+
+        return bookDto;
     }
 }

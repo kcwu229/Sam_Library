@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axiosInstance, axiosFileInstance } from "../axioConfig";
 
 // api route for book Object

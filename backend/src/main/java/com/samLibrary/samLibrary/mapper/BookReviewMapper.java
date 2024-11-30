@@ -7,9 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface BookReviewMapper {
-    @Mapping(target = "book.id", source = "bookId")
-    BookReview toEntity(BookReviewDto bookReviewDto);
+    BookReview toEntity(BookReviewDto dto);
 
-    @Mapping(target = "bookId", source = "book.id")
-    BookReviewDto toDto(BookReview bookReview);
+    BookReviewDto toDto(BookReview entity);
 }

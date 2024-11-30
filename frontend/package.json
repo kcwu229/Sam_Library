@@ -26,6 +26,7 @@
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.6",
     "router": "^1.3.8",
+    "styled-components": "^6.1.13",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

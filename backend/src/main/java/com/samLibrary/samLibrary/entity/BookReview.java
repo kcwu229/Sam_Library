@@ -1,16 +1,11 @@
-// BookReview.java
 package com.samLibrary.samLibrary.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -52,14 +47,5 @@ public class BookReview {
     @PreUpdate
     protected void onUpdate() {
         editTimestamp = LocalDateTime.now();
-    }
-
-    public BookReview(String id, Book book, String title, String review, int rating, String userId) {
-        this.id = id;
-        this.book = book;
-        this.title = title;
-        this.review = review;
-        this.rating = rating;
-        this.userId = userId;
     }
 }

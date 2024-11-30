@@ -2,6 +2,11 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="releases.java.net" />
+      <option name="name" value="releases.java.net" />
+      <option name="url" value="https://maven.java.net/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="central" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
@@ -10,6 +15,21 @@
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshots.java.net" />
+      <option name="name" value="snapshots.java.net" />
+      <option name="url" value="https://maven.java.net/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="netbeans" />
+      <option name="name" value="netbeans" />
+      <option name="url" value="https://bits.netbeans.org/nexus/content/groups/netbeans" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jvnet-nexus-staging" />
+      <option name="name" value="jvnet-nexus-staging" />
+      <option name="url" value="https://maven.java.net/content/repositories/staging/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />

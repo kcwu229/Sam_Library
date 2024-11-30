@@ -13,6 +13,7 @@ import categories from "../bookPage/bookFilter/BookFilterData";
 
 import SortFilter from "../bookPage/bookFilter/SortFilter";
 import FilterButtons from "./bookFilter/FilterButton";
+import PageNotFound from "../PageNotFound";
 
 function BookPage() {
   const [books, setBooks] = useState([]);
@@ -28,6 +29,7 @@ function BookPage() {
   const [sortCriteria, setSortCriteria] = useState(""); // Add sorting state
   const [categoryGroup, setCategoryGroup] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [hasNetworkError, setHasNetworkError] = useState(false);
 
   // pagination
   const pageSize = 20; // Set your desired page size
@@ -58,15 +60,23 @@ function BookPage() {
     if (storedRole) {
       setUserRole(storedRole);
     }
-    fetchBooks(currentPage, pageSize);
-  }, [currentPage]);
+    const fetchData = async () => {
+      await fetchBooks(currentPage, pageSize);
+    };
+    fetchData();
+  }, [currentPage, hasNetworkError]);
 
   async function fetchBooks(page, pageSize) {
-    const response = await listBooks(page, pageSize);
-    setBooks(response.data);
-    //console.log(response.data);
-    setOriginalBooks(response.data);
-    setLoading(false);
+    try {
+      const response = await listBooks(page, pageSize);
+      setBooks(response.data);
+      //console.log(response.data);
+      setOriginalBooks(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setHasNetworkError(true);
+    }
   }
 
   const toggleCategoryExpand = () => {
@@ -127,103 +137,111 @@ function BookPage() {
   }
 
   return (
-    <div className="w-full min-h-screen relative bg-gray-50">
-      <SearchBar
-        id="searchBar"
-        buttonText="Book"
-        onClickAction={createBook}
-        logo={<IoLibrarySharp className="text-4xl" />}
-        logoText={"BookList"}
-        onSearchResults={handleSearchResults}
-        setLoading={setLoading}
-      />
-
-      <div className="flex flex-col items-center justify-center mt-14">
-        <FilterButtons
-          className="md:flex md:justify-center hidden"
-          filterButtons={categoryGroup}
-          removeFilter={removeFilter}
-          removeAllFilter={removeAllFilter}
-        />
-        {searchField != "" && searchText != "" && (
-          <h2 className="text-4xl font-bold text-center mt-14">
-            Result for {searchField} field : {searchText}
-          </h2>
-        )}
-      </div>
-
-      <div className="flex flex-col md:flex-row">
-        {/* The filter section */}
-        <div>
-          <button>
-            <div className="bg-slate-800 p-2 mt-20 rounded">
-              <MdOutlineFilterAlt
-                className="w-8 h-8 text-white"
-                onClick={handlingFilter}
-              />
-              <p className="text-white">Filter</p>
-            </div>
-          </button>
-
-          {showFilter && (
-            <div className="py-4 px-2">
-              <Filters
-                categories={categories}
-                categoryExpand={categoryExpand}
-                toggleCategoryExpand={toggleCategoryExpand}
-                setBooks={setBooks}
-                originalBooks={originalBooks}
-                setCategoryGroup={setCategoryGroup}
-                categoryGroup={categoryGroup}
-                selectedCategories={selectedCategories}
-                setSelectedCategories={setSelectedCategories} //
-              />
-            </div>
-          )}
-        </div>
-        <div className="w-full md:w-9/12 flex flex-col space-y-4">
-          <div id="resultList">
-            <div className="flex justify-between text-xl tracking-wider mt-4">
-              <div className="flex justify-start"></div>
-              <h3 className="flex justify-center text-2xl font-semibold tracking-wide">
-                {books.length > 0
-                  ? books.length.toLocaleString() + " results found "
-                  : "No results found"}
-              </h3>
-              <SortFilter
-                onSortChange={handleSortChange}
-                currentSort={sortCriteria}
-                className="right-0 flex justify-end"
-              />
-              <></>
-            </div>
-          </div>
-          <br />
-          <div className="flex flex-wrap justify-center items-center gap-5 mt-4 w-full">
-            {loading && <LoadingSpinner />}
-            {paginatedBooks.map((book) => {
-              return (
-                <BookCard
-                  key={book.id}
-                  book={book}
-                  userRole={userRole}
-                  viewOrEditBook={viewOrEditBook}
-                  editAction={editAction}
-                  deleteAction={deleteAction}
-                />
-              );
-            })}
-          </div>
-          <br />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
+    <>
+      {!hasNetworkError ? (
+        <div className="w-full min-h-screen relative bg-gray-50">
+          <SearchBar
+            id="searchBar"
+            buttonText="Book"
+            onClickAction={createBook}
+            logo={<IoLibrarySharp className="text-4xl" />}
+            logoText={"BookList"}
+            onSearchResults={handleSearchResults}
+            setLoading={setLoading}
           />
-          <div className="pt-32"></div>
+
+          <div className="flex flex-col items-center justify-center mt-14">
+            <FilterButtons
+              className="md:flex md:justify-center hidden"
+              filterButtons={categoryGroup}
+              removeFilter={removeFilter}
+              removeAllFilter={removeAllFilter}
+            />
+            {searchField != "" && searchText != "" && (
+              <h2 className="text-4xl font-bold text-center mt-14">
+                Result for {searchField} field : {searchText}
+              </h2>
+            )}
+          </div>
+
+          <div className="flex flex-col md:flex-row">
+            {/* The filter section */}
+            <div>
+              <button>
+                <div className="bg-slate-800 p-2 mt-20 rounded">
+                  <MdOutlineFilterAlt
+                    className="w-8 h-8 text-white"
+                    onClick={handlingFilter}
+                  />
+                  <p className="text-white">Filter</p>
+                </div>
+              </button>
+
+              {showFilter && (
+                <div className="py-4 px-2">
+                  <Filters
+                    categories={categories}
+                    categoryExpand={categoryExpand}
+                    toggleCategoryExpand={toggleCategoryExpand}
+                    setBooks={setBooks}
+                    originalBooks={originalBooks}
+                    setCategoryGroup={setCategoryGroup}
+                    categoryGroup={categoryGroup}
+                    selectedCategories={selectedCategories}
+                    setSelectedCategories={setSelectedCategories} //
+                  />
+                </div>
+              )}
+            </div>
+            <div className="w-full md:w-9/12 flex flex-col space-y-4">
+              <div id="resultList">
+                <div className="flex justify-between text-xl tracking-wider mt-4">
+                  <div className="flex justify-start"></div>
+                  <h3 className="flex justify-center text-2xl font-semibold tracking-wide">
+                    {books.length > 0
+                      ? books.length.toLocaleString() + " results found "
+                      : "No results found"}
+                  </h3>
+                  <SortFilter
+                    onSortChange={handleSortChange}
+                    currentSort={sortCriteria}
+                    className="right-0 flex justify-end"
+                  />
+                  <></>
+                </div>
+              </div>
+              <br />
+              <div className="flex flex-wrap justify-center items-center gap-5 mt-4 w-full">
+                {loading && <LoadingSpinner />}
+                {paginatedBooks.map((book) => {
+                  return (
+                    <BookCard
+                      key={book.id}
+                      book={book}
+                      userRole={userRole}
+                      viewOrEditBook={viewOrEditBook}
+                      editAction={editAction}
+                      deleteAction={deleteAction}
+                    />
+                  );
+                })}
+              </div>
+              <br />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+              <div className="pt-32"></div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <>
+          <PageNotFound />
+        </>
+      )}
+    </>
   );
 }
 

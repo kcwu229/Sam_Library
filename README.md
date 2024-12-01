@@ -1,6 +1,8 @@
 # Welcome to Sam's Library
 <img width="140" alt="image" src="https://github.com/user-attachments/assets/dedc9c26-c592-4807-8955-41e77ad0e68b">
 
+### link :  http://34.92.99.72:3000/
+
 ## Introduction
 <ul>
   <li>Full-stack application built with:
@@ -33,27 +35,30 @@ Book_review Table : 151,019 records
 
 
 ### 1. Home page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/e45c0c38-eb3f-47e8-97c5-d8a5322d781c">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/fd788127-bce4-430b-89d7-2f286b629a90">
 
 
 ### 2. Login page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/ecc24579-1dd2-4f5d-afd5-56032f36b7e6">
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/ae0f0c44-6ffe-4d93-a03f-0728dfbc43d8">
 
 ### 3. Book Page
 We are sparing no pains on providing book resources to the public
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/e52ac7f2-71f6-47ec-a0c7-036983472f8e">
-
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/560a8086-643f-46db-9d4d-6e0567eb4ca4">
-
 Features: 
 #### Vistors: preview only, no access right on borrowing books and edit / deleting
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/330ad434-7c1d-4dba-99b4-dfa03bbaa6da">
+
 #### Admin: has access right on creating and edit / deleting and leave comment
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/5edab738-30fd-4f2f-9a12-92cc79ab4bdc">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/80ea517a-a353-46ed-b1c4-863747afd6c0">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/82dea623-00ad-4351-9d04-47aa4e12499c">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/2db4a3ce-f3dd-40ed-823f-e8815b3718ed">
+
 #### member: has access right on borrowing books and  leave comment
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/ba33eb81-3689-4972-b278-310265b89e25">
 
 ### 4. Detail Page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/15d376fc-bc6b-446f-9997-28ff5cf843b4">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/c7d04cad-ae69-4d18-ad12-e2f361dbc7b0">
 
 # Come and join us !!
 

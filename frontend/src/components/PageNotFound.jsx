@@ -7,25 +7,26 @@ const PageNotFound = () => {
   const navigate = useNavigate();
   return (
     <Container className="w-screen h-screen">
-      <div className="h-3/12 flex gap-4 items-center justify-center">
-        <div className="flex h-5/6">
+      <div className="h-3/12 flex flex-col md:flex md:flex-row gap-4 items-center justify-center">
+        <div className="flex h-2/6 w-3/6 md:h-5/6 justify-center">
           <img src={SignUpImage} className="h-1/6 w-4/6" />
         </div>
-        <div className="flex flex-col h-5/6 justify-center gap-3">
-          <h1 className="font-semibold text-4xl text-gray-700">OOPS !</h1>
-          <h1 className="font-semibold text-4xl text-gray-700">
+        <br />
+        <div className="flex flex-col h-5/6 justify-center items-center gap-3 md:items-start">
+          <h1 className="font-semibold text-4xl tmd:text-6xl text-red-600">
+            OOPS !
+          </h1>
+          <h1 className="font-semibold text-2xlt md:text-4xl  text-gray-600 ">
             PAGE NOT FOUND
           </h1>
-          <br />
-          <p className="tracking-wide text-lg font-light text-gray-600">
-            Due to the network error, the page you are looking for cannot be
-            shown.
+          <p className="w-8/12 tracking-wide md:text-lg text-sm font-light text-gray-600 md:flex px-10 md:px-0 text-left">
+            Due to the network error, the page cannot be shown. Please check
+            your network connection and try again.
           </p>
-          <p className="tracking-wide text-lg font-light text-gray-600">
-            Please check your network connection and try again.
-          </p>
-          <br />
-          <Button className="w-3/12" onClick={() => navigate("/")}>
+          <Button
+            className="text-center md:flex flex justify-center items-center text-sm md:text-xl"
+            onClick={() => navigate("/")}
+          >
             Back to Home
           </Button>
         </div>

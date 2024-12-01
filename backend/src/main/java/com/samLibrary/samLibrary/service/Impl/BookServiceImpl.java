@@ -40,7 +40,6 @@ public class BookServiceImpl implements BookService {
     @Value("${gcp.bucket.name}")
     private String bucketName;
 
-
     private final String credentialsPath = "config/bucketKey.json"; // Update this path
 
     public void initializeGoogleCredentials() {

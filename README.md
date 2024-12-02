@@ -27,11 +27,11 @@
 
 Data Migrate to MySQL
 
-Book Table : 750,000 records
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/9f579951-e8e2-415f-abe7-6b09d805206b">
+Book Table : Around 50,000 records
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/0ecac2c3-5bc5-429d-b4e8-6ec7a7b18bba">
 
-Book_review Table : 151,019 records
-<img width="823" alt="image" src="https://github.com/user-attachments/assets/e1fa5fd1-d6b7-4705-b7bf-e8c25b48f943">
+Book_review Table : 750,000 records
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/1ff0b5dc-b108-456d-90d6-68c20bfdf9ae">
 
 
 ### 1. Home page
@@ -46,7 +46,8 @@ We are sparing no pains on providing book resources to the public
 
 Features: 
 #### Vistors: preview only, no access right on borrowing books and edit / deleting
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/330ad434-7c1d-4dba-99b4-dfa03bbaa6da">
+<img width="1710" alt="image" src="https://github.com/user-attachments/assets/f4b8544b-67ad-4d23-ae25-f117bf748203">
+
 
 #### Admin: has access right on creating and edit / deleting and leave comment
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/5edab738-30fd-4f2f-9a12-92cc79ab4bdc">

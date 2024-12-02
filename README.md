@@ -43,14 +43,18 @@ Data Migrate to MySQL
 
 
 ### 2. Login page
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/ae0f0c44-6ffe-4d93-a03f-0728dfbc43d8">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/cbd6c945-a9e2-4dee-a467-9bfd948bd671">
 
-### 3. Book Page
+### 3. SignUp page
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/a962c17e-369d-473f-b029-06d5cf99f5ee">
+
+
+### 4. Book Page
 We are sparing no pains on providing book resources to the public
 
 Features: 
 #### Vistors: preview only, no access right on borrowing books and edit / deleting
-<img width="1710" alt="image" src="https://github.com/user-attachments/assets/f4b8544b-67ad-4d23-ae25-f117bf748203">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/f4b8544b-67ad-4d23-ae25-f117bf748203">
 
 
 #### Admin: has access right on creating and edit / deleting and leave comment
@@ -62,7 +66,7 @@ Features:
 #### member: has access right on borrowing books and  leave comment
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/ba33eb81-3689-4972-b278-310265b89e25">
 
-### 4. Detail Page
+### 5. Detail Page
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/c7d04cad-ae69-4d18-ad12-e2f361dbc7b0">
 
 # Come and join us !!

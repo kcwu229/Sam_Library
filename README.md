@@ -14,13 +14,17 @@
   </li>
   <br />
   <li>Uses <strong>RESTful APIs</strong> for communication between frontend and backend</li>
-   <br />
-  <li>Planned to:
+  <br />
+  <li>Deployment:
     <ul>
       <li>Containerize using <strong>Docker</strong></li>
       <li>Deploy on <strong>Google Cloud Platform (GCP)</strong> using <strong>Docker Compose</strong> for web hosting</li>
     </ul>
   </li>
+  <br />
+  <li>Books' images are stored in the GCP buckets</li>
+  <br />
+  <li>The frontend and backend are using Docker Compose and deployed on a GCP VM instance</li>
 </ul>
 
 ## Current works: 

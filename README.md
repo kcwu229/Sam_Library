@@ -31,11 +31,11 @@
 
 Data Migrate to MySQL
 
-Book Table : Around 50,000 records
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/0ecac2c3-5bc5-429d-b4e8-6ec7a7b18bba">
+### Book Table : Around 50,000 records
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/0ecac2c3-5bc5-429d-b4e8-6ec7a7b18bba">
 
-Book_review Table : 750,000 records
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/1ff0b5dc-b108-456d-90d6-68c20bfdf9ae">
+### Book_review Table : 750,000 records
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/1ff0b5dc-b108-456d-90d6-68c20bfdf9ae">
 
 
 ### 1. Home page

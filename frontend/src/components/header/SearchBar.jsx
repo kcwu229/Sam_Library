@@ -5,14 +5,7 @@ import DropdownTag from "../dropdown/DropdownTag";
 import { useNavigate } from "react-router-dom";
 import { listSearchResult } from "../../services/BookServices";
 
-function SearchBar({
-  buttonText,
-  onClickAction,
-  logo,
-  logoText,
-  onSearchResults,
-  setLoading,
-}) {
+function SearchBar({ buttonText, onClickAction, onSearchResults, setLoading }) {
   const [searchText, setSearchText] = useState("");
   const [searchField, setSearchField] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -63,9 +56,8 @@ function SearchBar({
   return (
     <div className="pt-4 top-16 w-full bg-white shadow z-50">
       <div className="flex items-center justify-between px-3 pb-4">
-        <div className="hidden md:flex" id="bookLogo">
-          {logo}
-          <span className="ml-2 text-4xl font-bold">{logoText}</span>
+        <div className="hidden md:flex text-blue-600" id="bookLogo">
+          <span className="ml-2 text-4xl font-bold text-blue-600"></span>
         </div>
 
         <div className="flex w-8/12 md:w-full max-w-5xl ml-4">
@@ -117,7 +109,7 @@ function SearchBar({
             className="shadow appearance-none border-t border-b border-r w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="searchField"
             type="text"
-            placeholder="Enter book name"
+            placeholder="Enter the word you want to search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             onKeyUp={(e) => {

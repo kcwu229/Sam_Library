@@ -42,35 +42,35 @@ function SignUpPage() {
     const errorCopy = { ...errors };
 
     if (formData.firstName === "") {
-      errorCopy.firstName = "First name is required !";
+      errorCopy.firstName = "First name is requiorange !";
       valid = false;
     } else {
       errorCopy.firstName = "";
     }
 
     if (formData.lastName === "") {
-      errorCopy.lastName = "Last name is required !";
+      errorCopy.lastName = "Last name is requiorange !";
       valid = false;
     } else {
       errorCopy.lastName = "";
     }
 
     if (formData.username === "") {
-      errorCopy.username = "Username is required !";
+      errorCopy.username = "Username is requiorange !";
       valid = false;
     } else {
       errorCopy.username = "";
     }
 
     if (formData.email === "") {
-      errorCopy.email = "Email is required !";
+      errorCopy.email = "Email is requiorange !";
       valid = false;
     } else {
       errorCopy.email = "";
     }
 
     if (formData.password === "") {
-      errorCopy.password = "Password is required !";
+      errorCopy.password = "Password is requiorange !";
       valid = false;
     } else {
       errorCopy.password = "";
@@ -91,11 +91,11 @@ function SignUpPage() {
         console.log("response", response);
 
         if (response.status === 200 || response.status === 201) {
+          navigate("/login");
           showToast("Successfully registration !", "success");
           await sleep(2000);
-          showToast("Redirecting you to login page", "success");
+          showToast("redirecting you to login page", "success");
           await sleep(2000);
-          navigate("/login");
         }
       } catch (error) {
         if (error.response && error.response.status === 409) {
@@ -111,7 +111,7 @@ function SignUpPage() {
   return (
     <div
       id="background"
-      className="flex justify-center items-center w-screen h-screen bg-pink-50 "
+      className="flex justify-center items-center w-screen h-screen bg-orange-50 "
     >
       <div
         id="container"
@@ -131,7 +131,7 @@ function SignUpPage() {
         <div className="w-full lg:w-5/12 flex items-center justify-center relative p-8">
           <div className="w-full max-w-sm">
             <form className="w-full relative" onSubmit={submitLoginForm}>
-              <h1 className="mb:text-lg font-bold mb-4 mt-1 text-4xl text-center text-red-400">
+              <h1 className="mb:text-lg font-bold mb-4 mt-1 text-4xl text-center text-orange-600">
                 Nice to meet you
               </h1>
               <p className="text-center">Create your own account</p>
@@ -231,7 +231,7 @@ function SignUpPage() {
               </div>
 
               <button
-                className="bg-red-400 hover:bg-red-600
+                className="bg-orange-400 hover:bg-orange-600
                 text-white font-bold py-3 
                 px-10 lg:px-10 xl:px-20 md:px-5 rounded focus:outline-none mt-4 mb-8 
                 focus:shadow-outline w-full"
@@ -243,7 +243,7 @@ function SignUpPage() {
                 Don't have an account?
                 <a
                   href="/sign-up"
-                  className="ml-2 text-red-400 hover:underline"
+                  className="ml-2 text-orange-600 hover:underline"
                 >
                   Sign up
                 </a>

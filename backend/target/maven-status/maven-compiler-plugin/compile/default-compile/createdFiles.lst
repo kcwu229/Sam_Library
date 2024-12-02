@@ -1,2 +1,12 @@
+com/samLibrary/samLibrary/dto/RegisterRequest.class
 com/samLibrary/samLibrary/config/JwtFilter.class
 com/samLibrary/samLibrary/service/JWTService.class
+com/samLibrary/samLibrary/entity/Book.class
+com/samLibrary/samLibrary/repository/BookRepositoryCustom.class
+com/samLibrary/samLibrary/dto/AuthenticationResponse.class
+com/samLibrary/samLibrary/security/SecurityConfig.class
+com/samLibrary/samLibrary/dto/AuthenticationRequest.class
+com/samLibrary/samLibrary/service/AuthenticationService.class
+com/samLibrary/samLibrary/repository/BookRepository.class
+com/samLibrary/samLibrary/entity/Role.class
+com/samLibrary/samLibrary/entity/BookReview.class

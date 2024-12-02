@@ -30,27 +30,27 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
   function validateForm() {
     let valid = true;
 
-    const errorCopy = { ...errors };
+    const errorsCopy = { ...errors };
 
-    if (title === "") {
-      errorCopy.title = "Title is required!";
-      valid = false;
+    if (title.trim()) {
+      errorsCopy.title = "";
     } else {
-      errorCopy.title = "";
+      valid = false;
+      errorsCopy.title = "Title is required!";
     }
 
-    if (review === "") {
-      errorCopy.review = "review is required!";
-      valid = false;
+    if (review.trim()) {
+      errorsCopy.review = "";
     } else {
-      errorCopy.review = "";
+      valid = false;
+      errorsCopy.review = "review is required!";
     }
 
-    setErrors(errorCopy);
+    setErrors(errorsCopy);
     return valid;
   }
 
-  async function submitComment(e) {
+  const submitComment = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
@@ -98,10 +98,8 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
       } catch (error) {
         console.error(error);
       }
-    } else {
-      throw new Error("Invalid rating type");
     }
-  }
+  };
 
   return (
     <div className="w-full flex items-center justify-center relative p-4">

@@ -124,7 +124,7 @@ function LoginPage() {
           />
           <div
             id="color-filter"
-            className="rounded-2xl bg-black opacity-15 absolute inset-0 md:w-11/12 lg:w-full h-full"
+            className="rounded-2xl bg-black opacity-30 absolute inset-0 md:w-11/12 lg:w-full h-full"
           ></div>
           <p
             className="absolute font-bold text-white 
@@ -198,8 +198,8 @@ function LoginPage() {
                 </a>
               </div>
               <br />
-              <hr />
             </form>
+            {/*
             <div className="flex justify-center items-center gap-8 mt-6">
               <button
                 className="w-14 h-14 p-2 border border-black rounded-full 
@@ -217,6 +217,7 @@ function LoginPage() {
                 <FcGoogle className="w-7 h-7" />
               </button>
             </div>
+              */}
             <div className="text-center mt-8">
               Don't have an account?
               <a

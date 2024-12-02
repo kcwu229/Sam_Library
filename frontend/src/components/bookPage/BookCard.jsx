@@ -19,6 +19,13 @@ const BookCard = ({
     setShowConfirmDialog(true);
   };
 
+  // Generate a cache-busting query parameter
+  const cacheBuster = new Date().getTime();
+
+  const handleImageError = (event) => {
+    event.target.src = NotFoundImage;
+  };
+
   const handleCancelDelete = () => {
     setShowConfirmDialog(false);
   };
@@ -41,31 +48,21 @@ const BookCard = ({
         key={book.id}
         onClick={() => viewOrEditBook(book.id)}
       >
-        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow relativ items-center">
+        <div className="w-full max-w-sm bg-white border hover:translate-y-2 hover:border-amber-400 hover:border-2 border-gray-300 rounded-xl shadow relativ items-center">
           {book.image != null && (
             <img
               loading="lazy"
-              className="p-8 rounded-t-lg h-80"
-              // to-do add handling for missing image && if image is on server or local
+              className="p-8 rounded-t-lg h-80 w-60 md:w-8/12"
               src={
                 book.image.startsWith("http")
-                  ? book.image
-                  : book.image.length > 0
-                  ? `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${book.image}.jpg`
-                  : NotFoundImage
+                  ? `${book.image}?${cacheBuster}`
+                  : `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${book.image}.jpg?${cacheBuster}`
               }
+              onError={handleImageError}
               alt="product image"
             />
           )}
-          {book.image == null && (
-            <img
-              loading="lazy"
-              className="p-8 rounded-t-lg h-80"
-              // to-do add handling for missing image && if image is on server or local
-              src={NotFoundImage}
-              alt="product image"
-            />
-          )}
+
           <div className="px-5 pb-5 text-left">
             <a href="#">
               {book.title && (
@@ -78,8 +75,8 @@ const BookCard = ({
               {book.author && (
                 <p className="text-gray-900 font-light mt-2 tracking-wide">
                   {book.author
-                    ? book.author.length > 10
-                      ? book.author.slice(0, 10) + "..."
+                    ? book.author.length > 15
+                      ? book.author.slice(0, 15) + "..."
                       : book.author
                     : "Unknown Author"}
                 </p>
@@ -91,18 +88,19 @@ const BookCard = ({
               )}
             </a>
             <div className="flex items-center mt-2.5 mb-5">
-              <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                <FaStar className="w-4 h-4 text-yellow-400" />
-              </div>
-              <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-                5
+              <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-2 rounded dark:bg-blue-200 dark:text-blue-800">
+                {book.category.length > 0
+                  ? book.category.length > 15
+                    ? book.category.slice(0, 15) + " ..."
+                    : book.category
+                  : "No category"}
               </span>
             </div>
             <div className="flex items-center justify-between">
               {userRole === "USER" && (
                 <div
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
-                font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     alert("Coming Soon!");

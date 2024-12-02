@@ -57,13 +57,12 @@ const FileInput = ({ value, onChange = noop, error, ...rest }) => {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      {Boolean(files.length) && (
-        <div className="mb-4 flex flex-col items-center">
-          <TiCloudStorage className="text-orange-400 w-16 h-16" />
-          <p className="font-semibold">Selected files:</p>
-          <p className="text-gray-500">{files.map((f) => f.name).join(", ")}</p>
-        </div>
-      )}
+      <div className="mb-4 flex flex-col items-center">
+        <TiCloudStorage className="text-orange-400 w-16 h-16" />
+        <p className="font-semibold">Selected files:</p>
+        <p className="text-gray-500">{files.map((f) => f.name).join(", ")}</p>
+      </div>
+
       <label className="cursor-pointer flex flex-col gap-4">
         <p className="underline text-blue-600">Click to select images</p>
         <span>Or</span>

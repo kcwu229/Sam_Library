@@ -1,5 +1,6 @@
 package com.samLibrary.samLibrary.service;
 
+import com.samLibrary.samLibrary.dto.BookDetailResponse;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.dto.BookReviewResponse;
 
@@ -11,5 +12,5 @@ public interface BookReviewService {
     BookReviewDto updateBookReview(BookReviewDto bookReviewDto, String bookReviewId);
     void deleteBookReview(String bookReviewId, String bookId, String userId);
     List<BookReviewDto> getUserCommentByBookId(String bookId);
-    List<BookReviewResponse> findBookReviewResponseByBookId(String bookId);
+    BookDetailResponse findBookReviewResponseByBookId(String bookId);
 }

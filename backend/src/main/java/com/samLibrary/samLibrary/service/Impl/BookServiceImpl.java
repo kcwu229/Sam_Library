@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
 import com.samLibrary.samLibrary.dto.BookDto;
 import com.samLibrary.samLibrary.entity.Book;
+import com.samLibrary.samLibrary.entity.BookReview;
 import com.samLibrary.samLibrary.mapper.BookMapper;
 import com.samLibrary.samLibrary.repository.BookRepository;
 import com.samLibrary.samLibrary.service.BookService;
@@ -18,12 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +35,8 @@ public class BookServiceImpl implements BookService {
     @Value("${gcp.bucket.name}")
     private String bucketName;
 
-    private final String credentialsPath = "config/bucketKey.json"; // Update this path
+    @Value("${gcp.bucket.path}")
+    private String credentialsPath ;
 
     public void initializeGoogleCredentials() {
         try (FileInputStream serviceAccountStream = new FileInputStream(credentialsPath)) {
@@ -58,7 +54,6 @@ public class BookServiceImpl implements BookService {
         try (FileInputStream serviceAccountStream = new FileInputStream(credentialsPath)) {
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccountStream);
             Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-            logger.info("Bucket name: " + bucketName);
 
             try {
                 Bucket bucket = storage.get(bucketName);
@@ -112,6 +107,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
         );
+
         return bookMapper.toDto(book);
     }
 
@@ -139,10 +135,10 @@ public class BookServiceImpl implements BookService {
         );
 
         // If the user uploads a new image, delete the old image and save the new one
-        String fileName = book.getImage();
+        String fileName = bookId;
         String folderName = "images/books/";
-        logger.info("bookId 222 is: " + bookId);
-        logger.info("filename 222 is: " + fileName);
+        logger.info("bookId is: " + bookId);
+        logger.info("filename is: " + fileName);
 
         try {
             if (!fileName.startsWith("http")) {
@@ -152,11 +148,12 @@ public class BookServiceImpl implements BookService {
 
             // Upload the new image to the bucket
             fileName = bookId;
-            // Upload the file to the folder
 
+            // Upload the file to the folder
             BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, folderName + (fileName + ".jpg")).build();
             storage.create(blobInfo, file.getInputStream());
             logger.info("File uploaded to GCP bucket successfully");
+
 
             Blob blob = storage.create(blobInfo, file.getInputStream());
             logger.info("File uploaded to GCP bucket successfully");
@@ -185,6 +182,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Cacheable(value = "books")
     public List<BookDto> getAllBooks() {
+        var rating = 0;
         List<Book> books = bookRepository.findAll();
         if (books == null) {
             logger.warn("No books found");
@@ -198,7 +196,6 @@ public class BookServiceImpl implements BookService {
                     return bookDto;
                 })
                 .collect(Collectors.toList());
-
         return bookDtos;
     }
 

@@ -7,25 +7,13 @@ const FilterButtons = ({ filterButtons, removeFilter, removeAllFilter }) => {
       {filterButtons.length > 0 && (
         <>
           {filterButtons.map((filterButton, index) => (
-            <button
+            <div
               key={index}
-              className="text-sam-black border border-black rounded-3xl px-8 py-2 text-center hover:border-blue-500 hover:border items-center mr-4 relative hover:text-blue-500"
-              onClick={() => removeFilter(filterButton)}
+              className=" border rounded-3xl px-8 py-2 text-center border-blue-600 items-center mr-4 relative text-blue-600"
             >
               {filterButton}
-              <VscClose className="w-6 h-6 absolute right-0 inset-y-2 py-1 mr-2 text-center pointer-events-auto hover:text-blue-500" />
-            </button>
+            </div>
           ))}
-          <a
-            href="#"
-            className="inline-block pl-8 hover:text-blue-500"
-            onClick={(e) => {
-              e.preventDefault();
-              removeAllFilter();
-            }}
-          >
-            Clear All
-          </a>
         </>
       )}
     </div>

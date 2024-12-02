@@ -47,14 +47,6 @@ function BookPage() {
     setLoading(false);
   };
 
-  const removeFilter = (filter) => {
-    // Implement the logic to remove a single filter
-  };
-
-  const removeAllFilter = () => {
-    // Implement the logic to remove all filters
-  };
-
   useEffect(() => {
     const storedRole = localStorage.getItem("userRole");
     if (storedRole) {
@@ -69,6 +61,7 @@ function BookPage() {
   async function fetchBooks(page, pageSize) {
     try {
       const response = await listBooks(page, pageSize);
+      console.log(response);
       setBooks(response.data);
       //console.log(response.data);
       setOriginalBooks(response.data);
@@ -139,13 +132,11 @@ function BookPage() {
   return (
     <>
       {!hasNetworkError ? (
-        <div className="w-full min-h-screen relative bg-gray-50">
+        <div className="w-full min-h-screen relative bg-gray-100">
           <SearchBar
             id="searchBar"
             buttonText="Book"
             onClickAction={createBook}
-            logo={<IoLibrarySharp className="text-4xl" />}
-            logoText={"BookList"}
             onSearchResults={handleSearchResults}
             setLoading={setLoading}
           />
@@ -154,8 +145,6 @@ function BookPage() {
             <FilterButtons
               className="md:flex md:justify-center hidden"
               filterButtons={categoryGroup}
-              removeFilter={removeFilter}
-              removeAllFilter={removeAllFilter}
             />
             {searchField != "" && searchText != "" && (
               <h2 className="text-4xl font-bold text-center mt-14">
@@ -168,7 +157,7 @@ function BookPage() {
             {/* The filter section */}
             <div>
               <button>
-                <div className="bg-slate-800 p-2 mt-20 rounded">
+                <div className="bg-gray-700 opacity-100 p-3 px-5 mt-20 rounded-tr-2xl flex flex-col gap-3">
                   <MdOutlineFilterAlt
                     className="w-8 h-8 text-white"
                     onClick={handlingFilter}
@@ -178,7 +167,7 @@ function BookPage() {
               </button>
 
               {showFilter && (
-                <div className="py-4 px-2">
+                <div>
                   <Filters
                     categories={categories}
                     categoryExpand={categoryExpand}
@@ -195,7 +184,7 @@ function BookPage() {
             </div>
             <div className="w-full md:w-9/12 flex flex-col space-y-4">
               <div id="resultList">
-                <div className="flex justify-between text-xl tracking-wider mt-4">
+                <div className="flex justify-between text-xl tracking-wider mt-10">
                   <div className="flex justify-start"></div>
                   <h3 className="flex justify-center text-2xl font-semibold tracking-wide">
                     {books.length > 0
@@ -209,10 +198,11 @@ function BookPage() {
                   />
                   <></>
                 </div>
+                {loading && <LoadingSpinner />}
               </div>
               <br />
+
               <div className="flex flex-wrap justify-center items-center gap-5 mt-4 w-full">
-                {loading && <LoadingSpinner />}
                 {paginatedBooks.map((book) => {
                   return (
                     <BookCard

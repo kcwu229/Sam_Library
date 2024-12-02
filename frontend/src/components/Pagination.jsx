@@ -20,13 +20,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   return (
     <div className="flex pagination-controls gap-10 justify-center items-center">
       <div onClick={handlePreviousPage} disabled={currentPage === 1}>
-        <FaAngleLeft className="w-8 h-8" />
+        <FaAngleLeft className="w-8 h-8 cursor-pointer" />
       </div>
       <span>
-        Page {currentPage} of {totalPages}
+        Page {currentPage} of {totalPages.toLocaleString()}
       </span>
       <div onClick={handleNextPage} disabled={currentPage === totalPages}>
-        <FaAngleRight className="w-8 h-8" />
+        <FaAngleRight className="w-8 h-8 cursor-pointer tracking-wider" />
       </div>
     </div>
   );

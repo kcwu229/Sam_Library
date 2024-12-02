@@ -1,5 +1,6 @@
 package com.samLibrary.samLibrary.service.Impl;
 
+import com.samLibrary.samLibrary.dto.BookDetailResponse;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.dto.BookReviewResponse;
 import com.samLibrary.samLibrary.entity.Book;
@@ -16,10 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -110,7 +109,8 @@ public class BookReviewServiceImpl implements BookReviewService {
 
 
     @Override
-    public List<BookReviewResponse> findBookReviewResponseByBookId(String bookId) {
+    public BookDetailResponse findBookReviewResponseByBookId(String bookId) {
+        AtomicInteger sumRating = new AtomicInteger();
         List<BookReview> bookReviews = bookReviewRepository.findByBookId(bookId);
         if (bookReviews.isEmpty()) {
             logger.warn("No book reviews found for bookId: {}", bookReviews);
@@ -118,12 +118,19 @@ public class BookReviewServiceImpl implements BookReviewService {
             logger.info("Found {} book reviews for bookId: {}", bookReviews.size(), bookReviews.get(0).getBook().getId());
             bookReviews.forEach(review -> logger.info("BookReview: {}", review));
         }
+        for (var i = 0; i < bookReviews.size(); i ++) {}
         List<BookReviewResponse> bookReviewResponses = bookReviews.stream().map(bookReview -> {
+
+            List<BookReviewResponse> bookReviewResponses2 = new ArrayList<>();
+
+            sumRating.addAndGet(bookReview.getRating());
             BookReviewDto bookReviewDto = bookReviewMapper.toDto(bookReview);
+
             String userId = bookReview.getUserId();
             User user = userRepository.findById(userId).orElseThrow(
                     () -> new RuntimeException("User not found")
             );
+
             String username = user.getUsername();
             String firstName = user.getFirstName();
             String lastName = user.getLastName();
@@ -132,8 +139,12 @@ public class BookReviewServiceImpl implements BookReviewService {
                     lastName, userImage, bookReview.getCreateTimestamp());
         }).collect(Collectors.toList());
 
+        int reviewerCount = bookReviewResponses.size();
+        int avgRating = sumRating.get() / reviewerCount;
+
         bookReviewResponses.sort(Comparator.comparing(BookReviewResponse::getCreateTimestamp).reversed());
-        return bookReviewResponses;
+        BookDetailResponse bookDetailResponse = new BookDetailResponse(bookReviewResponses, reviewerCount, avgRating);
+        return bookDetailResponse;
     }
 
 }

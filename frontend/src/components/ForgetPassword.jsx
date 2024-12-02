@@ -42,17 +42,6 @@ function ForgetPassword() {
     <div className="bg-white p-8 rounded-lg shadow-lg w-full md:w-4/5 lg:w-4/5 xl:w-4/5 h-auto flex flex-col md:flex-row mt-28 mx-auto">
       <div className="w-full md:w-1/2 flex items-center justify-center relative p-4">
         <div className="w-full max-w-sm">
-          <div className="absolute top-0 right-20">
-            <FaRegCircleQuestion className="w-6 h-6" />
-          </div>
-          <div className="group absolute top-0 right-10">
-            <button>
-              <AiOutlineGlobal className="w-6 h-6" />
-            </button>
-            <p className="absolute top-10 right-0 w-24 text-xs text-wrap invisible group-hover:visible text-center bg-slate-50">
-              Click to change language
-            </p>
-          </div>
           <form className="w-full relative mt-10" onSubmit={submitLoginForm}>
             <img
               className="w-20 h-18 mb-10 mx-auto"

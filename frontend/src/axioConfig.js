@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 // Create an axios instance for JSON requests
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_PROD_BACKEND_URL,
+  baseURL: process.env.REACT_APP_PROD_BACKEND_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 
 // Create an axios instance for file uploads
 const axiosFileInstance = axios.create({
-  baseURL: process.env.REACT_APP_PROD_BACKEND_URL,
+  baseURL: process.env.REACT_APP_PROD_BACKEND_API_URL,
   headers: {
     "Content-Type": "multipart/form-data",
   },
@@ -63,7 +63,7 @@ const isTokenExpired = (token) => {
       )
     );
 
-    console.log("Decoded Payload:", jsonPayload); // Consider removing this in production
+    //console.log("Decoded Payload:", jsonPayload); // Consider removing this in production
 
     // Check expiration
     return jsonPayload.exp * 1000 < Date.now();

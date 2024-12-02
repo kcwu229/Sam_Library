@@ -1,5 +1,6 @@
 package com.samLibrary.samLibrary.controller;
 
+import com.samLibrary.samLibrary.dto.BookDetailResponse;
 import com.samLibrary.samLibrary.dto.BookReviewDto;
 import com.samLibrary.samLibrary.dto.BookReviewResponse;
 import com.samLibrary.samLibrary.service.BookReviewService;
@@ -43,11 +44,11 @@ public class BookReviewController {
     }
 
     @GetMapping("/all/{bookId}")
-    public ResponseEntity<List<BookReviewResponse>> getAllBookReview(@PathVariable String bookId) {
+    public ResponseEntity<BookDetailResponse> getAllBookReview(@PathVariable String bookId) {
         logger.info("THE BOOK ID IS : {}", bookId);
-        List<BookReviewResponse> bookReviewResponses= bookReviewService.findBookReviewResponseByBookId(bookId);
-        logger.info("ttttest : {}", bookReviewResponses);
-        return ResponseEntity.ok(bookReviewResponses);
+        BookDetailResponse bookDetailResponse= bookReviewService.findBookReviewResponseByBookId(bookId);
+        logger.info("ttttest : {}", bookDetailResponse);
+        return ResponseEntity.ok(bookDetailResponse);
 
     }
 

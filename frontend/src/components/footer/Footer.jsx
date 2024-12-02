@@ -27,7 +27,7 @@ function Footer() {
           className="font-medium mt-4 sm:mt-0 text-sm text-sam-gray text-right flex flex-col sm:flex-row justify-between"
           id="contact"
         >
-          <div className="text-left pl-6">
+          <div className="text-left pl-6 tracking-wider font-normal">
             <p>Tel: (123) 456-7890</p>
             <p>Email: contact@samlibrary.com</p>
             <p>Fax: (098) 765-4321</p>
@@ -42,7 +42,7 @@ function Footer() {
         <br />
 
         <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
-        <span className="block text-sm text-sam-gray sm:text-center">
+        <span className="block text-sm text-sam-gray sm:text-center tracking-wider">
           © 2024 Sam Library. All Rights Reserved.
           <a href="/" className="hover:underline">
             Sam Library™

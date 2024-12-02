@@ -1,7 +1,6 @@
 package com.samLibrary.samLibrary.security;
 
 import com.samLibrary.samLibrary.config.JwtFilter;
-import com.samLibrary.samLibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -92,24 +91,7 @@ public class SecurityConfig {
                          //Requiring authentication for all other requests
                         .anyRequest().authenticated()
                         )
-
-
-
                         // Configuring the login page with oauth2Login and httpBasic
-                        .oauth2Login(oauth2 -> oauth2
-                                .loginPage("/api/oauth/login")
-                                .authorizationEndpoint(authorization -> authorization
-                                        // set the url as
-                                        // http://localhost:8080/api/auth/oauth2/authorize/google
-                                        // and
-                                        // http://localhost:8080/api/auth/oauth2/authorize/github
-                                        .baseUri("/api/auth/oauth2/authorize")
-                                )
-                                        .redirectionEndpoint(redirection -> redirection
-                                                .baseUri("/oauth2/callback/*")
-                                )
-                                .defaultSuccessUrl("/home", true)
-                        )
 
                 .httpBasic(Customizer.withDefaults()) // Enabling HTTP Basic authentication
                 .authenticationProvider(authenticationProvider)

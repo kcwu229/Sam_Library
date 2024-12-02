@@ -25,6 +25,8 @@ function BookDetailPage() {
   // pagination
   const pageSize = 5; // Set your desired page size
   const [currentPage, setCurrentPage] = useState(1);
+  const [reviewCount, setReviewCount] = useState(0);
+  const [avgRating, setAvgRating] = useState(0);
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedReviews = reviews.slice(startIndex, startIndex + pageSize);
   const totalPages = Math.ceil(reviews.length / pageSize);
@@ -32,11 +34,14 @@ function BookDetailPage() {
   const userId = localStorage.getItem("userId");
   const { showToast } = useToast();
 
+  const cacheBuster = new Date().getTime();
+
   useEffect(() => {
     if (id) {
       // get book info
       getBook(id)
         .then((response) => {
+          console.log("Book detail obj", response.data.image);
           setBook(response.data);
           //console.log("Book detail obj", response.data);
         })
@@ -45,8 +50,10 @@ function BookDetailPage() {
       // get all comments on this book
       listAllBookReviews(id, currentPage, pageSize)
         .then((response) => {
-          setReviews(response.data);
-          console.log(response.data);
+          //console.log("review response is:", response);
+          setReviews(response.data.bookReviews);
+          setReviewCount(response.data.reviewerCount);
+          setAvgRating(response.data.averageRating);
         })
         .catch((error) => {
           console.error(error);
@@ -58,10 +65,12 @@ function BookDetailPage() {
       }
       //console.log(reviews);
     }
-  }, [id, currentPage, reviews]);
+  }, [id, currentPage, reviews, book]);
 
   const handleReviewAdded = (updatedReviews) => {
-    setReviews(updatedReviews);
+    setReviews(updatedReviews.bookReviews);
+    setAvgRating(updatedReviews.avgRating);
+    setReviewCount(updatedReviews.reviewCount);
   };
 
   const [bookReviewId, setBookReviewId] = useState(null);
@@ -110,12 +119,12 @@ function BookDetailPage() {
                 {book && (
                   <img
                     loading="lazy"
-                    className="w-full md:w-8/12 lg:w-10/12 xl:w-full"
+                    className="w-7/12 md:w-8/12 lg:w-10/12 xl:w-full"
                     // to-do add handling for missing image && if image is on server or local
                     src={
                       book.image.startsWith("http")
-                        ? book.image
-                        : `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${book.image}.jpg`
+                        ? `${book.image}?${cacheBuster}`
+                        : `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${book.image}.jpg?${cacheBuster}`
                     }
                     //src={`${process.env.REACT_APP_BASE_URL}/books/${book.imageName}.png`}
                     alt="book cover"
@@ -187,7 +196,10 @@ function BookDetailPage() {
               </div>
             </div>
             <div className="w-full flex flex-col items-center mt-20">
-              <RatingSection />
+              <RatingSection
+                overallRating={avgRating}
+                reviewerCount={reviewCount}
+              />
               <div
                 id="commentSection"
                 className="w-full flex flex-wrap justify-center gap-8 mt-20"

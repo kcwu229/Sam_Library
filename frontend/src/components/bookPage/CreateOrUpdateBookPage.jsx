@@ -64,13 +64,14 @@ const CreateOrUpdateBookPage = () => {
           if (response.data.image) {
             let imageUrl;
             if (!response.data.image.startsWith("http")) {
-              imageUrl = `${process.env.GCP_BUCKET_LOCATION}/${response.data.image}.png`;
+              imageUrl = `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${response.data.image}.jpg`;
             } else {
               imageUrl = response.data.image;
+              console.log("Image URL: ", imageUrl);
             }
             try {
               const imageFile = await fetchImage(imageUrl, id);
-              //console.log("Image file:", imageFile);
+              console.log("Image file:", imageFile);
               setFile(imageFile);
               setImagePreviewUrl(URL.createObjectURL(imageFile));
             } catch (error) {
@@ -290,7 +291,7 @@ const CreateOrUpdateBookPage = () => {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
-          <LabelsTag for="publishedDate" text="Publication Year" required="*" />
+          <LabelsTag for="publishedDate" text="Publication Year" />
           <InputTag
             id="publishedDate"
             name="publishedDate"
@@ -304,7 +305,7 @@ const CreateOrUpdateBookPage = () => {
           )}
         </div>
         <div className="w-full md:w-1/2 px-3">
-          <LabelsTag for="publisher" text="Publisher" required="*" />
+          <LabelsTag for="publisher" text="Publisher" />
           <InputTag
             id="publisher"
             name="publisher"
@@ -316,7 +317,7 @@ const CreateOrUpdateBookPage = () => {
           {errors.publisher && <CreateFormErrorTag error={errors.publisher} />}
         </div>
         <div className="w-full md:w-1/2 px-3 mt-4">
-          <LabelsTag for="category" text="Category" required="*" />
+          <LabelsTag for="category" text="Category" />
           <InputTag
             id="category"
             name="category"
@@ -341,7 +342,7 @@ const CreateOrUpdateBookPage = () => {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3 relative">
-          <LabelsTag for="catchPhrase" text="CatchPhrase" required="*" />
+          <LabelsTag for="catchPhrase" text="CatchPhrase" />
           <TextAreaTag
             id="catchPhrase"
             name="catchPhrase"

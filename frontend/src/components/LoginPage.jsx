@@ -101,12 +101,12 @@ function LoginPage() {
       setIsSubmitting(true);
       try {
         const response = await authenticateUser(formData);
-        console.log("login obj is : ", response);
+        //console.log("login obj is : ", response);
 
         // Set the user ID in the context
         if (response.status === 200 || response.status === 201) {
           login();
-          console.log("response", response.data);
+          //console.log("response", response.data);
           const userId = response.data.userId;
           localStorage.setItem("userId", userId);
           const userRole = response.data.role;

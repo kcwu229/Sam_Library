@@ -5,10 +5,9 @@ import { useToast } from "../Context/ToastMessageContext";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { getUser } from "../../services/UserSevices";
-import { MdExpandMore } from "react-icons/md";
 import DropdownTag from "../dropdown/DropdownTag";
 
-function UserSection({ userLoggedIn }) {
+function UserSection({ userLoggedIn, userData }) {
   const { showToast } = useToast();
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -43,18 +42,15 @@ function UserSection({ userLoggedIn }) {
 
   useEffect(() => {
     if (userId != null) {
-      console.log(userId);
-      const response = getUser(userId);
-      response.then((res) => {
-        setUserIcon(res.data.image);
-      });
+      //const response = getUser(userId);
+      setUserIcon(userData.image);
     }
   });
 
   return userLoggedIn ? (
     <div className="md:flex items-center gap-4 hidden">
       <div className="flex felx-row items-center gap-3">
-        <p className="text-white">{username}</p>
+        <p className="text-white">{userData.username}</p>
 
         <button onClick={toggleDropdown}>
           <img

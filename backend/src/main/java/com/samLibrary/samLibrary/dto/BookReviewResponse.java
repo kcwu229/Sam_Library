@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookReviewResponse {
-    private BookReviewDto bookReviewDto;
+    private int rating;
+    private String review;
+    private String title;
+    private String reviewId;
     private String username;
     private String userId;
     private String firstName;

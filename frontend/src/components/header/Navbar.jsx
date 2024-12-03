@@ -12,12 +12,12 @@ import { FaHome } from "react-icons/fa";
 import { getUser } from "../../services/UserSevices";
 import Cookies from "js-cookie";
 import { FaBookOpen } from "react-icons/fa6";
-import { MdOutlineSignalCellularAlt1Bar } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
 function Navbar() {
   const location = useLocation();
   const { showToast } = useToast();
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
   const [userIcon, setUserIcon] = useState(null);
   const [activeTab, setActiveTab] = useState(location.pathname);
@@ -32,12 +32,17 @@ function Navbar() {
 
   useEffect(() => {
     if (userId != null) {
-      console.log(userId);
-      const response = getUser(userId);
-      response.then((res) => {
-        setUserIcon(res.data.image);
-      });
+      getUser(userId)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
+  }, [userId]);
+
+  useEffect(() => {
     setActiveTab(location.pathname);
   }, [location]);
 
@@ -111,14 +116,6 @@ function Navbar() {
               isActive={activeTab === "/books"}
               onClick={() => handleTabClick("/books")}
             />
-            {/*  Hide the Authors tab
-            <NavBarTag
-              href="/authors"
-              text="Authors"
-              isActive={activeTab === "/authors"}
-              onClick={() => handleTabClick("/authors")}
-            />
-             */}
           </ul>
         </div>
 
@@ -132,33 +129,33 @@ function Navbar() {
 
             <div
               id="dropdownDelay"
-              className={`rounded-lg mt-80 z-10 absolute right-0 w-4/12 ${
+              className={`rounded-xl mt-80 z-10 absolute right-0 w-4/12 ${
                 dropdownOpen ? "block" : "hidden"
               } bg-gray-50 border-black divide-y divide-gray-100 shadow w-28`}
               onMouseLeave={closeDropdown}
             >
               <ul
-                className="py-2 text-sm text-gray-700"
+                className="text-sm text-gray-700"
                 aria-labelledby="dropdownBtn"
               >
                 {isLoggedIn && (
                   <div
-                    className="flex flex-row items-center cursor-pointer justify-center 
-                  gap-5 read-only p-2"
+                    className="flex flex-row items-center justify-center 
+                  gap-5 read-only p-2 bg-gray-500 cursor"
                   >
-                    <p className="text-gray-800 font-normal">{username}</p>
+                    <p className="text-white font-bold">{userData.username}</p>
 
                     <img
-                      src={userIcon ? userIcon : DefaultImage}
-                      className="w-10 h-10 rounded-full relative"
+                      src={userData.image ? userData.image : DefaultImage}
+                      className="w-10 h-10 rounded-full relative border-2 border-white"
                     />
                   </div>
                 )}
-                <div class="flex items-center mt-3">
-                  <span class="px-3 text-orange-500 font-medium">
+                <div className="flex items-center mt-3">
+                  <span className="px-3 text-orange-500 font-medium">
                     Basic Function
                   </span>
-                  <hr class="flex-grow border-t border-orange-500" />
+                  <hr className="flex-grow border-t border-orange-500" />
                 </div>
                 <li onClick={navigateHomePage} className="cursor-pointer">
                   <DropdownTag
@@ -179,11 +176,11 @@ function Navbar() {
                 <hr className="mt-1 mb-1" />
                 {!isLoggedIn && (
                   <>
-                    <div class="flex items-center mt-4">
-                      <span class="px-3 text-blue-500 font-medium">
+                    <div className="flex items-center mt-4">
+                      <span className="px-3 text-blue-500 font-medium">
                         Login Section
                       </span>
-                      <hr class="flex-grow border-t border-blue-500" />
+                      <hr className="flex-grow border-t border-blue-500" />
                     </div>
 
                     <Link to="/login">
@@ -208,11 +205,11 @@ function Navbar() {
                 )}
                 {isLoggedIn && (
                   <>
-                    <div class="flex items-center mt-4">
-                      <span class="px-3 text-blue-500 font-medium">
+                    <div className="flex items-center mt-4">
+                      <span className="px-3 text-blue-500 font-medium">
                         User Section
                       </span>
-                      <hr class="flex-grow border-t border-blue-500" />
+                      <hr className="flex-grow border-t border-blue-500" />
                     </div>
                     <Link to={`/user-profile/${userId}`}>
                       <li className="cursor-pointer">
@@ -237,7 +234,7 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <UserSection userLoggedIn={isLoggedIn} />
+        <UserSection userLoggedIn={isLoggedIn} userData={userData} />
       </div>
     </nav>
   );

@@ -59,8 +59,17 @@ public class BookReviewServiceImpl implements BookReviewService {
         bookReview.setTitle(bookReviewDto.getTitle());
         bookReview = bookReviewRepository.save(bookReview);
         BookReviewDto result = bookReviewMapper.toDto(bookReview);
-        BookReviewResponse reviewResponse = new BookReviewResponse(result, user.get().getUsername(), userId, user.get().getFirstName(), user.get().getLastName(), user.get().getImage(), bookReview.getCreateTimestamp());
-        messagingTemplate.convertAndSend("/topic/reviews", reviewResponse);
+        String review = result.getReview();
+        String reviewId = result.getId();
+        String title = result.getTitle();
+        int rating = result.getRating();
+        BookReviewResponse reviewResponse =
+                new BookReviewResponse(rating, review, title, reviewId,
+                        user.get().getUsername(),
+                        userId, user.get().getFirstName(), user.get().getLastName(),
+                        user.get().getImage(), bookReview.getCreateTimestamp());
+        // Send the review to the client
+        messagingTemplate.convertAndSend("/topic/reviews",result);
 
         return result;
     }
@@ -142,7 +151,11 @@ public class BookReviewServiceImpl implements BookReviewService {
             String firstName = user.getFirstName();
             String lastName = user.getLastName();
             String userImage = user.getImage();
-            return new BookReviewResponse(bookReviewDto, username, userId, firstName,
+            String review = bookReviewDto.getReview();
+            String reviewId = bookReviewDto.getId();
+            String title = bookReviewDto.getTitle();
+            int rating = bookReviewDto.getRating();
+            return new BookReviewResponse(rating,review,title, reviewId, username, userId, firstName,
                     lastName, userImage, bookReview.getCreateTimestamp());
         }).collect(Collectors.toList());
 

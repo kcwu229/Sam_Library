@@ -57,7 +57,7 @@ const CreateOrUpdateBookPage = () => {
     // turn the response into a blob (binary data)
     const blob = await response.blob();
     const file = new File([blob], bookId + ".jpg", { type: blob.type });
-    console.log(`it return ${file.name}`);
+    //console.log(`it return ${file.name}`);
     return file;
   }
 
@@ -73,11 +73,11 @@ const CreateOrUpdateBookPage = () => {
               imageUrl = `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${response.data.image}.jpg`;
             } else {
               imageUrl = response.data.image;
-              console.log("Image URL: ", imageUrl);
+              //console.log("Image URL: ", imageUrl);
             }
             try {
               const imageFile = await fetchImage(imageUrl, id);
-              console.log("Image file:", imageFile);
+              //console.log("Image file:", imageFile);
               setFile(imageFile);
               setImagePreviewUrl(URL.createObjectURL(imageFile));
             } catch (error) {
@@ -90,7 +90,7 @@ const CreateOrUpdateBookPage = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log("Updated Book: ", book);
+    //console.log("Updated Book: ", book);
   }, [book]);
 
   const handleInputChange = (e) => {
@@ -135,25 +135,21 @@ const CreateOrUpdateBookPage = () => {
       selectedFile &&
       (selectedFile.type === "image/jpeg" || selectedFile.type === "image/png")
     ) {
-      console.log("step 1");
       if (selectedFile.size > 1048576) {
         // 1 MB = 1048576 bytes
         alert("File size cannot be greater than 1 MB.");
         return;
       }
       setFile(selectedFile);
-      console.log("step 2");
       setBook((prevBook) => ({
         ...prevBook,
         image: selectedFile.name,
       })); // Update image with the image name// Update image with the image name
-      console.log("step 3 : new book ", selectedFile.name);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreviewUrl(reader.result);
       };
       reader.readAsDataURL(selectedFile);
-      console.log("step 4");
     } else {
       alert("Please upload a JPG or PNG file.");
     }
@@ -197,7 +193,6 @@ const CreateOrUpdateBookPage = () => {
 
   const saveOrUpdateBook = async (e) => {
     e.preventDefault();
-    console.log("Book object: yoyoyo", book);
 
     if (validateForm()) {
       // Create a new FormData object
@@ -216,28 +211,27 @@ const CreateOrUpdateBookPage = () => {
         if (pair[1] instanceof Blob) {
           const reader = new FileReader();
           reader.onload = () => {
-            console.log(`${pair[0]}: ${reader.result}`);
+            //console.log(`${pair[0]}: ${reader.result}`);
             if (pair[0] === "file") {
               setImagePreviewUrl(reader.result); // Set the image preview URL
             }
           };
           reader.readAsDataURL(pair[1]); // Read as Data URL to verify the file contents
         } else {
-          console.log(`${pair[0]}: ${pair[1]}`);
+          //console.log(`${pair[0]}: ${pair[1]}`);
         }
       }
 
       try {
         if (id) {
           // Update existing book
-          console.log("i want to check", formData);
           const response = await updateBook(id, formData);
-          console.log("Book updated successfully:", response.data);
+          //console.log("Book updated successfully:", response.data);
           showToast("Successfully update on book!", "success");
         } else {
           // Create a new book
           const response = await createBook(formData);
-          console.log("Book created successfully:", response.data);
+          //console.log("Book created successfully:", response.data);
           showToast("Successfully create a book !", "success");
         }
         navigate("/books#searchBar");

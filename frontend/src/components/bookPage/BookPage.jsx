@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { IoLibrarySharp } from "react-icons/io5";
 import { MdOutlineFilterAlt } from "react-icons/md";
 import Pagination from "../Pagination";
+import { useToast } from "../Context/ToastMessageContext";
+
 import BookCard from "./BookCard"; // Import the new BookCard component
 import Filters from "./bookFilter/Filters";
 import LoadingSpinner from "../LoadingSpinner";
@@ -38,6 +40,7 @@ function BookPage() {
   const paginatedBooks = books.slice(startIndex, startIndex + pageSize);
   const totalPages = Math.ceil(books.length / pageSize);
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   //search result
   const handleSearchResults = (data, searchField, searchText) => {
@@ -61,9 +64,7 @@ function BookPage() {
   async function fetchBooks(page, pageSize) {
     try {
       const response = await listBooks(page, pageSize);
-      console.log(response);
       setBooks(response.data);
-      //console.log(response.data);
       setOriginalBooks(response.data);
       setLoading(false);
     } catch (error) {
@@ -106,15 +107,18 @@ function BookPage() {
     setBooks(sortedBooks);
   };
 
-  function deleteAction(id) {
-    deleteBook(id)
-      .then((response) => {
-        console.log(response);
-        fetchBooks(currentPage, pageSize);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  async function deleteAction(bookId) {
+    try {
+      await deleteBook(bookId); // Assuming deleteBook is a function that makes the API call to delete the book
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+      setOriginalBooks((prevBooks) =>
+        prevBooks.filter((book) => book.id !== bookId)
+      );
+      //showToast("Book deleted successfully", "success");
+    } catch (error) {
+      console.error("Error deleting book:", error);
+      showToast("Error deleting book", "error");
+    }
   }
 
   function createBook() {

@@ -37,6 +37,12 @@ const CreateOrUpdateBookPage = () => {
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
+  const handleKeyPress = (e, callback) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+
   // Fetch image from external API
   async function fetchImage(url, bookId) {
     const response = await fetch(
@@ -388,6 +394,7 @@ const CreateOrUpdateBookPage = () => {
         className="mb-20 bg-rose-500 rounded-xl px-8 py-2 text-center text-white 
               hover:border-rose-600 hover:border items-center mr-4 relative"
         type="submit"
+        onKeyUp={handleKeyPress}
       >
         {id ? "Update" : "Create"}
       </button>

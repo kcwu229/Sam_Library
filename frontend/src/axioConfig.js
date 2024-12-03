@@ -21,7 +21,7 @@ const axiosFileInstance = axios.create({
 const refreshAccessToken = async () => {
   try {
     const refreshToken = Cookies.get("refreshToken"); // Assuming you store the refresh token as well
-    const response = await axios.post("/auth/refresh-token", {
+    const response = await axiosInstance.post("/auth/refresh-token", {
       refreshToken,
     });
     const newAccessToken = response.data.accessToken;

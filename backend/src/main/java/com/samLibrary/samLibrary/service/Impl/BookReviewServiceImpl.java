@@ -14,6 +14,8 @@ import com.samLibrary.samLibrary.service.BookReviewService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,8 @@ public class BookReviewServiceImpl implements BookReviewService {
     private BookReviewRepository bookReviewRepository;
     private BookRepository bookRepository;
     private UserRepository userRepository;
+    @Qualifier("simpMessagingTemplate")
+    private SimpMessagingTemplate messagingTemplate;
     private BookReviewMapper bookReviewMapper;
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
@@ -55,6 +59,9 @@ public class BookReviewServiceImpl implements BookReviewService {
         bookReview.setTitle(bookReviewDto.getTitle());
         bookReview = bookReviewRepository.save(bookReview);
         BookReviewDto result = bookReviewMapper.toDto(bookReview);
+        BookReviewResponse reviewResponse = new BookReviewResponse(result, user.get().getUsername(), userId, user.get().getFirstName(), user.get().getLastName(), user.get().getImage(), bookReview.getCreateTimestamp());
+        messagingTemplate.convertAndSend("/topic/reviews", reviewResponse);
+
         return result;
     }
 
@@ -146,5 +153,8 @@ public class BookReviewServiceImpl implements BookReviewService {
         BookDetailResponse bookDetailResponse = new BookDetailResponse(bookReviewResponses, reviewerCount, avgRating);
         return bookDetailResponse;
     }
+
+
+
 
 }

@@ -23,7 +23,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <FaAngleLeft className="w-8 h-8 cursor-pointer" />
       </div>
       <span>
-        Page {currentPage} of {totalPages.toLocaleString()}
+        {currentPage} of {totalPages}
       </span>
       <div onClick={handleNextPage} disabled={currentPage === totalPages}>
         <FaAngleRight className="w-8 h-8 cursor-pointer tracking-wider" />

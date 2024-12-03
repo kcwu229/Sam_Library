@@ -14,6 +14,10 @@ export const createBookReview = (bookId, bookReviewData, userId) => {
   );
 };
 
+export const getBookReview = (bookReviewId) => {
+  axiosInstance.get(REST_BOOKREVIEW_API_URL, bookReviewId);
+};
+
 export const listAllBookReviews = (bookId, page, pageSize) =>
   axiosInstance.get(REST_BOOKREVIEW_API_URL + "/all/" + bookId, {
     params: {

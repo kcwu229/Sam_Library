@@ -7,6 +7,7 @@ import com.samLibrary.samLibrary.dto.RegisterRequest;
 import com.samLibrary.samLibrary.entity.Role;
 import com.samLibrary.samLibrary.entity.Token;
 import com.samLibrary.samLibrary.entity.TokenType;
+import com.samLibrary.samLibrary.exception.custom.UserAlreadyExistsException;
 import com.samLibrary.samLibrary.repository.TokenRepository;
 import com.samLibrary.samLibrary.repository.UserRepository;
 import com.samLibrary.samLibrary.service.AuthenticationService;
@@ -42,7 +43,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new RuntimeException("Username already exists");
+            throw new UserAlreadyExistsException("Username has already used for signUp !");
+        }
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException("Email has already used for signUp !");
         }
 
         User user = new User();
@@ -53,8 +58,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 encoder.encode(request.getPassword())
         );
         user.setEmail(request.getEmail());
-        user.setLastName(request.getLastName());
-        user.setLastName(request.getLastName());
         user.setRole(Role.USER);
         userRepository.save(user);
 

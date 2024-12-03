@@ -72,8 +72,9 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
             showToast("Review not added!", "error");
           }
           console.log("Book review created:", response.data);
-          const updatedReviews = await listAllBookReviews(id);
-          onReviewAdded(updatedReviews.data);
+          //const updatedReviews = await listAllBookReviews(id);
+          //onReviewAdded(updatedReviews.data);
+          onReviewAdded(response.data);
           setTitle("");
           setReview("");
           setRating(0);
@@ -92,8 +93,9 @@ function LeaveComment({ ratingType, id, onReviewAdded }) {
           // call api to create author reviews
           const response = await createAuthorReview(id, reviewData);
           console.log("author review created:", response.data);
-          const updatedReviews = await listAllAuthorReviews(id);
-          onReviewAdded(updatedReviews.data);
+          //const updatedReviews = await listAllAuthorReviews(id);
+          //onReviewAdded(updatedReviews.data);
+          onReviewAdded(response.data);
         }
       } catch (error) {
         console.error(error);

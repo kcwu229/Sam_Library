@@ -17,9 +17,12 @@ function LoginPage() {
     username: "",
     password: "",
   });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const { showToast } = useToast();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [rememberMe, setRememberMe] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -28,12 +31,36 @@ function LoginPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleKeyPress = (e, callback) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+
+  const handleRememberMeChange = (event) => {
+    setRememberMe(event.target.checked);
+  };
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    // Check if user info is stored in localStorage
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
+    if (storedUsername && storedPassword) {
+      setFormData((prevData) => ({
+        ...prevData,
+        username: storedUsername,
+        password: storedPassword,
+      }));
+      setRememberMe(true);
+    }
+  }, []);
 
   const googleLogin = () =>
     (window.location.href =
@@ -82,7 +109,6 @@ function LoginPage() {
           console.log("response", response.data);
           const userId = response.data.userId;
           localStorage.setItem("userId", userId);
-          // Set the user role in the context
           const userRole = response.data.role;
           localStorage.setItem("userRole", userRole);
           const username = response.data.username;
@@ -94,6 +120,13 @@ function LoginPage() {
             `User '${response.data.username}', welcome back !`,
             "success"
           );
+          if (rememberMe) {
+            localStorage.setItem("username", formData.username);
+            localStorage.setItem("password", formData.password);
+          } else {
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+          }
           navigate("/books");
         }
       } catch (error) {
@@ -176,7 +209,13 @@ function LoginPage() {
               </div>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
-                  <input type="checkbox" className="w-4 h-4" />
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    className="w-4 h-4"
+                    checked={rememberMe}
+                    onChange={handleRememberMeChange}
+                  />
                   <label className=" inline-flex items-center ml-3 md:">
                     Remember me
                   </label>
@@ -189,6 +228,7 @@ function LoginPage() {
                 focus:shadow-outline w-full"
                 type="submit"
                 disabled={isSubmitting}
+                onKeyUp={handleKeyPress}
               >
                 Login
               </button>
@@ -218,12 +258,9 @@ function LoginPage() {
               </button>
             </div>
               */}
-            <div className="text-center mt-8">
+            <div className="text-center mt-2">
               Don't have an account?
-              <a
-                href="/sign-up"
-                className="block ml-2 text-slate-700 hover:underline"
-              >
+              <a href="/sign-up" className="ml-2 text-gray-600 hover:underline">
                 Sign up
               </a>
             </div>

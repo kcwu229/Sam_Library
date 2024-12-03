@@ -15,7 +15,7 @@ function UserSection({ userLoggedIn }) {
   const [userIcon, setUserIcon] = useState(null);
   const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
-  const removeItems = ["userId", "userRole", "username"];
+  const removeItems = ["userId", "userRole"];
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -52,7 +52,7 @@ function UserSection({ userLoggedIn }) {
   });
 
   return userLoggedIn ? (
-    <div className="flex items-center gap-4">
+    <div className="md:flex items-center gap-4 hidden">
       <div className="flex felx-row items-center gap-3">
         <p className="text-white">{username}</p>
 
@@ -85,7 +85,7 @@ function UserSection({ userLoggedIn }) {
       </div>
     </div>
   ) : (
-    <div className="mr-4">
+    <div className="md:flex hidden mr-4">
       <a href="/login" className="px-4 py-2 text-sam-gray">
         Sign In
       </a>

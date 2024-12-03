@@ -82,6 +82,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/authors/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/authors-reviews/all/{authorId}").permitAll()
                         .requestMatchers("/signup").permitAll()
+                                .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/forget-password").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
                                 .requestMatchers("/proxy").permitAll()

@@ -31,7 +31,7 @@ const BookCard = ({
   };
   const handleConfirmDelete = () => {
     deleteAction(book.id);
-    showToast("The book is deleted", "success");
+    //showToast("The book is deleted", "success");
     setShowConfirmDialog(false);
   };
   return (
@@ -48,11 +48,14 @@ const BookCard = ({
         key={book.id}
         onClick={() => viewOrEditBook(book.id)}
       >
-        <div className="w-full max-w-sm bg-white border hover:translate-y-2 hover:border-amber-400 hover:border-2 border-gray-300 rounded-xl shadow relativ items-center">
+        <div
+          className="w-full max-w-sm bg-white border 
+        hover:translate-y-2 hover:border-amber-400 hover:border-2 border-gray-300 rounded-xl shadow relativ items-center"
+        >
           {book.image != null && (
             <img
               loading="lazy"
-              className="p-8 rounded-t-lg h-80 w-60 md:w-8/12"
+              className="p-8 rounded-t-lg h-80 w-60 md:w-10/12"
               src={
                 book.image.startsWith("http")
                   ? `${book.image}?${cacheBuster}`

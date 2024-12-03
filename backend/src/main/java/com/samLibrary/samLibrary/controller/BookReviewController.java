@@ -38,7 +38,7 @@ public class BookReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookReviewDto> getAuthorById(@PathVariable("id") String bookReviewId) {
+    public ResponseEntity<BookReviewDto> getBookReviewById(@PathVariable("id") String bookReviewId) {
         BookReviewDto bookReviewDto = bookReviewService.getBookReviewById(bookReviewId);
         return ResponseEntity.ok(bookReviewDto);
     }

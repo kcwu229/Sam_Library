@@ -15,16 +15,12 @@ function SignUpPage() {
     username: "",
     password: "",
     email: "",
-    firstName: "",
-    lastName: "",
   });
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    firstName: "",
     email: "",
-    lastName: "",
   });
 
   const handleChange = (e) => {
@@ -34,26 +30,18 @@ function SignUpPage() {
     });
   };
 
+  const handleKeyPress = (e, callback) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+
   const navigate = useNavigate();
 
   function validateForm() {
     let valid = true;
 
     const errorCopy = { ...errors };
-
-    if (formData.firstName === "") {
-      errorCopy.firstName = "First name is requiorange !";
-      valid = false;
-    } else {
-      errorCopy.firstName = "";
-    }
-
-    if (formData.lastName === "") {
-      errorCopy.lastName = "Last name is requiorange !";
-      valid = false;
-    } else {
-      errorCopy.lastName = "";
-    }
 
     if (formData.username === "") {
       errorCopy.username = "Username is requiorange !";
@@ -91,6 +79,8 @@ function SignUpPage() {
         console.log("response", response);
 
         if (response.status === 200 || response.status === 201) {
+          localStorage.setItem("username", formData.username);
+          localStorage.setItem("password", formData.password);
           navigate("/login");
           showToast("Successfully registration !", "success");
           await sleep(2000);
@@ -99,7 +89,10 @@ function SignUpPage() {
         }
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          showToast("The username is already been registrated", "error");
+          showToast(
+            "The username / email is already been registrated",
+            "error"
+          );
         } else {
           showToast("Registrate failed. Please try again.", "error");
           console.error();
@@ -125,6 +118,10 @@ function SignUpPage() {
             src={SignUpImage}
             alt="Login"
           />
+          <div
+            id="color-filter"
+            className="rounded-2xl bg-black opacity-15 absolute inset-0 md:w-11/12 lg:w-full h-full"
+          ></div>
         </div>
 
         {/* Login Form */}
@@ -132,45 +129,12 @@ function SignUpPage() {
           <div className="w-full max-w-sm">
             <form className="w-full relative" onSubmit={submitLoginForm}>
               <h1 className="mb:text-lg font-bold mb-4 mt-1 text-4xl text-center text-orange-600">
-                Nice to meet you
+                Hello !
               </h1>
               <p className="text-center">Create your own account</p>
               <br />
 
-              {/* firstName */}
-              <div className="mb-4 relative">
-                <LabelsTag for="firstName" text="First Name" />
-                <InputTag
-                  length="20"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  text="First Name"
-                  error={errors.firstName}
-                />
-                {errors.firstName && (
-                  <CreateFormErrorTag error={errors.firstName} />
-                )}
-              </div>
-
-              {/* lastName */}
-              <div className="mb-4 relative">
-                <LabelsTag for="lastName" text="Last Name" />
-                <InputTag
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  text="Enter your lastName"
-                  error={errors.lastName}
-                />
-                {errors.lastName && (
-                  <CreateFormErrorTag error={errors.lastName} />
-                )}
-              </div>
-
-              {/* username */}
+              {/* email */}
               <div className="mb-4 relative">
                 <LabelsTag for="email" text="Email" />
                 <InputTag
@@ -218,34 +182,23 @@ function SignUpPage() {
                 )}
               </div>
 
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center">
-                  <input type="checkbox" className="w-4 h-4" />
-                  <label className=" inline-flex items-center ml-3 md:">
-                    Remember me
-                  </label>
-                </div>
-                <a href="/forget-password" className="text-sm">
-                  Forget Password?
-                </a>
-              </div>
-
               <button
                 className="bg-orange-400 hover:bg-orange-600
                 text-white font-bold py-3 
                 px-10 lg:px-10 xl:px-20 md:px-5 rounded focus:outline-none mt-4 mb-8 
                 focus:shadow-outline w-full"
                 type="submit"
+                onKeyUp={handleKeyPress}
               >
                 Login
               </button>
               <div className="text-center mt-2">
-                Don't have an account?
+                Already have an account?
                 <a
-                  href="/sign-up"
+                  href="/login"
                   className="ml-2 text-orange-600 hover:underline"
                 >
-                  Sign up
+                  Sign in
                 </a>
               </div>
             </form>

@@ -1,4 +1,4 @@
-const TextAreaTag = ({ id, name, value, onChange, text, error }) => {
+const TextAreaTag = ({ id, name, value, onChange, text, error, readOnly }) => {
   return (
     <textarea
       className={`appearance-none block w-full bg-gray-100 text-gray-700 
@@ -12,6 +12,7 @@ const TextAreaTag = ({ id, name, value, onChange, text, error }) => {
       placeholder={text}
       onChange={onChange}
       maxLength={2000}
+      readOnly={readOnly}
     />
   );
 };

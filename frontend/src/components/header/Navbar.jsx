@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import DefaultImage from "../../assets/images/userIcon1.jpg";
+import DefaultImage from "../../assets/images/user.jpg";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import LogoImage from "../../assets/images/logo-inverted.png";
 import { useAuth } from "../Context/AuthContext";

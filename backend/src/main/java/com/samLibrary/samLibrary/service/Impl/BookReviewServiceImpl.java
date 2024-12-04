@@ -69,7 +69,7 @@ public class BookReviewServiceImpl implements BookReviewService {
                         userId, user.get().getFirstName(), user.get().getLastName(),
                         user.get().getImage(), bookReview.getCreateTimestamp());
         // Send the review to the client
-        messagingTemplate.convertAndSend("/topic/reviews",result);
+        messagingTemplate.convertAndSend("/topic/reviews",reviewResponse);
 
         return result;
     }
@@ -127,6 +127,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Override
     public BookDetailResponse findBookReviewResponseByBookId(String bookId) {
         AtomicInteger sumRating = new AtomicInteger();
+        int avgRating;
         List<BookReview> bookReviews = bookReviewRepository.findByBookId(bookId);
         if (bookReviews.isEmpty()) {
             logger.warn("No book reviews found for bookId: {}", bookReviews);
@@ -160,8 +161,12 @@ public class BookReviewServiceImpl implements BookReviewService {
         }).collect(Collectors.toList());
 
         int reviewerCount = bookReviewResponses.size();
-        int avgRating = sumRating.get() / reviewerCount;
-
+        if (reviewerCount == 0) {
+            avgRating = 0;
+        }
+        else {
+            avgRating = sumRating.get() / reviewerCount;
+        }
         bookReviewResponses.sort(Comparator.comparing(BookReviewResponse::getCreateTimestamp).reversed());
         BookDetailResponse bookDetailResponse = new BookDetailResponse(bookReviewResponses, reviewerCount, avgRating);
         return bookDetailResponse;

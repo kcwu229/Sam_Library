@@ -1,10 +1,9 @@
-import DefaultImage from "../../assets/images/userIcon1.jpg";
+import DefaultImage from "../../assets/images/user.jpg";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastMessageContext";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { getUser } from "../../services/UserSevices";
 import DropdownTag from "../dropdown/DropdownTag";
 
 function UserSection({ userLoggedIn, userData }) {

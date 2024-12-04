@@ -4,7 +4,7 @@ import { getBook } from "../../services/BookServices";
 import { FaChevronRight } from "react-icons/fa6";
 import BlockQuote from "../atoms/BlockQuote";
 import RatingSection from "../RatingSection";
-import Comments from "../Comments";
+import DefaultImage from "../../assets/images/user.jpg";
 import Pagination from "../Pagination";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastMessageContext";
@@ -16,7 +16,6 @@ import {
   deleteBookReview,
   listAllBookReviews,
 } from "../../services/BookReviewServices";
-import LogoImage from "../../assets/images/article2.png";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
@@ -25,7 +24,11 @@ function BookDetailPage() {
   const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [userRole, setUserRole] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    image: "",
+  });
   const ratingType = "book";
 
   // pagination
@@ -99,9 +102,10 @@ function BookDetailPage() {
       onConnect: () => {
         stompClient.subscribe("/topic/reviews", (message) => {
           const updatedReview = JSON.parse(message.body);
-          console.log("Updated review", updatedReview);
+          //console.log("Updated review", updatedReview);
           if (updatedReview && updatedReview.rating !== undefined) {
             setReviews((prevReviews) => [updatedReview, ...prevReviews]);
+            console.log(updatedReview);
             setAvgRating((prevAvgRating) => {
               const newAvgRating = (
                 (prevAvgRating * reviewCount + updatedReview.rating) /
@@ -122,28 +126,7 @@ function BookDetailPage() {
     return () => {
       stompClient.deactivate();
     };
-
-    stompClient.activate();
-
-    return () => {
-      stompClient.deactivate();
-    };
   }, [reviewCount]);
-
-  const handleReviewAdded = (updatedReview) => {
-    setReviews((prevReviews) => [updatedReview, ...prevReviews]);
-    setAvgRating((prevAvgRating) => {
-      const newAvgRating =
-        (prevAvgRating * reviewCount + updatedReview.rating) /
-        (reviewCount + 1);
-      return newAvgRating;
-    });
-    setReviewCount((prevReviewCount) => prevReviewCount + 1);
-  };
-
-  const handleBookReviewId = (reviewId) => {
-    setBookReviewId(reviewId);
-  };
 
   function handleDeleteAction() {
     deleteBookReview(id, userId, bookReviewId)
@@ -175,16 +158,6 @@ function BookDetailPage() {
   const totalPages = useMemo(() => {
     return Math.ceil(reviews.length / pageSize);
   }, [reviews.length, pageSize]);
-
-  const testReview = {
-    userImage: "/static/media/userIcon3.374b35dbed09ea94348c.jpg",
-    firstName: "admin",
-    lastName: "admin",
-    username: "admin",
-    createTimestamp: "2024-12-04T06:00:52.529017",
-    title: "Sample Title",
-    review: "Sample Review",
-  };
 
   return (
     <div className="container mx-auto w-screen">
@@ -306,31 +279,25 @@ function BookDetailPage() {
                 {paginatedReviews.length > 0 ? (
                   paginatedReviews.map((review, i) => {
                     //console.log("Review object:", review);
+                    const userImage = review.userImage;
+                    const firstName = review.firstName;
+                    const lastName = review.lastName;
                     return (
                       <div
                         key={i}
                         className="w-full md:w-10/12 lg:w-4/12 xl:w-3/12 bg-white shadow-xl rounded-lg text-gray-900 p-6 relative gap-10 mt-8 border-2 border-gray-200 hover:border-amber-500 hover:shadow-2xl"
                       >
                         <div className="mx-auto w-28 h-28 relative -mt-16 border-gray-700 rounded-full overflow-hidden z-10 gap-10">
-                          {userData && (
-                            <img
-                              className="object-cover object-center h-full w-full"
-                              src={userData.image}
-                              alt="User"
-                            />
-                          )}
+                          <img
+                            className="object-cover object-center h-full w-full"
+                            src={userImage || DefaultImage}
+                            alt="User"
+                          />
                         </div>
                         <div className="text-center mt-8 ">
-                          {userData && (
-                            <h2 className="font-bold text-xl text-black">
-                              {userData.firstName} {userData.lastName}
-                            </h2>
-                          )}
-                          {userData && (
-                            <p className="text-sm text-gray-500">
-                              {userData.username}
-                            </p>
-                          )}
+                          <h2 className="font-bold text-xl text-black">
+                            {firstName} {lastName}
+                          </h2>
                           <div className="text-center mt-4 text-sm text-slate-400">
                             {review.createTimestamp}
                           </div>
@@ -376,7 +343,7 @@ function BookDetailPage() {
                 )}
               </div>
             </div>
-            <div className="w-full md:w-8/12 lg:w-6/12 mx-auto mt-20">
+            <div className="w-full mx-auto mt-20">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -387,7 +354,7 @@ function BookDetailPage() {
                 <LeaveComment
                   ratingType={ratingType}
                   id={id}
-                  onReviewAdded={handleReviewAdded}
+                  userData={userData}
                 />
               )}
             </div>

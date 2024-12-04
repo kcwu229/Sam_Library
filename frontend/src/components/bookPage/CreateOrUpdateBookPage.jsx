@@ -13,6 +13,7 @@ import { createBook, updateBook } from "../../services/BookServices";
 const CreateOrUpdateBookPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const cacheBuster = new Date().getTime();
   const { showToast } = useToast();
   const [book, setBook] = useState({
     title: "",
@@ -68,18 +69,22 @@ const CreateOrUpdateBookPage = () => {
         .then(async (response) => {
           setBook(response.data);
           if (response.data.image) {
+            console.log("Image: ", response.data.image);
             let imageUrl;
             if (!response.data.image.startsWith("http")) {
-              imageUrl = `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${response.data.image}.jpg`;
+              console.log(
+                "Image URL: ",
+                `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${response.data.image}.jpg?${cacheBuster}`
+              );
+              imageUrl = `${process.env.REACT_APP_GCP_BUCKET_LOCATION}/${response.data.image}.jpg?${cacheBuster}`;
             } else {
               imageUrl = response.data.image;
-              //console.log("Image URL: ", imageUrl);
+              console.log("Image URL: ", imageUrl);
             }
             try {
               const imageFile = await fetchImage(imageUrl, id);
-              //console.log("Image file:", imageFile);
               setFile(imageFile);
-              setImagePreviewUrl(URL.createObjectURL(imageFile));
+              setImagePreviewUrl(imageUrl);
             } catch (error) {
               console.error("Error fetching image:", error);
             }

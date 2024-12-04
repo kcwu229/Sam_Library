@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import InputTag from "./form/InputTag";
 import LabelsTag from "./form/LabelsTag";
 import CreateFormErrorTag from "./form/CreateFormErrorTag";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getUser, updateUser } from "../services/UserSevices";
 import { useToast } from "./Context/ToastMessageContext";
 import userIcon1 from "../assets/images/userIcon1.jpg";
@@ -12,9 +12,12 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import userIcon4 from "../assets/images/userIcon4.jpg";
 
 const UserProfile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+  console.log("from", from);
   const params = useParams();
   const userId = params.id;
-  const navigate = useNavigate();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [icon, setIcon] = useState(0);
@@ -34,6 +37,7 @@ const UserProfile = () => {
     password: "",
     confirmPassword: "",
     file: "",
+    icon: "",
     email: "",
   });
 
@@ -158,7 +162,12 @@ const UserProfile = () => {
       if (response.status === 200 || response.status === 201) {
         console.log("User created successfully", response.data);
         showToast("Successfully update user profile !", "success");
-        navigate("/");
+
+        if (from) {
+          navigate(from);
+        } else {
+          navigate("/");
+        }
       }
     }
   };
@@ -201,9 +210,6 @@ const UserProfile = () => {
               <p className="font-light text-sm">
                 Choose one of the icon as your user icon
               </p>
-              {errors.userIcon && (
-                <CreateFormErrorTag error={errors.userIcon} />
-              )}
             </div>
           </div>
 

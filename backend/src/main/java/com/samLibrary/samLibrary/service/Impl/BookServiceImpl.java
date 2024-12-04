@@ -11,6 +11,7 @@ import com.samLibrary.samLibrary.service.BookService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -222,6 +223,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @CacheEvict(value = "books", allEntries = true)
     public void deleteBook(String bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new RuntimeException("Book not found")
@@ -246,6 +248,8 @@ public class BookServiceImpl implements BookService {
         }
 
 
+        logger.info("Deleting book from repository: {}", book);
         bookRepository.deleteById(bookId);
+        logger.info("Book deleted successfully.");
     }
 }

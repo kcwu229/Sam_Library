@@ -6,6 +6,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_PROD_BACKEND_API_URL,
   headers: {
     "Content-Type": "application/json",
+    "Cache-Control": "no-cache",
   },
 });
 
@@ -14,6 +15,7 @@ const axiosFileInstance = axios.create({
   baseURL: process.env.REACT_APP_PROD_BACKEND_API_URL,
   headers: {
     "Content-Type": "multipart/form-data",
+    "Cache-Control": "no-cache",
   },
 });
 
